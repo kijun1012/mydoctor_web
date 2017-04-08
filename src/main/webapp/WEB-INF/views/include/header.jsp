@@ -202,7 +202,7 @@
             <i class="fa fa-angle-left pull-right"></i>
          </span></a>
             <ul class="treeview-menu">
-               <li><a href="<c:url value="/graph"/>">심박수</a></li>
+               <li><a href="<c:url value="/heartrate"/>">심박수</a></li>
                <li><a href="#">혈압</a></li>
                <li><a href="#">몸무게</a></li>
                <li><a href="#">혈당</a></li>

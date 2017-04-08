@@ -15,9 +15,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
 
-	<definition name="graph" extends="base">
+	<definition name="heartrate" extends="base">
 		<put-attribute name="title" value="heart rate graph" />
-		<put-attribute name="body" value="/WEB-INF/views/content/graph.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
 	</definition>
 
 
