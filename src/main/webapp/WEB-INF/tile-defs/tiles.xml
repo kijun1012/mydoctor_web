@@ -19,6 +19,11 @@
 		<put-attribute name="title" value="heart rate graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
 	</definition>
+	
+	<definition name="stepCount" extends="base">
+		<put-attribute name="title" value="step count graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
+	</definition>
 
 
 
