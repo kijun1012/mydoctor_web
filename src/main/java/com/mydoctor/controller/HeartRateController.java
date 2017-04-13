@@ -24,11 +24,5 @@ public class HeartRateController {
 		return "heartrate";
 	}
 	
-	@RequestMapping("/stepCount")
-	public String step(Model model) {
-		List<HeartRate> heartRates = this.heartRateService.getHeartRate();
-		model.addAttribute("heartRates", heartRates);
-
-		return "stepCount";
-	}
+	
 }
