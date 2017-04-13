@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="min-height:1000px;">
    <!-- Content Header (Page header) -->
    <section class="content-header">
       <h1>
@@ -73,7 +73,7 @@
       time.push("${heartRate.id}");
    </c:forEach>
    
-   alert(JSON.stringify(result));
+  
    
    var randomScalingFactor = function() {
       return Math.round(Math.random() * 100)
