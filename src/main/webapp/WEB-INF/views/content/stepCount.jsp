@@ -7,12 +7,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			ChartJS <small>Preview sample</small>
+			걸음<small>걸음 기록</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li><a href="#">Charts</a></li>
-			<li class="active">ChartJS</li>
+			<li><a href="/mydoctor/"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">걸음</li>
 		</ol>
 	</section>
 
