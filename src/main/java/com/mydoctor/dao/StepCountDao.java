@@ -30,6 +30,7 @@ public class StepCountDao {
 			public StepCount mapRow(ResultSet res, int rowNum) throws SQLException {
 				StepCount stepCount = new StepCount();
 
+				stepCount.setUsername(res.getString("username"));
 				stepCount.setDate(res.getInt("date"));
 				stepCount.setStepCount(res.getInt("stepcount"));
 				return stepCount;

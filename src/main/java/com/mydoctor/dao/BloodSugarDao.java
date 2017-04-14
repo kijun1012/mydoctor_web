@@ -12,9 +12,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.BloodSugar;
 
 @Repository
-public class BloodPressureDao {
+public class BloodSugarDao {
 
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -23,20 +24,19 @@ public class BloodPressureDao {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public List<BloodPressure> getBloodPressure() {
-		String sqlStatement = "select * from bloodpressure";
-		return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<BloodPressure>(){
+	public List<BloodSugar> getBloodSugar() {
+		String sqlStatement = "select * from bloodsugar";
+		return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<BloodSugar>(){
 
 			@Override
-			public BloodPressure mapRow(ResultSet res, int rowNum) throws SQLException {
-				BloodPressure bloodPressure = new BloodPressure();
+			public BloodSugar mapRow(ResultSet res, int rowNum) throws SQLException {
+				BloodSugar bloodSugar = new BloodSugar();
 				
-				bloodPressure.setUsername(res.getString("username"));
-				bloodPressure.setDate(res.getInt("date"));
-				bloodPressure.setSystolic_pressure(res.getInt("systolic_pressure"));
-				bloodPressure.setDiastolic_pressure(res.getInt("diastolic_pressure"));
+				bloodSugar.setUsername(res.getString("username"));
+				bloodSugar.setDate(res.getInt("date"));
+				bloodSugar.setBloodsugar(res.getInt("bloodsugar"));
 				
-				return bloodPressure;
+				return bloodSugar;
 			}
 			
 		});

@@ -164,10 +164,10 @@
                   class="fa fa-angle-left pull-right"></i>
             </span></a>
             <ul class="treeview-menu">
-               <li><a href="<c:url value="/heartrate"/>">심박수</a></li>
-               <li><a href="#">혈압</a></li>
+               <li><a href="<c:url value="heartrate"/>">심박수</a></li>
+               <li><a href="<c:url value="bloodPressure"/>">혈압</a></li>
                <li><a href="<c:url value="stepCount"/>">걸음수</a></li>
-               <li><a href="#">혈당</a></li>
+               <li><a href="<c:url value="bloodSugar"/>">혈당</a></li>
             </ul></li>
 
          <li class="treeview"><a href="#"><i class="fa fa-link"></i>

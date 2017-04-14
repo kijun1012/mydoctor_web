@@ -8,11 +8,10 @@
    <!-- Content Header (Page header) -->
    <section class="content-header">
       <h1>
-         My Doctor <small>homepage</small>
+         My Doctor <small>Dash Board</small>
       </h1>
       <ol class="breadcrumb">
-         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-         <li class="active">Here</li>
+         <li><a href="#"><i class="fa fa-dashboard"></i>DashBoard</a></li>
       </ol>
    </section>
 

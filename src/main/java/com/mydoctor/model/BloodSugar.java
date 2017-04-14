@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class StepCount {
+public class BloodSugar {
 	private String username;
 	private int date;
-	private int stepCount;
+	private int bloodsugar;
 }

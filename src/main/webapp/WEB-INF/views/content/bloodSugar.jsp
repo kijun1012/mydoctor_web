@@ -7,18 +7,18 @@
    <!-- Content Header (Page header) -->
    <section class="content-header">
       <h1>
-         	혈압 <small>혈압 기록</small>
+         	혈당<small>혈당 기록</small>
       </h1>
       <ol class="breadcrumb">
          <li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-         <li class="active">혈압</li>
+         <li class="active">혈당</li>
       </ol>
    </section>
 
    <div class="col-md-6">
       <div class="box box-info">
          <div class="box-header with-border">
-            <h3 class="box-title">혈압</h3>
+            <h3 class="box-title">혈당</h3>
 
             <div class="box-tools pull-right">
                <button type="button" class="btn btn-box-tool"
@@ -46,15 +46,15 @@
          <thead>
             <tr>
                <th>date</th>
-               <th>bloodPressure</th>
+               <th>bloodSugar</th>
             </tr>
          </thead>
          <tbody>
-            <c:forEach var="bloodPressure" items="${bloodPressures}">
+            <c:forEach var="bloodSugar" items="${bloodSugars}">
 
                <tr>
-                  <td>${bloodPressure.date}</td>
-                  <td>${bloodPressure.diastolic_pressure}</td>
+                  <td>${bloodSugar.date}</td>
+                  <td>${bloodSugar.bloodsugar }</td>
                </tr>
 
             </c:forEach>
@@ -68,9 +68,9 @@
    var result = new Array();
    var time = new Array();
    
-   <c:forEach var="bloodPressure" items = "${bloodPressures}">
-      result.push("${bloodPressure.diastolic_pressure}");
-      time.push("${bloodPressure.date}");
+   <c:forEach var="bloodSugar" items = "${bloodSugars}">
+      result.push("${bloodSugar.bloodsugar}");
+      time.push("${bloodSugar.date}");
    </c:forEach>
    
   

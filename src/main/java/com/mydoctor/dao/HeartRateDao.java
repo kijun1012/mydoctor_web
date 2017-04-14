@@ -30,6 +30,7 @@ public class HeartRateDao {
 			public HeartRate mapRow(ResultSet res, int rowNum) throws SQLException {
 				HeartRate heartRate = new HeartRate();
 				
+				heartRate.setUsername(res.getString("username"));
 				heartRate.setDate(res.getInt("date"));
 				heartRate.setHeartRate(res.getInt("heartRate"));
 				return heartRate;

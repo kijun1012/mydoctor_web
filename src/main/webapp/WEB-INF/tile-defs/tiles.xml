@@ -10,10 +10,9 @@
 		<put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
 	</definition>
 	
-
-	<definition name="home" extends="base">
-		<put-attribute name="title" value="My Doctor's homepage" />
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+	<definition name="dashboard" extends="base">
+		<put-attribute name="title" value="My Doctor's DashBoard" />
+		<put-attribute name="body" value="/WEB-INF/views/dashboard.jsp" />
 	</definition>
 	
 	<definition name="login" template="/WEB-INF/views/login.jsp">
@@ -34,6 +33,11 @@
 	<definition name="stepCount" extends="base">
 		<put-attribute name="title" value="step count graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
+	</definition>
+	
+	<definition name="bloodSugar" extends="base">
+		<put-attribute name="title" value="step count graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/bloodSugar.jsp" />
 	</definition>
 
 

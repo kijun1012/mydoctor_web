@@ -10,7 +10,7 @@
          	심박<small>심박 기록</small>
       </h1>
       <ol class="breadcrumb">
-         <li><a href="/mydoctor/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+         <li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
          <li class="active">심박</li>
       </ol>
    </section>
