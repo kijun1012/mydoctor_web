@@ -45,16 +45,16 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>id</th>
-					<th>heartRate</th>
+					<th>date</th>
+					<th>stepCount</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="heartRate" items="${heartRates}">
+				<c:forEach var="stepCount" items="${stepCounts}">
 
 					<tr>
-						<td>${heartRate.id}</td>
-						<td>${heartRate.heartRate }</td>
+						<td>${stepCount.date}</td>
+						<td>${stepCount.stepCount }</td>
 					</tr>
 
 				</c:forEach>
@@ -68,9 +68,9 @@
 	var result = new Array();
 	var time = new Array();
 
-	<c:forEach var="heartRate" items = "${heartRates}">
-	result.push("${heartRate.heartRate}");
-	time.push("${heartRate.id}");
+	<c:forEach var="stepCount" items = "${stepCounts}">
+	result.push("${stepCount.stepCount}");
+	time.push("${stepCount.date}");
 	</c:forEach>
 
 
