@@ -9,10 +9,16 @@
 		<put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
 	</definition>
+	
 
 	<definition name="home" extends="base">
 		<put-attribute name="title" value="My Doctor's homepage" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	
+	<definition name="login" template="/WEB-INF/views/login.jsp">
+		<put-attribute name="title" value="Login Page" />
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
 	</definition>
 
 	<definition name="heartrate" extends="base">
