@@ -21,15 +21,19 @@
 		<!-- Navbar Right Menu -->
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
-				<li>
-				 
-				<a href="#">Login</a>
-					
-				</li>
+			
+			<c:if test="${pageContext.request.userPrincipal.name != null }">
+				<li><a>Welcome:${pageContext.request.userPrincipal.name}</a></li>
+				<li><a href="<c:url value="/logout"/> ">Logout</a></li>
+			</c:if>
+			
+			<c:if test="${pageContext.request.userPrincipal.name == null}">
+				<li><a href="<c:url value="/login"/> ">Login</a></li>
+			</c:if>
+			
 				<!-- Control Sidebar Toggle Button -->
 				<li><a href="#" data-toggle="control-sidebar"><i
 						class="fa fa-gears"></i></a></li>
-
 			</ul>
 		</div>
 	</nav>
