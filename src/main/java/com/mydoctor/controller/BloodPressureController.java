@@ -18,7 +18,7 @@ public class BloodPressureController {
 
 	@RequestMapping("/bloodPressure")
 	public String graph(Model model) {
-		List<BloodPressure> bloodPressure = this.bloodPressureService.getHeartRate();
+		List<BloodPressure> bloodPressure = this.bloodPressureService.getAllBloodPressure();
 		model.addAttribute("bloodPressures", bloodPressure);
 
 		return "bloodPressure";

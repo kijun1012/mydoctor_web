@@ -17,4 +17,9 @@ public class HeartRateService {
 		return this.heartRateDao.getHeartRates();
 
 	}
+
+	public HeartRate getRecentHeartRate(String userId) {
+		// TODO Auto-generated method stub
+		return this.heartRateDao.getRecentHeartRate(userId);
+	}
 }

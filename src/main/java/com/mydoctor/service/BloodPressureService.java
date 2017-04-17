@@ -13,7 +13,12 @@ public class BloodPressureService {
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 
-	public List<BloodPressure> getHeartRate() {
+	public List<BloodPressure> getAllBloodPressure() {
 		return this.bloodPressureDao.getBloodPressure();
+	}
+
+	public BloodPressure getRecentBloodPressure(String userId) {
+		// TODO Auto-generated method stub
+		return this.bloodPressureDao.getRecentBloodPressure(userId);
 	}
 }
