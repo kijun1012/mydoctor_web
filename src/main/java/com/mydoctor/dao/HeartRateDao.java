@@ -27,6 +27,20 @@ public class HeartRateDao {
 
 	public List<HeartRate> getHeartRates() {
 		String sqlStatement = "select * from heartrate";
+
+		return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<HeartRate>(){
+
+			@Override
+			public HeartRate mapRow(ResultSet res, int rowNum) throws SQLException {
+				HeartRate heartRate = new HeartRate();
+				
+				heartRate.setUsername(res.getString("username"));
+				heartRate.setDate(res.getTimestamp("date"));
+				heartRate.setHeartRate(res.getInt("heartRate"));
+				return heartRate;
+			}
+			
+		});
 		try {
 			return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<HeartRate>() {
 
@@ -68,6 +82,5 @@ public class HeartRateDao {
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
-
 	}
 }

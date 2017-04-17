@@ -20,6 +20,8 @@ public class HeartRateController {
 	public String graph(Model model) {
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate();
 		model.addAttribute("heartRates", heartRates);
+		
+		System.out.println(heartRates.get(0).getDate());
 
 		return "heartrate";
 	}
