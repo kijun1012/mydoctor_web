@@ -31,7 +31,7 @@ public class HeartRateDao {
 				HeartRate heartRate = new HeartRate();
 				
 				heartRate.setUsername(res.getString("username"));
-				heartRate.setDate(res.getInt("date"));
+				heartRate.setDate(res.getTimestamp("date"));
 				heartRate.setHeartRate(res.getInt("heartRate"));
 				return heartRate;
 			}
