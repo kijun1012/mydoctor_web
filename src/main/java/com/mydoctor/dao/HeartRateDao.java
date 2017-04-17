@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.mydoctor.model.HeartRate;
@@ -28,19 +27,6 @@ public class HeartRateDao {
 	public List<HeartRate> getHeartRates() {
 		String sqlStatement = "select * from heartrate";
 
-		return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<HeartRate>(){
-
-			@Override
-			public HeartRate mapRow(ResultSet res, int rowNum) throws SQLException {
-				HeartRate heartRate = new HeartRate();
-				
-				heartRate.setUsername(res.getString("username"));
-				heartRate.setDate(res.getTimestamp("date"));
-				heartRate.setHeartRate(res.getInt("heartRate"));
-				return heartRate;
-			}
-			
-		});
 		try {
 			return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<HeartRate>() {
 
@@ -49,7 +35,7 @@ public class HeartRateDao {
 					HeartRate heartRate = new HeartRate();
 
 					heartRate.setUsername(res.getString("username"));
-					heartRate.setDate(res.getInt("date"));
+					heartRate.setDate(res.getTimestamp("date"));
 					heartRate.setHeartRate(res.getInt("heartRate"));
 					return heartRate;
 				}
@@ -72,7 +58,7 @@ public class HeartRateDao {
 							HeartRate heartRate = new HeartRate();
 
 							heartRate.setUsername(res.getString("username"));
-							heartRate.setDate(res.getInt("date"));
+							heartRate.setDate(res.getTimestamp("date"));
 							heartRate.setHeartRate(res.getInt("heartrate"));
 
 							return heartRate;
