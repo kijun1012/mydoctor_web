@@ -77,101 +77,83 @@
 	<c:forEach var="bloodPressure" items = "${bloodPressures}">
 	min.push("${bloodPressure.diastolic_pressure}");
 	max.push("${bloodPressure.systolic_pressure}");
-	
+
 	time.push(number);
 	number += 1;
-	
+
 	// time.push("${bloodPressure.date}");
 	</c:forEach>
 
 	var randomScalingFactor = function() {
 		return Math.round(Math.random() * 100)
 	};
-
 	var months = [ "January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December" ];
-	var lineChart = null;
-	var lineChartData = {
+	var barChart = null;
+	var barChartData = {
 		labels : time,
-		datasets : [
-		            {
+		datasets : [ {
 			label : "max",
-			fillColor : "rgba(210, 214, 222, 1)",
+			fillColor : "rgba(255, 178, 245, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
-			pointHighlightFill : "#fff",
-			pointHighlightStroke : "rgba(220,220,220,1)",
+			HighlightFill : "#fff",
+			HighlightStroke : "rgba(220,220,220,1)",
 			data : max
-		},{
+		}, {
 			label : "min",
-			fillColor : "rgba(210, 214, 222, 1)",
+			fillColor : "rgba(181,178,255, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
-			pointHighlightFill : "#fff",
-			pointHighlightStroke : "rgba(220,220,220,1)",
+			HighlightFill : "#fff",
+			HighlightStroke : "rgba(220,220,220,1)",
 			data : min
 		}
-		
+
 		]
 
 	};
 
-	var lineChartOption = {
-		//Boolean - If we should show the scale at all
-		showScale : true,
-		scaleBeginAtZero : true,
+	var barChartOption = {
 
+		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+		scaleBeginAtZero : true,
 		//Boolean - Whether grid lines are shown across the chart
-		scaleShowGridLines : false,
+		scaleShowGridLines : true,
 		//String - Colour of the grid lines
-		scaleGridLineColor : "rgba(0,0,0,.05)",
+		scaleGridLineColor : "rgba(0,0,0,0.05)",
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
-		//Boolean - Whether to show horizontal lines (except X axis)
-		scaleShowHorizontalLines : true,
-		//Boolean - Whether to show vertical lines (except Y axis)
-		scaleShowVerticalLines : true,
-		//Boolean - Whether the line is curved between points
-		bezierCurve : true,
-		//Number - Tension of the bezier curve between points
-		bezierCurveTension : 0.3,
-		//Boolean - Whether to show a dot for each point
-		pointDot : true,
-		//Number - Radius of each point dot in pixels
-		pointDotRadius : 2,
-		//Number - Pixel width of point dot stroke
-		pointDotStrokeWidth : 1,
-		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-		pointHitDetectionRadius : 20,
-		//Boolean - Whether to show a stroke for datasets
-		datasetStroke : true,
-		//Number - Pixel width of dataset stroke
-		datasetStrokeWidth : 2,
-		//Boolean - Whether to fill the dataset with a color
-		datasetFill : false,
-
+		//Boolean - If there is a stroke on each bar
+		barShowStroke : false,
+		//Number - Pixel width of the bar stroke
+		barStrokeWidth : 2,
+		//Number - Spacing between each of the X value sets
+		barValueSpacing : 5,
+		//Number - Spacing between data sets within X values
+		barDatasetSpacing : 1,
+		onAnimationProgress : function() {
+			console.log("onAnimationProgress");
+		},
+		onAnimationComplete : function() {
+			console.log("onAnimationComplete");
+		},
 		//Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
 		maintainAspectRatio : true,
 		//Boolean - whether to make the chart responsive to window resizing
 		responsive : true
 
-	};
+	}
 
 	$(function() {
 		var ctx = document.getElementById("canvas").getContext("2d");
-		lineChart = new Chart(ctx).Line(lineChartData, lineChartOption);
+		barChart = new Chart(ctx).Bar(barChartData, barChartOption);
 	});
 
-	
-
 	$("canvas").on("click", function(e) {
-		var activePoints = lineChart.getPointsAtEvent(e);
-		console.log(activePoints);
+		var activeBars = barChart.getBarsAtEvent(e);
+		console.log(activeBars);
 
-		for ( var i in activePoints) {
-			console.log(activePoints[i].value);
+		for ( var i in activeBars) {
+			console.log(activeBars[i].value);
 		}
 	});
 </script>
