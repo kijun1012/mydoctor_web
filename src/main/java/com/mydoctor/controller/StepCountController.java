@@ -2,6 +2,8 @@ package com.mydoctor.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +14,19 @@ import com.mydoctor.service.StepCountService;
 
 @Controller
 public class StepCountController {
-	
+
 	@Autowired
 	private StepCountService stepCountService;
-	
+
 	@RequestMapping("/stepCount")
-	public String step(Model model) {
+	public String step(Model model, HttpServletRequest request) {
 		List<StepCount> stepCounts = this.stepCountService.getStepCount();
 		model.addAttribute("stepCounts", stepCounts);
 
-		return "stepCount";
+		if (request.getQueryString() == null) {
+			return "stepCount";
+		} else {
+			return "webview_stepCount";
+		}
 	}
 }

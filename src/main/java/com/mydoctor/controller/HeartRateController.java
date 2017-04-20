@@ -23,7 +23,6 @@ public class HeartRateController {
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate();
 		model.addAttribute("heartRates", heartRates);
 
-		System.out.println(heartRates.get(0).getDate());
 		if (request.getQueryString() == null) {
 			return "heartrate";
 		} else {
