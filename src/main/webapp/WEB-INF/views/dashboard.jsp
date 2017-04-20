@@ -37,7 +37,7 @@
 						<p>심박수</p>
 					</div>
 					<div class="icon">
-						<i class="fa fa-heartbeat"></i>
+						<i class="ion-ios-pulse-strong"></i>
 					</div>
 					<a href="<c:url value="/heartrate"/>" class="small-box-footer">More
 						info <i class="fa fa-arrow-circle-right"></i>
@@ -46,7 +46,8 @@
 			</div>
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
-				<div class="small-box bg-aqua">
+				<div class="small-box bg-green">
+				
 					<div class="inner">
 						<h3>
 							<c:if test="${bloodPressure == null }">
@@ -60,23 +61,23 @@
 						<p>혈압</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-bag"></i>
+						<i class="ion-android-favorite"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i
+					<a href="<c:url value="/bloodPressure"/>" class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
-				<div class="small-box bg-aqua">
+				<div class="small-box bg-maroon">
 					<div class="inner">
 						<h3>150</h3>
 
 						<p>걸음수</p>
 					</div>
 					<div class="icon">
-						<i class="fa fa-child"></i>
+						<i class="ion-android-walk"></i>
 					</div>
 					<a href="<c:url value="/stepCount"/>" class="small-box-footer">More
 						info <i class="fa fa-arrow-circle-right"></i>
@@ -86,7 +87,7 @@
 			<!-- ./col -->
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
-				<div class="small-box bg-green">
+				<div class="small-box bg-aqua">
 					<div class="inner">
 						<h3>
 							53<sup style="font-size: 20px">%</sup>
@@ -95,23 +96,23 @@
 						<p>혈당</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-stats-bars"></i>
+						<i class="ion-waterdrop"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i
+					<a href="<c:url value="/bloodSugar"/>" class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
-				<div class="small-box bg-yellow">
+				<div class="small-box bg-green">
 					<div class="inner">
 						<h3>44</h3>
 
 						<p>수면</p>
 					</div>
-					<div class="icon ">
-						<i class="fa fa-bed "></i>
+					<div class="icon">
+						<i class="ion-ios-alarm"></i>
 					</div>
 					<a href="#" class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
@@ -120,14 +121,14 @@
 			<!-- ./col -->
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
-				<div class="small-box bg-red">
+				<div class="small-box bg-purple">
 					<div class="inner">
 						<h3>65</h3>
 
 						<p>체중</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-pie-graph"></i>
+						<i class="ion-ios-body"></i>
 					</div>
 					<a href="#" class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
@@ -141,8 +142,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="info-box">
-							<span class="info-box-icon bg-aqua"><i
-								class="fa fa-envelope-o"></i></span>
+							<span class="info-box-icon bg-navy"><i
+								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
 								<span class="info-box-text">심혈관 위험</span> <span
@@ -156,8 +157,8 @@
 					<div class="col-md-12">
 						<!-- small box -->
 						<div class="info-box">
-							<span class="info-box-icon bg-aqua"><i
-								class="fa fa-envelope-o"></i></span>
+							<span class="info-box-icon bg-navy"><i
+								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
 								<span class="info-box-text">제2형 당뇨병</span> <span
@@ -171,8 +172,8 @@
 					<div class="col-md-12">
 						<!-- small box -->
 						<div class="info-box">
-							<span class="info-box-icon bg-aqua"><i
-								class="fa fa-envelope-o"></i></span>
+							<span class="info-box-icon bg-navy"><i
+								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
 								<span class="info-box-text">비만도</span> <span
@@ -200,7 +201,7 @@
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body" style="min-height: 300px;">
-						술을 먹지 마세요<br> 담배도 피지 마세요
+						조언1<br>조언2
 					</div>
 					<!-- /.box-body -->
 				</div>
