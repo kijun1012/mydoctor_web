@@ -42,14 +42,33 @@
 
 
 
+
+
+
+<!-- webview 용 definition-->
+
 <definition name="webview" template="/WEB-INF/views/include/webview_layout.jsp">
 		<put-attribute name="title" value="My Doctor" />
-		
 	</definition>
 	
 	<definition name="webview_heartrate" extends="webview">
 		<put-attribute name="title" value="heart rate graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
+	</definition>
+	
+	<definition name="webview_bloodPressure" extends="webview">
+		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/bloodPressure.jsp" />
+	</definition>
+	
+	<definition name="webview_stepCount" extends="webview">
+		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
+	</definition>
+	
+	<definition name="webview_bloodSugar" extends="webview">
+		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/bloodSugar.jsp" />
 	</definition>
 
 
