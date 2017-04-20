@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -74,6 +74,7 @@
 
 	<c:forEach var="heartRate" items = "${heartRates}">
 	result.push("${heartRate.heartRate}");
+	//time.push("${heartRate.date}");
 	time.push(number);
 	number += 1;
 	</c:forEach>

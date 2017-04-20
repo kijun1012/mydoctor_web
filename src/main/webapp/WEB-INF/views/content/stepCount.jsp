@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-<div class="content-wrapper" style="min-height:1000px;">
+<div class="content-wrapper" style="min-height: 1000px;">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
@@ -40,22 +40,25 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>number</th>
 					<th>date</th>
 					<th>stepCount</th>
 				</tr>
 			</thead>
 			<tbody>
+				<c:set var="id" value="1" />
 				<c:forEach var="stepCount" items="${stepCounts}">
 
 					<tr>
+						<td><c:out value="${id}" /></td>
 						<td>${stepCount.date}</td>
 						<td>${stepCount.stepCount }</td>
 					</tr>
-
+					<c:set var="id" value="${id+1}" />
 				</c:forEach>
 
 			</tbody>
@@ -66,13 +69,13 @@
 <script type="text/javascript">
 	var result = new Array();
 	var time = new Array();
-
+	var number = 1;
 	<c:forEach var="stepCount" items = "${stepCounts}">
 	result.push("${stepCount.stepCount}");
-	time.push("${stepCount.date}");
+	//time.push("${stepCount.date}");
+	time.push(number);
+	number += 1;
 	</c:forEach>
-
-
 
 	var randomScalingFactor = function() {
 		return Math.round(Math.random() * 100)
@@ -95,7 +98,7 @@
 	var barChartOption = {
 		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 		scaleBeginAtZero : true,
-		
+
 		max : 10000,
 		//Boolean - Whether grid lines are shown across the chart
 		scaleShowGridLines : true,
@@ -121,7 +124,7 @@
 		maintainAspectRatio : true,
 		//Boolean - whether to make the chart responsive to window resizing
 		responsive : true
-		
+
 	}
 
 	$(function() {
