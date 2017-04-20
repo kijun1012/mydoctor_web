@@ -23,11 +23,12 @@ public class BloodPressureController {
 		List<BloodPressure> bloodPressure = this.bloodPressureService.getAllBloodPressure();
 		model.addAttribute("bloodPressures", bloodPressure);
 
-		if (request.getQueryString() == null) {
-			return "bloodPressure";
-		} else {
+		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
 			return "webview_bloodPressure";
+		} else {
+			return "bloodPressure";
 		}
+
 	}
 
 }

@@ -23,10 +23,10 @@ public class HeartRateController {
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate();
 		model.addAttribute("heartRates", heartRates);
 
-		if (request.getQueryString() == null) {
-			return "heartrate";
-		} else {
+		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
 			return "webview_heartrate";
+		} else {
+			return "heartrate";
 		}
 
 	}

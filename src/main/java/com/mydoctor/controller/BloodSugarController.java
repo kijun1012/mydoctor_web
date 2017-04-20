@@ -23,12 +23,12 @@ public class BloodSugarController {
 		List<BloodSugar> bloodSugar = this.bloodSugarService.getBloodSugar();
 		model.addAttribute("bloodSugars", bloodSugar);
 
-		if (request.getQueryString() == null) {
-			return "bloodSugar";
-		} else {
+		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
 			return "webview_bloodSugar";
+		} else {
+			return "bloodSugar";
 		}
-		
+
 	}
 
 }

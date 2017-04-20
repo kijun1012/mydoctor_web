@@ -23,10 +23,12 @@ public class StepCountController {
 		List<StepCount> stepCounts = this.stepCountService.getStepCount();
 		model.addAttribute("stepCounts", stepCounts);
 
-		if (request.getQueryString() == null) {
-			return "stepCount";
-		} else {
+		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
 			return "webview_stepCount";
+		} else {
+			return "stepCount";
 		}
+
 	}
+
 }
