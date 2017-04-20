@@ -2,6 +2,8 @@ package com.mydoctor.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +19,17 @@ public class HeartRateController {
 	private HeartRateService heartRateService;
 
 	@RequestMapping("/heartrate")
-	public String graph(Model model) {
+	public String graph(Model model, HttpServletRequest request) {
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate();
 		model.addAttribute("heartRates", heartRates);
-		
-		System.out.println(heartRates.get(0).getDate());
 
-		return "heartrate";
+		System.out.println(heartRates.get(0).getDate());
+		if (request.getQueryString() == null) {
+			return "heartrate";
+		} else {
+			return "webview_heartrate";
+		}
+
 	}
-	
-	
+
 }
