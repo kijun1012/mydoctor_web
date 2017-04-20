@@ -41,7 +41,7 @@
       </div>
    </div>
    <div class="col-md-6">
-      <input type="button" id="btnAdd" value="add data">
+      
       <table class="table table-striped">
          <thead>
             <tr>
