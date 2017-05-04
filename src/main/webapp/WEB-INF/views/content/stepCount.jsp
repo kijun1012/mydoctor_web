@@ -55,7 +55,7 @@
 
 					<tr>
 						<td><c:out value="${id}" /></td>
-						<td>${stepCount.date}</td>
+						<td>${stepCount.measurement_time}</td>
 						<td>${stepCount.stepCount }</td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
@@ -72,7 +72,7 @@
 	var number = 1;
 	<c:forEach var="stepCount" items = "${stepCounts}">
 	result.push("${stepCount.stepCount}");
-	//time.push("${stepCount.date}");
+	//time.push("${stepCount.measurement_time}");
 	time.push(number);
 	number += 1;
 	</c:forEach>

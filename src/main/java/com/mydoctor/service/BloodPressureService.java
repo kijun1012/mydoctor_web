@@ -19,6 +19,11 @@ public class BloodPressureService {
 
 	public BloodPressure getRecentBloodPressure(String userId) {
 		// TODO Auto-generated method stub
-		return this.bloodPressureDao.getRecentBloodPressure(userId);
+		return null;
+	}
+
+	public void addBloodPressure(List<BloodPressure> bpList) {
+		this.bloodPressureDao.addBloodPressure(bpList);
+
 	}
 }

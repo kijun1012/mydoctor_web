@@ -6,67 +6,39 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.HeartRate;
 
 @Repository
+@Transactional
 public class HeartRateDao {
 
-	private JdbcTemplate jdbcTemplateObject;
-
 	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-	}
+	private SessionFactory sessionFactory;
 
-	public List<HeartRate> getHeartRates() {
-		String sqlStatement = "select * from heartrate";
+	public List<HeartRate> getHeartRate(String userId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from HeartRate as hr where hr.username=:username");
+		query.setParameter("username",userId);
+		List<HeartRate> heartRateList = query.list();
+		
+		System.out.println("심박수들  " + heartRateList);
+		return heartRateList;
 
-		try {
-			return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<HeartRate>() {
-
-				@Override
-				public HeartRate mapRow(ResultSet res, int rowNum) throws SQLException {
-					HeartRate heartRate = new HeartRate();
-
-					heartRate.setUsername(res.getString("username"));
-					heartRate.setDate(res.getTimestamp("date"));
-					heartRate.setHeartRate(res.getInt("heartRate"));
-					return heartRate;
-				}
-
-			});
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
 	}
 
 	public HeartRate getRecentHeartRate(String userId) {
-		String sqlStatement = "select * from heartrate where date = (select max(date) from heartrate) && username = ?";
-
-		try {
-			return this.jdbcTemplateObject.queryForObject(sqlStatement, new Object[] { userId },
-					new RowMapper<HeartRate>() {
-
-						@Override
-						public HeartRate mapRow(ResultSet res, int rownum) throws SQLException {
-							HeartRate heartRate = new HeartRate();
-
-							heartRate.setUsername(res.getString("username"));
-							heartRate.setDate(res.getTimestamp("date"));
-							heartRate.setHeartRate(res.getInt("heartrate"));
-
-							return heartRate;
-						}
-
-					});
-		} catch (EmptyResultDataAccessException e) {
 			return null;
-		}
+	
 	}
 }

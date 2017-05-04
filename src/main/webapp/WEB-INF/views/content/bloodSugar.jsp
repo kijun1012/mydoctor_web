@@ -56,7 +56,7 @@
 
 					<tr>
 						<td><c:out value="${id}" /></td>
-						<td>${bloodSugar.date}</td>
+						<td>${bloodSugar.measurement_time}</td>
 						<td>${bloodSugar.bloodsugar }</td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
@@ -75,7 +75,7 @@
 
 	<c:forEach var="bloodSugar" items = "${bloodSugars}">
 	result.push("${bloodSugar.bloodsugar}");
-	//time.push("${bloodSugar.date}");
+	//time.push("${bloodSugar.measurement_time}");
 	time.push(number);
 	number += 1;
 	</c:forEach>

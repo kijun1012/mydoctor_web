@@ -13,8 +13,8 @@ public class HeartRateService {
 	@Autowired
 	private HeartRateDao heartRateDao;
 
-	public List<HeartRate> getHeartRate() {
-		return this.heartRateDao.getHeartRates();
+	public List<HeartRate> getHeartRate(String userId) {
+		return this.heartRateDao.getHeartRate(userId);
 
 	}
 

@@ -1,73 +1,39 @@
 package com.mydoctor.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.BloodSugar;
 
 @Repository
+@Transactional
 public class BloodPressureDao {
 
-	private JdbcTemplate jdbcTemplateObject;
-
 	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	private SessionFactory sessionFactory;
+
+	public void addBloodPressure(List<BloodPressure> bpList) {
+		Session session = sessionFactory.getCurrentSession();
+		for (int i = 0; i < bpList.size(); i++) {
+			session.save(bpList.get(i));
+		}
+
+		session.flush();
 	}
 
 	public List<BloodPressure> getBloodPressure() {
-		String sqlStatement = "select * from bloodpressure";
-		try {
-			return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<BloodPressure>() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from BloodPressure");
+		List<BloodPressure> bloodPressureList = query.list();
 
-				@Override
-				public BloodPressure mapRow(ResultSet res, int rowNum) throws SQLException {
-					BloodPressure bloodPressure = new BloodPressure();
+		return bloodPressureList;
 
-					bloodPressure.setUsername(res.getString("username"));
-					bloodPressure.setDate(res.getInt("date"));
-					bloodPressure.setSystolic_pressure(res.getInt("systolic_pressure"));
-					bloodPressure.setDiastolic_pressure(res.getInt("diastolic_pressure"));
-
-					return bloodPressure;
-				}
-
-			});
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
-	}
-
-	public BloodPressure getRecentBloodPressure(String userId) {
-		String sqlStatement = "select * from bloodpressure where date = (select max(date) from bloodpressure) && username = ?";
-		try {
-			return this.jdbcTemplateObject.queryForObject(sqlStatement, new Object[] { userId },
-					new RowMapper<BloodPressure>() {
-
-						@Override
-						public BloodPressure mapRow(ResultSet res, int rownum) throws SQLException {
-							BloodPressure bloodPressure = new BloodPressure();
-
-							bloodPressure.setUsername(res.getString("username"));
-							bloodPressure.setDate(res.getInt("date"));
-							bloodPressure.setDiastolic_pressure(res.getInt("diastolic_pressure"));
-							bloodPressure.setSystolic_pressure(res.getInt("systolic_pressure"));
-
-							return bloodPressure;
-						}
-
-					});
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
 	}
 }

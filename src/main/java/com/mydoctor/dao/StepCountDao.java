@@ -6,36 +6,31 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.StepCount;
 
 @Repository
+@Transactional
 public class StepCountDao {
-	private JdbcTemplate jdbcTemplateObject;
 
 	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-	}
+	private SessionFactory sessionFactory;
 
 	public List<StepCount> getStepCounts() {
-		String sqlStatement = "select * from stepcount";
-		return this.jdbcTemplateObject.query(sqlStatement, new RowMapper<StepCount>() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from StepCount");
+		List<StepCount> stepCountList = query.list();
 
-			@Override
-			public StepCount mapRow(ResultSet res, int rowNum) throws SQLException {
-				StepCount stepCount = new StepCount();
+		return stepCountList;
 
-				stepCount.setUsername(res.getString("username"));
-				stepCount.setDate(res.getInt("date"));
-				stepCount.setStepCount(res.getInt("stepcount"));
-				return stepCount;
-			}
-
-		});
 	}
 }

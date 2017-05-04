@@ -57,9 +57,9 @@
 
 					<tr>
 						<td><c:out value="${id}" /></td>
-						<td>${bloodPressure.date}</td>
-						<td>${bloodPressure.diastolic_pressure}</td>
-						<td>${bloodPressure.systolic_pressure}</td>
+						<td>${bloodPressure.measurement_time}</td>
+						<td>${bloodPressure.HR}</td>
+						<td>${bloodPressure.HP}</td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
 				</c:forEach>
@@ -75,13 +75,13 @@
 	var time = new Array();
 	var number = 1;
 	<c:forEach var="bloodPressure" items = "${bloodPressures}">
-	min.push("${bloodPressure.diastolic_pressure}");
-	max.push("${bloodPressure.systolic_pressure}");
+	min.push("${bloodPressure.HR}");
+	max.push("${bloodPressure.HP}");
 
 	time.push(number);
 	number += 1;
 
-	// time.push("${bloodPressure.date}");
+	// time.push("${bloodPressure.measurement_time}");
 	</c:forEach>
 
 	var randomScalingFactor = function() {
