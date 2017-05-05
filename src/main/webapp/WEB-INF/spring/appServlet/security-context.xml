@@ -14,13 +14,30 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
+
+
 	<security:http pattern="/ihealth/**" security="none" />
-	<security:http pattern="/mobile/**" security="none" />	
+	<security:http pattern="/mobile/**" security="none" />
 
 
 	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/" access="hasRole('ROLE_USER')" />
+
+
+		<security:intercept-url pattern="/"
+			access="hasRole('ROLE_USER')" />
+
 		<security:form-login login-page="/login"
-			authentication-failure-url="/login?error=1" />
+			authentication-failure-url="/login?error=1"
+			authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
+
+		<security:logout logout-success-url="/logout"
+			delete-cookies="JSESSIONID" />
+		<security:csrf />
+
+		<security:remember-me token-validity-seconds="1209600"
+			remember-me-parameter="remember-me" data-source-ref="dataSource" />
+
 	</security:http>
+
+
 </beans>
