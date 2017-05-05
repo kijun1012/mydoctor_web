@@ -47,14 +47,14 @@
 			<div class="col-lg-2 col-xs-4">
 				<!-- small box -->
 				<div class="small-box bg-green">
-				
+
 					<div class="inner">
 						<h3>
 							<c:if test="${bloodPressure == null }">
 							-/-
 						</c:if>
 							<c:if test="${bloodPressure != null }">
-							${bloodPressure.diastolic_pressure}/${bloodPressure.systolic_pressure}
+							${bloodPressure.HR}/${bloodPressure.HP}
 						</c:if>
 						</h3>
 
@@ -63,8 +63,8 @@
 					<div class="icon">
 						<i class="ion-android-favorite"></i>
 					</div>
-					<a href="<c:url value="/bloodPressure"/>" class="small-box-footer">More info <i
-						class="fa fa-arrow-circle-right"></i>
+					<a href="<c:url value="/bloodPressure"/>" class="small-box-footer">More
+						info <i class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
@@ -72,7 +72,14 @@
 				<!-- small box -->
 				<div class="small-box bg-maroon">
 					<div class="inner">
-						<h3>150</h3>
+						<h3>
+							<c:if test="${stepCount == null }">
+							-
+						</c:if>
+							<c:if test="${stepCount != null }">
+							${stepCount.stepCount}
+						</c:if>
+						</h3>
 
 						<p>걸음수</p>
 					</div>
@@ -90,7 +97,12 @@
 				<div class="small-box bg-aqua">
 					<div class="inner">
 						<h3>
-							53<sup style="font-size: 20px">%</sup>
+							<c:if test="${bloodSugar == null }">
+							-
+						</c:if>
+							<c:if test="${bloodSugar != null }">
+							${bloodSugar.bloodSugar}
+						</c:if>
 						</h3>
 
 						<p>혈당</p>
@@ -98,8 +110,9 @@
 					<div class="icon">
 						<i class="ion-waterdrop"></i>
 					</div>
-					<a href="<c:url value="/bloodSugar"/>" class="small-box-footer">More info <i
-						class="fa fa-arrow-circle-right"></i></a>
+					<a href="<c:url value="/bloodSugar"/>" class="small-box-footer">More
+						info <i class="fa fa-arrow-circle-right"></i>
+					</a>
 				</div>
 			</div>
 			<!-- ./col -->
