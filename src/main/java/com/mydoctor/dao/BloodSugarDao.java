@@ -1,14 +1,11 @@
 package com.mydoctor.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +18,20 @@ public class BloodSugarDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public List<BloodSugar> getBloodSugar() {
+	@SuppressWarnings("unchecked")
+	public List<BloodSugar> getBloodSugar(String userId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from BloodSugar");
+		Query query = session.createQuery("from BloodSugar as bs where bs.username=:username");
+		query.setParameter("username", userId);
 		List<BloodSugar> bloodSugarList = query.list();
 
 		return bloodSugarList;
 
+	}
+
+	public void addBloodSugar(BloodSugar bloodSugar) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(bloodSugar);
+		session.flush();
 	}
 }

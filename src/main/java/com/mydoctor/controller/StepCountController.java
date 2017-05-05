@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ public class StepCountController {
 
 	@RequestMapping("/stepCount")
 	public String step(Model model, HttpServletRequest request) {
-		List<StepCount> stepCounts = this.stepCountService.getStepCount();
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<StepCount> stepCounts = this.stepCountService.getStepCount(userId);
 		model.addAttribute("stepCounts", stepCounts);
 
 		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {

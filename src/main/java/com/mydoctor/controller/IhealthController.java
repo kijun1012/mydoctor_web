@@ -7,6 +7,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,6 @@ import com.mydoctor.module.JsonPassingModule;
 import com.mydoctor.module.MyHttpModule;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
-import com.mydoctor.service.IhealthService;
 import com.mydoctor.vo.IhealthData;
 import com.mydoctor.vo.IhealthDataCategory;
 
@@ -59,8 +59,6 @@ public class IhealthController {
 	 * list.get(i).getDate()를해서 각 항목별 측정날짜를 다뽑아 측정날짜가 더 큰 걸 db에 넣고
 	 * IhealthDataCategory객체만들고 List로만들어서 Android에 주면 됨
 	 */
-	@Autowired
-	private IhealthService iHealthService;
 
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
 	public IhealthData setIhealthData(@RequestBody IhealthData ihealthData)
@@ -68,8 +66,6 @@ public class IhealthController {
 		this.user_open_id = ihealthData.getUser_open_id();
 		this.accessToken = ihealthData.getAccessToken();
 
-		
-		
 		getBP();
 		getBG();
 		getWeight();
@@ -78,7 +74,7 @@ public class IhealthController {
 
 	// ------------------------혈압
 	public void getBP() throws ClientProtocolException, IOException {
-
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		IhealthDataCategory bpC = new IhealthDataCategory();
 		StringBuilder query = new StringBuilder();
 		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/bp.json/?");
@@ -94,8 +90,8 @@ public class IhealthController {
 		JSONArray jsonArray = obj.getJSONArray("BPDataList");
 
 		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodPressure.class);
-		
-		this.bloodPressureService.addBloodPressure(bpList);
+
+		this.bloodPressureService.addBloodPressure(bpList, userId);
 	}
 
 	// ----------------------혈당

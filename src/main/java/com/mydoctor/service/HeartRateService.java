@@ -19,7 +19,15 @@ public class HeartRateService {
 	}
 
 	public HeartRate getRecentHeartRate(String userId) {
-		// TODO Auto-generated method stub
-		return this.heartRateDao.getRecentHeartRate(userId);
+		List<HeartRate> heartRateList = this.heartRateDao.getHeartRate(userId);
+		if (heartRateList.isEmpty())
+			return null;
+		else
+			return heartRateList.get(heartRateList.size() - 1);
+
+	}
+
+	public void addHeartRate(HeartRate heartRate) {
+		this.heartRateDao.addHeartRate(heartRate);
 	}
 }

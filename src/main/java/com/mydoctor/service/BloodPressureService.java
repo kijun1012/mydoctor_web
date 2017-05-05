@@ -7,22 +7,29 @@ import org.springframework.stereotype.Service;
 
 import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.HeartRate;
 
 @Service
 public class BloodPressureService {
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 
-	public List<BloodPressure> getAllBloodPressure() {
-		return this.bloodPressureDao.getBloodPressure();
+	public List<BloodPressure> getAllBloodPressure(String userId) {
+		return this.bloodPressureDao.getBloodPressure(userId);
 	}
 
 	public BloodPressure getRecentBloodPressure(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BloodPressure> bloodPressureList = this.bloodPressureDao.getBloodPressure(userId);
+		if (bloodPressureList.isEmpty())
+			return null;
+		else
+			return bloodPressureList.get(bloodPressureList.size() - 1);
 	}
 
-	public void addBloodPressure(List<BloodPressure> bpList) {
+	public void addBloodPressure(List<BloodPressure> bpList, String userId) {
+		for (int i = 0; i < bpList.size(); i++) {
+			bpList.get(i).setUsername(userId);
+		}
 		this.bloodPressureDao.addBloodPressure(bpList);
 
 	}

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mydoctor.model.BloodPressure;
-import com.mydoctor.model.BloodSugar;
 
 @Repository
 @Transactional
@@ -28,9 +27,11 @@ public class BloodPressureDao {
 		session.flush();
 	}
 
-	public List<BloodPressure> getBloodPressure() {
+	@SuppressWarnings("unchecked")
+	public List<BloodPressure> getBloodPressure(String userId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from BloodPressure");
+		Query query = session.createQuery("from BloodPressure as bp where bp.username=:username");
+		query.setParameter("username", userId);
 		List<BloodPressure> bloodPressureList = query.list();
 
 		return bloodPressureList;

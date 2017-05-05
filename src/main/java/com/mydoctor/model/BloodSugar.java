@@ -28,9 +28,9 @@ public class BloodSugar {
 	@Id
 	@Column(name = "date", nullable = false)
 	private String measurement_time;
-	
+
 	@Column(nullable = false)
-	private int bloodsugar;
+	private int bloodSugar;
 
 	@MapsId("username")
 	@ManyToOne(cascade = CascadeType.ALL)
