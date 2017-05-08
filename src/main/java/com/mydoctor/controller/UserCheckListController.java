@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mydoctor.exception.UserNotFoundException;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.service.UserCheckListService;
 
@@ -21,13 +21,15 @@ public class UserCheckListController {
 	private UserCheckListService userCheckListService;
 	
 	@ResponseBody
-	@RequestMapping(value = "/set/{id}", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<UserCheckList> udpateCheckList(@PathVariable("id") String id, @RequestBody UserCheckList checkList) {
+	@RequestMapping(value = "/set", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<UserCheckList> udpateCheckList(@RequestBody UserCheckList checkList) {
 		
-		UserCheckList currentUserCheckList = userCheckListService.findById(id);
+		
+		System.out.println(checkList);
+		
+		UserCheckList currentUserCheckList = userCheckListService.findById(checkList.getUsername());
 		if (currentUserCheckList == null) {
-			// to do list: exception 처리 중요!!
-			//throw new UserNotFoundException(id);
+			throw new UserNotFoundException(checkList.getUsername());
 		}
 		
 		currentUserCheckList.setAge(checkList.getAge());

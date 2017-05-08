@@ -15,19 +15,6 @@ public class UserCheckListDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-//	public UserCheckList setCheckList(String userId, UserCheckList checkList) {
-//		
-//		Session session = sessionFactory.getCurrentSession();
-//		UserCheckList userCheckList = (UserCheckList)session.get(UserCheckList.class, userId);
-//		
-//		userCheckList = checkList; //µðºñ¿¡
-//		
-//		session = sessionFactory.getCurrentSession();
-//		session.saveOrUpdate(userCheckList);
-//		
-//		return userCheckList;
-//	}
-
 	public UserCheckList findById(String id) {
 		Session session = sessionFactory.getCurrentSession();
 		UserCheckList userCheckList = (UserCheckList)session.get(UserCheckList.class, id);
