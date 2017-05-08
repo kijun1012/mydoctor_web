@@ -1,12 +1,19 @@
 package com.mydoctor.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.User;
 import com.mydoctor.model.Weight;
 import com.mydoctor.module.JsonPassingModule;
 import com.mydoctor.module.MyHttpModule;
@@ -38,6 +46,8 @@ public class IhealthController {
 	private final String WEIGHT_SV = "d00ed5569b4e4c16b3e4c276ac102101";
 	private String user_open_id;
 	private String accessToken;
+
+	static AuthenticationManager am = new SampleAuthenticationManager();
 
 	private List<BloodPressure> bpList;
 	private List<BloodSugar> bGList;
@@ -70,6 +80,25 @@ public class IhealthController {
 		getBG();
 		getWeight();
 		return ihealthData;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public User login(@RequestBody User user)
+			throws ClientProtocolException, IOException {
+		System.out.println(user.getId());
+		System.out.println(user.getPassword());
+		
+		try{
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
+			Authentication result = am.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
+			
+		}catch(AuthenticationException e){
+			System.out.println("Authentication failed: "+e.getMessage());
+		}
+		System.out.println("success"+SecurityContextHolder.getContext().getAuthentication());;
+		
+		return user;
 	}
 
 	// ------------------------혈압
@@ -115,4 +144,23 @@ public class IhealthController {
 		query.append("sc=" + this.WEIGHT_SC + "&");
 		query.append("sv=" + this.WEIGHT_SV);
 	}
+}
+class SampleAuthenticationManager implements AuthenticationManager{
+	static final List AUTHORITIES = new ArrayList();
+	static{
+		AUTHORITIES.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+	}
+	
+	
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		if(authentication.getName().equals(authentication.getCredentials())){
+			return new UsernamePasswordAuthenticationToken(authentication.getName(),
+					authentication.getCredentials(), AUTHORITIES);
+		}
+		// TODO 자동 생성된 메소드 스텁
+		throw new BadCredentialsException("Bad");
+	}
+	
 }
