@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,9 +27,17 @@ public class HeartRateController {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate(userId);
 		model.addAttribute("heartRates", heartRates);
-
-		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
+		System.out.println(request.getQueryString());
+		
+		if (request.getQueryString() != null) {
+			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
+			if (st.nextToken().equals("webview")) {
+				String id = st.nextToken();
+				List<HeartRate> heartRatesWeb = this.heartRateService.getHeartRate(id);
+				model.addAttribute("heartRates", heartRatesWeb);
+			}
 			return "webview_heartrate";
+
 		} else {
 			return "heartrate";
 		}

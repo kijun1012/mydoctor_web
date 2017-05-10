@@ -13,7 +13,8 @@
 				authorities-by-username-query="select username, authority from authorities where username=?" />
 		</security:authentication-provider>
 	</security:authentication-manager>
-
+	
+	
 
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled = "true"/>

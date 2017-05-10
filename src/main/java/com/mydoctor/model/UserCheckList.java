@@ -31,6 +31,8 @@ public class UserCheckList {
 	private int height;
 	@Column
 	private int weight;
+	@Column
+	private int sex;
 	
 	@Column
 	@Type(type="org.hibernate.type.NumericBooleanType")

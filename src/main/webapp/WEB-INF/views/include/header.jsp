@@ -180,6 +180,7 @@
 					<li><a href="<c:url value="bloodPressure"/>">혈압</a></li>
 					<li><a href="<c:url value="stepCount"/>">걸음수</a></li>
 					<li><a href="<c:url value="bloodSugar"/>">혈당</a></li>
+					<li><a href="<c:url value="bloodOxygen"/>">혈중산소농도</a></li>
 				</ul></li>
 
 			<li class="treeview"><a href="#"><i class="fa fa-link"></i>

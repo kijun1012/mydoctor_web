@@ -21,23 +21,28 @@
 	</definition>
 
 	<definition name="heartrate" extends="base">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Heart Rate graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
 	</definition>
 	
 	<definition name="bloodPressure" extends="base">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Blood Sugar graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodPressure.jsp" />
 	</definition>
 	
 	<definition name="stepCount" extends="base">
-		<put-attribute name="title" value="step count graph" />
+		<put-attribute name="title" value="Step Count graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
 	</definition>
 	
 	<definition name="bloodSugar" extends="base">
-		<put-attribute name="title" value="step count graph" />
+		<put-attribute name="title" value="Blood Sugar graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodSugar.jsp" />
+	</definition>
+	
+	<definition name="bloodOxygen" extends="base">
+		<put-attribute name="title" value="Blood Oxygen graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/bloodOxygen.jsp" />
 	</definition>
 
 
@@ -52,23 +57,28 @@
 	</definition>
 	
 	<definition name="webview_heartrate" extends="webview">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Heart Rate graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
 	</definition>
 	
 	<definition name="webview_bloodPressure" extends="webview">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Blood Pressure graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodPressure.jsp" />
 	</definition>
 	
 	<definition name="webview_stepCount" extends="webview">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Step count graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
 	</definition>
 	
 	<definition name="webview_bloodSugar" extends="webview">
-		<put-attribute name="title" value="heart rate graph" />
+		<put-attribute name="title" value="Blood Sugar graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodSugar.jsp" />
+	</definition>
+	
+	<definition name="webview_bloodOxygen" extends="webview">
+		<put-attribute name="title" value="Blood Oxygen graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/bloodOxygen.jsp" />
 	</definition>
 
 

@@ -21,16 +21,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mydoctor.dao.BloodPressureDao;
+import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.User;
 import com.mydoctor.model.Weight;
 import com.mydoctor.module.JsonPassingModule;
 import com.mydoctor.module.MyHttpModule;
+import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.vo.DataListObject;
 import com.mydoctor.vo.IhealthData;
-import com.mydoctor.vo.IhealthDataCategory;
+import com.mydoctor.vo.IhealthDataListStatus;
 
 @RestController
 @RequestMapping("/ihealth")
@@ -46,13 +49,16 @@ public class IhealthController {
 	private final String WEIGHT_SV = "d00ed5569b4e4c16b3e4c276ac102101";
 	private String user_open_id;
 	private String accessToken;
-
-	static AuthenticationManager am = new SampleAuthenticationManager();
+	private String username;
 
 	private List<BloodPressure> bpList;
-	private List<BloodSugar> bGList;
+	private List<BloodOxygen> boList;
+	private List<BloodSugar> bgList;
 	private List<Weight> weightList;
-	private List<IhealthDataCategory> categoryList;
+	private List<IhealthDataListStatus> categoryList;
+
+	private DataListObject dataListObject = new DataListObject();
+	static AuthenticationManager am = new SampleAuthenticationManager();
 
 	@Autowired
 	private BloodPressureDao bpDao;
@@ -63,6 +69,9 @@ public class IhealthController {
 	@Autowired
 	private BloodSugarService bloodSugarService;
 
+	@Autowired
+	private BloodOxygenService bloodOxygenService;
+
 	/**
 	 * getBp(). getBG(). getWeight...매소드를 실행하면 각model에 측정날짜가 들어감 DB에서 가장 최근의
 	 * 데이터를 뽑아와(혈압, 혈당, 몸무게....) List에 ihealth에서 읽어온 data를
@@ -71,40 +80,29 @@ public class IhealthController {
 	 */
 
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
-	public IhealthData setIhealthData(@RequestBody IhealthData ihealthData)
+	public DataListObject setIhealthData(@RequestBody IhealthData ihealthData)
 			throws ClientProtocolException, IOException {
 		this.user_open_id = ihealthData.getUser_open_id();
 		this.accessToken = ihealthData.getAccessToken();
+		this.username = ihealthData.getUsername();
+		categoryList = new ArrayList<IhealthDataListStatus>();
 
 		getBP();
 		getBG();
+		getBO();
 		getWeight();
-		return ihealthData;
+
+		this.dataListObject.setStatus(categoryList);
+
+		return dataListObject;
 	}
+
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public User login(@RequestBody User user)
-			throws ClientProtocolException, IOException {
-		System.out.println(user.getId());
-		System.out.println(user.getPassword());
-		
-		try{
-			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
-			Authentication result = am.authenticate(request);
-			SecurityContextHolder.getContext().setAuthentication(result);
-			
-		}catch(AuthenticationException e){
-			System.out.println("Authentication failed: "+e.getMessage());
-		}
-		System.out.println("success"+SecurityContextHolder.getContext().getAuthentication());;
-		
-		return user;
-	}
 
 	// ------------------------혈압
 	public void getBP() throws ClientProtocolException, IOException {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		IhealthDataCategory bpC = new IhealthDataCategory();
+		
 		StringBuilder query = new StringBuilder();
 		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/bp.json/?");
 		query.append("client_id=" + clientId + "&");
@@ -120,11 +118,15 @@ public class IhealthController {
 
 		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodPressure.class);
 
-		this.bloodPressureService.addBloodPressure(bpList, userId);
+		List<String> status = this.bloodPressureService.addBloodPressure(bpList, username);
+
+		IhealthDataListStatus bpStatus = new IhealthDataListStatus("혈압", status.get(0), status.get(1), status.get(2));
+
+		categoryList.add(bpStatus);
 	}
 
 	// ----------------------혈당
-	public void getBG() {
+	public void getBG() throws ClientProtocolException, IOException {
 		StringBuilder query = new StringBuilder();
 		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/glucose.json/?");
 		query.append("client_id=" + clientId + "&");
@@ -132,6 +134,42 @@ public class IhealthController {
 		query.append("access_token=" + accessToken + "&");
 		query.append("sc=" + BGSC + "&");
 		query.append("sv=" + BGSV);
+
+		MyHttpModule module = new MyHttpModule();
+		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
+		System.out.println(obj.toString());
+		int count = obj.getInt("RecordCount");
+		JSONArray jsonArray = obj.getJSONArray("BGDataList");
+
+		bgList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodSugar.class);
+
+		List<String> status = this.bloodSugarService.addBloodSugar(bgList, username);
+
+		IhealthDataListStatus bgStatus = new IhealthDataListStatus("혈당", status.get(0), status.get(1), status.get(2));
+
+		categoryList.add(bgStatus);
+	}
+
+	public void getBO() throws ClientProtocolException, IOException {
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		StringBuilder query = new StringBuilder();
+		// Category 설정 필요.
+
+		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/spo2.json/?");
+		query.append("client_id=" + clientId + "&");
+		query.append("client_secret=" + clientSecret + "&");
+		query.append("access_token=" + accessToken + "&");
+		query.append("sc=" + BGSC + "&");
+		query.append("sv=" + BGSV);
+
+		MyHttpModule module = new MyHttpModule();
+		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
+		int count = obj.getInt("RecordCount");
+		JSONArray jsonArray = obj.getJSONArray("BODataList");
+
+		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodOxygen.class);
+
+		this.bloodOxygenService.addBloodOxygen(boList, userId);
 	}
 
 	// -----------------------몸무게
@@ -145,22 +183,22 @@ public class IhealthController {
 		query.append("sv=" + this.WEIGHT_SV);
 	}
 }
-class SampleAuthenticationManager implements AuthenticationManager{
+
+class SampleAuthenticationManager implements AuthenticationManager {
 	static final List AUTHORITIES = new ArrayList();
-	static{
+	static {
 		AUTHORITIES.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 	}
-	
-	
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		if(authentication.getName().equals(authentication.getCredentials())){
-			return new UsernamePasswordAuthenticationToken(authentication.getName(),
-					authentication.getCredentials(), AUTHORITIES);
+		if (authentication.getName().equals(authentication.getCredentials())) {
+			return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(),
+					AUTHORITIES);
 		}
 		// TODO 자동 생성된 메소드 스텁
 		throw new BadCredentialsException("Bad");
 	}
-	
+
 }

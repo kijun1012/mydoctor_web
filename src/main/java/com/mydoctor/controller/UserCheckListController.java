@@ -37,6 +37,7 @@ public class UserCheckListController {
 		currentUserCheckList.setIsalcohol(checkList.getIsalcohol());
 		currentUserCheckList.setIssmoke(checkList.getIssmoke());
 		currentUserCheckList.setWeight(checkList.getWeight());
+		currentUserCheckList.setSex(checkList.getSex());
 		
 		userCheckListService.updateCheckList(currentUserCheckList);
 		

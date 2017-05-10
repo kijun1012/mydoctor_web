@@ -8,8 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mydoctor.model.User;
 import com.mydoctor.service.LoginService;
@@ -28,6 +30,8 @@ public class LoginController {
 
 	@Autowired
 	LoginService loginService;
+	
+	static AuthenticationManager am = new SampleAuthenticationManager();
 
 	@RequestMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
@@ -36,6 +40,7 @@ public class LoginController {
 		// 받은 parameter가 error인 경우
 		if (error != null) {
 			model.addAttribute("error", "Invalid username and password");
+			System.out.println("로그인 실패");
 		}
 		// 받은 parameter가 logout인 경우
 		if (logout != null) {
@@ -50,10 +55,7 @@ public class LoginController {
 
 		return "login";
 	}
-	
-	
 
-	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 
@@ -65,22 +67,24 @@ public class LoginController {
 
 		return "redirect:/login?logout";
 	}
+	
+	@RequestMapping(value = "/mobile/login", method = RequestMethod.POST)
+	public User login(@RequestBody User user) throws ClientProtocolException, IOException {
+		System.out.println(user.getId());
+		System.out.println(user.getPassword());
 
-	@ResponseBody
-	@RequestMapping(value = "/mobile/login", method = RequestMethod.POST, produces = "application/json")
-	public User loginMobile(@RequestBody User user) throws ClientProtocolException, IOException {
+		try {
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
+			Authentication result = am.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
 
-		String id = user.getId();
-		String password = user.getPassword();
+		} catch (AuthenticationException e) {
+			System.out.println("Authentication failed: " + e.getMessage());
+		}
+		System.out.println("success" + SecurityContextHolder.getContext().getAuthentication());
+		;
 
-		System.out.println(id);
-		System.out.println(password);
-
-		// JSONObject obj = new JSONObject();
-		// obj.put("token", loginService.getTokenById(id));
-		// TokenData tokenData = new TokenData(loginService.getTokenById(id));
-
-		return loginService.getUserById(id, password);
+		return user;
 	}
 
 	/**

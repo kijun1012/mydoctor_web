@@ -7,18 +7,18 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			혈당<small>혈당 기록</small>
+			혈중산소농도<small>혈중산소농도 기록</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-			<li class="active">혈당</li>
+			<li class="active">혈중산소농도</li>
 		</ol>
 	</section>
 
 	<div class="col-md-6">
 		<div class="box box-info">
 			<div class="box-header with-border">
-				<h3 class="box-title">혈당</h3>
+				<h3 class="box-title">혈중산소농도</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
@@ -47,20 +47,19 @@
 				<tr>
 					<th>number</th>
 					<th>date</th>
-					<th>bloodSugar</th>
+					<th>혈중산소농도</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:set var="id" value="1" />
-				<c:forEach var="bloodSugar" items="${bloodSugars}">
+				<c:forEach var="bloodOxygen" items="${bloodOxygens}">
 
 					<tr>
 						<td><c:out value="${id}" /></td>
-						<td>${bloodSugar.measurement_time}</td>
-						<td>${bloodSugar.BG }</td>
+						<td>${bloodOxygen.measurement_time}</td>
+						<td>${bloodOxygen.BO }</td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
-
 				</c:forEach>
 
 			</tbody>
@@ -73,9 +72,9 @@
 	var time = new Array();
 	var number = 1;
 
-	<c:forEach var="bloodSugar" items = "${bloodSugars}">
-	result.push("${bloodSugar.BG}");
-	//time.push("${bloodSugar.measurement_time}");
+	<c:forEach var="bloodOxygen" items = "${bloodOxygens}">
+	result.push("${bloodOxygen.BO}");
+	//time.push("${heartRate.measurement_time}");
 	time.push(number);
 	number += 1;
 	</c:forEach>

@@ -24,7 +24,7 @@ public class HeartRateDao {
 		query.setParameter("username", userId);
 		@SuppressWarnings("unchecked")
 		List<HeartRate> heartRateList = query.list();
-
+		System.out.println(userId);
 		return heartRateList;
 
 	}
