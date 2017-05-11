@@ -26,11 +26,11 @@ public class BloodPressureService {
 			return bloodPressureList.get(bloodPressureList.size() - 1);
 	}
 
-	public void addBloodPressure(List<BloodPressure> bpList, String userId) {
+	public List<String> addBloodPressure(List<BloodPressure> bpList, String userId) {
 		for (int i = 0; i < bpList.size(); i++) {
 			bpList.get(i).setUsername(userId);
 		}
-		this.bloodPressureDao.addBloodPressure(bpList);
+		return this.bloodPressureDao.addBloodPressure(bpList);
 
 	}
 }

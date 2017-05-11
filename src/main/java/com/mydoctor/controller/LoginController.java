@@ -1,6 +1,8 @@
 package com.mydoctor.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,8 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -18,16 +25,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.HeartRate;
+import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
+import com.mydoctor.model.UserInfo;
+import com.mydoctor.service.BloodPressureService;
+import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.service.HeartRateService;
 import com.mydoctor.service.LoginService;
+import com.mydoctor.service.StepCountService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	private BloodPressureService bloodPressureService;
+
+	@Autowired
+	private BloodSugarService bloodSugarService;
+
+	@Autowired
+	private HeartRateService heartRateService;
+
+	@Autowired
+	private StepCountService stepCountService;
+	
+	static AuthenticationManager am = new SampleAuthenticationManager();
 
 	@RequestMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
@@ -36,6 +64,7 @@ public class LoginController {
 		// 받은 parameter가 error인 경우
 		if (error != null) {
 			model.addAttribute("error", "Invalid username and password");
+			System.out.println("로그인 실패");
 		}
 		// 받은 parameter가 logout인 경우
 		if (logout != null) {
@@ -50,10 +79,7 @@ public class LoginController {
 
 		return "login";
 	}
-	
-	
 
-	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 
@@ -66,21 +92,38 @@ public class LoginController {
 		return "redirect:/login?logout";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/mobile/login", method = RequestMethod.POST, produces = "application/json")
-	public User loginMobile(@RequestBody User user) throws ClientProtocolException, IOException {
+	@RequestMapping(value = "/mobile/login", method = RequestMethod.POST)
+	public UserInfo login(@RequestBody User user) throws ClientProtocolException, IOException {
+		System.out.println(user.getId());
+		System.out.println(user.getPassword());
+		UserInfo userInfo = new UserInfo();
+		try {
+			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
+			Authentication result = am.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
 
-		String id = user.getId();
-		String password = user.getPassword();
+			userInfo.setIsLogin(true);
 
-		System.out.println(id);
-		System.out.println(password);
+			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(user.getId());
+			HeartRate heartRate = this.heartRateService.getRecentHeartRate(user.getId());
+			StepCount stepCount = this.stepCountService.getRecentStepCount(user.getId());
+			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
 
-		// JSONObject obj = new JSONObject();
-		// obj.put("token", loginService.getTokenById(id));
-		// TokenData tokenData = new TokenData(loginService.getTokenById(id));
+			userInfo.setUsername(user.getId());
+			userInfo.setToken(user.getToken());
+			userInfo.setHeartRate(Integer.toString(heartRate.getHeartRate()));
+			userInfo.setBloodPressure(bloodPressure.getHR() + "/" + bloodPressure.getHP());
+			userInfo.setBloodSugar(bloodSugar.getBG());
+			userInfo.setStepCount(Integer.toString(stepCount.getStepCount()));
 
-		return loginService.getUserById(id, password);
+			System.out.println("app dashboard" + userInfo);
+
+		} catch (AuthenticationException e) {
+			System.out.println("Authentication failed: " + e.getMessage());
+		}
+		System.out.println("success  " + SecurityContextHolder.getContext().getAuthentication());
+
+		return userInfo;
 	}
 
 	/**
@@ -117,6 +160,25 @@ public class LoginController {
 			targetUrl = session.getAttribute("targetUrl") == null ? "" : session.getAttribute("targetUrl").toString();
 		}
 		return targetUrl;
+	}
+
+}
+
+class SampleAuthenticationManager implements AuthenticationManager {
+	static final List AUTHORITIES = new ArrayList();
+	static {
+		AUTHORITIES.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+	}
+
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		if (authentication.getName().equals(authentication.getCredentials())) {
+			return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(),
+					AUTHORITIES);
+		}
+		// TODO 자동 생성된 메소드 스텁
+		throw new BadCredentialsException("Bad");
 	}
 
 }

@@ -7,18 +7,18 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			심박<small>심박 기록</small>
+			혈중산소농도<small>혈중산소농도 기록</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-			<li class="active">심박</li>
+			<li class="active">혈중산소농도</li>
 		</ol>
 	</section>
 
 	<div class="col-md-6">
 		<div class="box box-info">
 			<div class="box-header with-border">
-				<h3 class="box-title">심박</h3>
+				<h3 class="box-title">혈중산소농도</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
@@ -42,39 +42,22 @@
 	</div>
 	<div class="col-md-6">
 
-		<div class="input-group">
-			<div class="input-group-addon">
-				<i class="fa fa-calendar"></i> 시작<input type="text"
-					id="fromDate"> 종료<input type="text" id="toDate">
-				<button type="button" class="btn btn-default" id="search">조회하기</button>
-
-			</div>
-
-
-
-
-
-
-
-		</div>
-
-
-		<table class="table table-striped header-fixed">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>number</th>
 					<th>date</th>
-					<th>heartRate</th>
+					<th>혈중산소농도</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:set var="id" value="1" />
-				<c:forEach var="heartRate" items="${heartRates}">
+				<c:forEach var="bloodOxygen" items="${bloodOxygens}">
 
 					<tr>
 						<td><c:out value="${id}" /></td>
-						<td>${heartRate.measurement_time}</td>
-						<td>${heartRate.heartRate }</td>
+						<td>${bloodOxygen.measurement_time}</td>
+						<td>${bloodOxygen.BO }</td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
 				</c:forEach>
@@ -89,8 +72,8 @@
 	var time = new Array();
 	var number = 1;
 
-	<c:forEach var="heartRate" items = "${heartRates}">
-	result.push("${heartRate.heartRate}");
+	<c:forEach var="bloodOxygen" items = "${bloodOxygens}">
+	result.push("${bloodOxygen.BO}");
 	//time.push("${heartRate.measurement_time}");
 	time.push(number);
 	number += 1;
@@ -106,7 +89,7 @@
 	var lineChartData = {
 		labels : time,
 		datasets : [ {
-			label : "HeartRate",
+			label : "Electronics",
 			fillColor : "rgba(210, 214, 222, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
 			pointColor : "rgba(210, 214, 222, 1)",
@@ -164,6 +147,14 @@
 		lineChart = new Chart(ctx).Line(lineChartData, lineChartOption);
 	});
 
+	$("input#btnAdd").on(
+			"click",
+			function() {
+				lineChart.addData([ randomScalingFactor(),
+						randomScalingFactor() ],
+						months[(lineChart.datasets[0].points.length) % 12]);
+			});
+
 	$("canvas").on("click", function(e) {
 		var activePoints = lineChart.getPointsAtEvent(e);
 		console.log(activePoints);
@@ -172,39 +163,4 @@
 			console.log(activePoints[i].value);
 		}
 	});
-
-	//기간 입력 JS--------------------------------------------------------------------------
-
-	$('#fromDate').datepicker({
-		format : 'yyyy-mm-dd',
-		autoclose : true,
-		language : 'kr',
-		todayHighlight : true
-
-	});
-	$('#toDate').datepicker({
-		format : 'yyyy-mm-dd',
-		autoclose : true,
-		language : 'kr',
-		todayHighlight : true
-
-	});
-
-	
-	var s = "${pageContext.request.contextPath}/heartrate";
-	
-	
-	//s = s + "/search?" + username + "/" + $('#fromDate').val() + "/" + $('#toDate').val();
-
-	$("button#search").on("click", function() {
-		var username = "${username}";
-		var toDate = $('#toDate').val();
-		var fromDate = $('#fromDate').val();
-		
-		var url = s + "/search?" + username + "/" +fromDate + "/" + toDate;
-		
-		window.location.href=url;
-	});
-	
-	
 </script>

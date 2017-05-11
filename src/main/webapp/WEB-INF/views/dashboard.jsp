@@ -101,7 +101,7 @@
 							-
 						</c:if>
 							<c:if test="${bloodSugar != null }">
-							${bloodSugar.bloodSugar}
+							${bloodSugar.BG}
 						</c:if>
 						</h3>
 

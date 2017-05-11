@@ -1,5 +1,6 @@
 package com.mydoctor.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -18,13 +19,27 @@ public class BloodPressureDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void addBloodPressure(List<BloodPressure> bpList) {
+	public List<String> addBloodPressure(List<BloodPressure> bpList) {
+		
 		Session session = sessionFactory.getCurrentSession();
+		List<String> status = new ArrayList<String>();
+		int lastCount = this.getBloodPressure(bpList.get(0).getUsername()).size();
+		
+		
 		for (int i = 0; i < bpList.size(); i++) {
-			session.save(bpList.get(i));
+			
+			session.saveOrUpdate("BloodPressure",bpList.get(i));
 		}
-
+		
 		session.flush();
+		session.clear();
+		
+		int allDataCount = this.getBloodPressure(bpList.get(0).getUsername()).size();
+		
+		status.add(Integer.toString(allDataCount));
+		status.add(Integer.toString(allDataCount-lastCount));
+		status.add(Integer.toString(lastCount));
+		return status;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,6 +49,9 @@ public class BloodPressureDao {
 		query.setParameter("username", userId);
 		List<BloodPressure> bloodPressureList = query.list();
 
+		
+		session.clear();
+		System.out.println(userId);
 		return bloodPressureList;
 
 	}

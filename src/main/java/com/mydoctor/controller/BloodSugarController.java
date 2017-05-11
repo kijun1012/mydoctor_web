@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +26,13 @@ public class BloodSugarController {
 		List<BloodSugar> bloodSugar = this.bloodSugarService.getBloodSugar(userId);
 		model.addAttribute("bloodSugars", bloodSugar);
 
-		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
+		if (request.getQueryString() != null) {
+			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
+			if (st.nextToken().equals("webview")) {
+				String id = st.nextToken();
+				List<BloodSugar> bloodSugarWeb = this.bloodSugarService.getBloodSugar(id);
+				model.addAttribute("bloodSugars", bloodSugarWeb);
+			}
 			return "webview_bloodSugar";
 		} else {
 			return "bloodSugar";

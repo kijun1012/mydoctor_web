@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,8 +26,13 @@ public class BloodPressureController {
 		List<BloodPressure> bloodPressure = this.bloodPressureService.getAllBloodPressure(userId);
 		model.addAttribute("bloodPressures", bloodPressure);
 
-		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
-			return "webview_bloodPressure";
+		if (request.getQueryString() != null) {
+			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
+			if (st.nextToken().equals("webview")) {
+				String id = st.nextToken();
+				List<BloodPressure> bloodPressureWeb =this.bloodPressureService.getAllBloodPressure(id);
+				model.addAttribute("bloodPressures", bloodPressureWeb);
+			}return "webview_bloodPressure";
 		} else {
 			return "bloodPressure";
 		}

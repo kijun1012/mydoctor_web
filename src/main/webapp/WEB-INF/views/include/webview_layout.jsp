@@ -33,6 +33,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
 <link rel="stylesheet" href="resources/dist/css/skins/skin-blue.min.css">
 
+<!-- daterange picker -->
+<link rel="stylesheet"
+	href="resources/plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet"
+	href="resources/plugins/datepicker/datepicker3.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="resources/plugins/iCheck/all.css">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet"
+	href="resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet"
+	href="resources/plugins/timepicker/bootstrap-timepicker.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
+
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -56,6 +77,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="resources/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="resources/dist/js/demo.js"></script>
+
+<!-- Select2 -->
+<script src="resources/plugins/select2/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="resources/plugins/input-mask/jquery.inputmask.js"></script>
+<script
+	src="resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script
+	src="resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="resources/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="resources/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll 1.3.0 -->
+<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="resources/plugins/iCheck/icheck.min.js"></script>
+
 </head>
 
 <!--

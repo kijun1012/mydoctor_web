@@ -1,6 +1,7 @@
 package com.mydoctor.controller;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.service.StepCountService;
 
@@ -25,7 +27,13 @@ public class StepCountController {
 		List<StepCount> stepCounts = this.stepCountService.getStepCount(userId);
 		model.addAttribute("stepCounts", stepCounts);
 
-		if (request.getQueryString() != null && request.getQueryString().equals("webview")) {
+		if (request.getQueryString() != null) {
+			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
+			if (st.nextToken().equals("webview")) {
+				String id = st.nextToken();
+				List<StepCount> stepCountWeb = this.stepCountService.getStepCount(id);
+				model.addAttribute("heartRates", stepCountWeb);
+			}
 			return "webview_stepCount";
 		} else {
 			return "stepCount";
