@@ -30,14 +30,14 @@ public class HeartRateService {
 	public void addHeartRate(HeartRate heartRate) {
 		this.heartRateDao.addHeartRate(heartRate);
 	}
-	
-public List<HeartRate> getHeartRateByDate(String username, String fromDate, String toDate) {
-		
+
+	public List<HeartRate> getHeartRateByDate(String username, String fromDate, String toDate) {
+
 		fromDate = fromDate + " 00:00:00";
 		toDate = toDate + " 23:59:59";
-		List<HeartRate> data = this.heartRateDao.getHeartRateByDate(username,fromDate,toDate);
-		
+		List<HeartRate> data = this.heartRateDao.getHeartRateByDate(username, fromDate, toDate);
+
 		return data;
-		
+
 	}
 }

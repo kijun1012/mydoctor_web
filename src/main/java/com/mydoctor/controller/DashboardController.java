@@ -11,10 +11,12 @@ import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
+import com.mydoctor.model.UserCheckList;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.HeartRateService;
 import com.mydoctor.service.StepCountService;
+import com.mydoctor.service.UserCheckListService;
 
 /**
  * Handles requests for the application home page.
@@ -30,6 +32,8 @@ public class DashboardController {
 	BloodSugarService bloodSugarService;
 	@Autowired
 	StepCountService stepCountService;
+	@Autowired
+	UserCheckListService userCheckListService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String dashboard(Model model) {
@@ -39,11 +43,16 @@ public class DashboardController {
 		HeartRate heartRate = this.heartRateService.getRecentHeartRate(userId);
 		StepCount stepCount = this.stepCountService.getRecentStepCount(userId);
 		BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(userId);
+		UserCheckList curCheckList = userCheckListService.findById(userId);
 
 		model.addAttribute("heartRate", heartRate);
 		model.addAttribute("bloodPressure", bloodPressure);
 		model.addAttribute("bloodSugar", bloodSugar);
 		model.addAttribute("stepCount", stepCount);
+		model.addAttribute("height", curCheckList.getHeight());
+		model.addAttribute("weight", curCheckList.getWeight());
+		
+		
 
 		return "dashboard";
 	}

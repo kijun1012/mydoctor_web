@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -26,13 +27,22 @@ public class UserCheckList {
 	private String username;
 	
 	@Column
+	private String name;
+	
+	@Column
+	private String birth;
+	
+	@Column
 	private int age;
 	@Column
 	private int height;
 	@Column
 	private int weight;
+	
+	
 	@Column
-	private int sex;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private Boolean sex;
 	
 	@Column
 	@Type(type="org.hibernate.type.NumericBooleanType")
@@ -41,6 +51,27 @@ public class UserCheckList {
 	@Column
 	@Type(type="org.hibernate.type.NumericBooleanType")
 	private Boolean isalcohol;
+	
+	@Column
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private Boolean ishighpressure;
+	
+	@Column
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private Boolean isdiabetes;
+	
+	@Transient
+	private int lastHeartrate;
+	@Transient
+	private int lastBloodoxygen;
+	@Transient
+	private int lastBloodsugar;
+	@Transient
+	private int lastStepcount;
+	@Transient
+	private int lastHP;
+	@Transient
+	private int lastHR;
 	
 	@MapsId("username")
 	@ManyToOne(cascade = CascadeType.ALL)

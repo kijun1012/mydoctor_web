@@ -189,8 +189,12 @@
 								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text">비만도</span> <span
-									class="info-box-number">1,410</span>
+								<span class="info-box-text">비만도</span> 
+								<span class="info-box-number">
+									<c:if test="${height != null }">
+										${weight/(height*height)}
+									</c:if>
+								</span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>

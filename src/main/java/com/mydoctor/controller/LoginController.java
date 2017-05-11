@@ -25,18 +25,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mydoctor.exception.UserNotFoundException;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
+import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.UserInfo;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.HeartRateService;
 import com.mydoctor.service.LoginService;
 import com.mydoctor.service.StepCountService;
+import com.mydoctor.service.UserCheckListService;
 
 @Controller
 public class LoginController {
@@ -54,6 +58,9 @@ public class LoginController {
 
 	@Autowired
 	private StepCountService stepCountService;
+	
+	@Autowired
+	private UserCheckListService userCheckListService;
 	
 	static AuthenticationManager am = new SampleAuthenticationManager();
 
@@ -92,11 +99,14 @@ public class LoginController {
 		return "redirect:/login?logout";
 	}
 
+	@SuppressWarnings("unused")
+	@ResponseBody
 	@RequestMapping(value = "/mobile/login", method = RequestMethod.POST)
-	public UserInfo login(@RequestBody User user) throws ClientProtocolException, IOException {
+	public UserCheckList login(@RequestBody User user) throws ClientProtocolException, IOException {
 		System.out.println(user.getId());
 		System.out.println(user.getPassword());
-		UserInfo userInfo = new UserInfo();
+		//UserInfo userInfo = new UserInfo();
+		UserCheckList currentUserCheckList = new UserCheckList();
 		try {
 			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
 			Authentication result = am.authenticate(request);
@@ -104,27 +114,37 @@ public class LoginController {
 
 			//user.setIslogin(true);
 			//this.loginService.setIsLogin(user);
+			/*
+			 * 최근꺼 가져와야함.
+			 */
 
+			
 			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(user.getId());
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(user.getId());
 			StepCount stepCount = this.stepCountService.getRecentStepCount(user.getId());
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
 
-			userInfo.setUsername(user.getId());
-			userInfo.setToken(user.getToken());
-			userInfo.setHeartRate(Integer.toString(heartRate.getHeartRate()));
-			userInfo.setBloodPressure(bloodPressure.getHR() + "/" + bloodPressure.getHP());
-			userInfo.setBloodSugar(bloodSugar.getBG());
-			userInfo.setStepCount(Integer.toString(stepCount.getStepCount()));
-
-			System.out.println("app dashboard" + userInfo);
+			currentUserCheckList = userCheckListService.findById(user.getId());
+			System.out.println(currentUserCheckList);
+			currentUserCheckList.getUser().setIslogin(true);
+			currentUserCheckList.setLastHP(Integer.parseInt(bloodPressure.getHP()));
+			currentUserCheckList.setLastHR(Integer.parseInt(bloodPressure.getHR()));
+			currentUserCheckList.setLastHeartrate(heartRate.getHeartRate());
+			currentUserCheckList.setLastStepcount(stepCount.getStepCount());
+			currentUserCheckList.setLastBloodsugar(Integer.parseInt(bloodSugar.getBG()));
+			
+			if (currentUserCheckList == null) {
+				throw new UserNotFoundException(user.getId());
+			}
+			
+			//System.out.println("app dashboard" + userInfo);
 
 		} catch (AuthenticationException e) {
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 		System.out.println("success  " + SecurityContextHolder.getContext().getAuthentication());
 
-		return userInfo;
+		return currentUserCheckList;
 	}
 
 	/**

@@ -47,6 +47,7 @@ public class HeartRateDao {
 		@SuppressWarnings("unchecked")
 		List<HeartRate> heartRateList = query.list();
 		session.clear();
+		
 		return heartRateList;
 
 	}
