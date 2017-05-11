@@ -102,7 +102,8 @@ public class LoginController {
 			Authentication result = am.authenticate(request);
 			SecurityContextHolder.getContext().setAuthentication(result);
 
-			userInfo.setIsLogin(true);
+			//user.setIslogin(true);
+			//this.loginService.setIsLogin(user);
 
 			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(user.getId());
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(user.getId());

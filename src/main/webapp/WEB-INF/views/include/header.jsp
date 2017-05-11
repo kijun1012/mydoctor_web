@@ -151,7 +151,7 @@
 		<c:if test="${pageContext.request.userPrincipal.name != null }">
 			<div class="user-panel">
 				<div class="pull-left image">
-					<img src="resources/dist/img/user2-160x160.jpg" class="img-circle"
+					<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="img-circle"
 						alt="User Image">
 				</div>
 				<div class="pull-left info">

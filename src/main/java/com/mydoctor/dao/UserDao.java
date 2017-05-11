@@ -30,7 +30,7 @@ public class UserDao {
 				System.out.println(user.getToken());
 				user.setIslogin(true);
 				session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(user); //islogin¿ª true∑Œ πŸ≤ﬁ
+				session.saveOrUpdate(user); // islogin¿ª true∑Œ πŸ≤ﬁ
 
 				return user;
 			} else {
@@ -38,5 +38,11 @@ public class UserDao {
 			}
 		} else
 			return new User();
+	}
+
+	public void setIsLogin(User user) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.saveOrUpdate("User", user);
+		session.clear();
 	}
 }

@@ -16,4 +16,11 @@ public class LoginService {
 		return userDao.getUserById(id, password);
 	}
 
+	
+
+	public void setIsLogin(User user) {
+		this.userDao.setIsLogin(user);
+		
+	}
+
 }

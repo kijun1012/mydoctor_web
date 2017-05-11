@@ -28,7 +28,7 @@
 			authentication-failure-url="/login?error=1"
 			authentication-success-handler-ref="savedRequestAwareAuthenticationSuccessHandler" />
 
-		<security:logout logout-success-url="/logout"
+		<security:logout logout-success-url="/login?logout"
 			delete-cookies="JSESSIONID" />
 
 		<security:remember-me token-validity-seconds="1209600"
