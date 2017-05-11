@@ -38,7 +38,6 @@ public class HeartRateController {
 
 			List<HeartRate> heartRates = this.heartRateService.getHeartRate(userId);
 			model.addAttribute("heartRates", heartRates);
-			model.addAttribute("username", heartRates.get(0).getUsername());
 			System.out.println(request.getQueryString());
 			return "heartrate";
 		}

@@ -7,7 +7,7 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			심박<small>심박 기록</small>
+			심박<small>심박 기록 </small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
@@ -42,21 +42,26 @@
 	</div>
 	<div class="col-md-6">
 
+
 		<div class="input-group">
-			<div class="input-group-addon">
-				<i class="fa fa-calendar"></i> 시작<input type="text"
-					id="fromDate"> 종료<input type="text" id="toDate">
-				<button type="button" class="btn btn-default" id="search">조회하기</button>
 
-			</div>
+			<c:if test="${empty heartRates}">
 
+				<h2 class="text-yellow">저장된 데이터가 없습니다.</h2>
+			</c:if>
 
+			<c:if test="${not empty heartRates }">
+				<div class="input-group-addon">
+					<i class="fa fa-calendar"></i> 시작<input type="text" id="fromDate">
+					종료<input type="text" id="toDate">
+					<button type="button" class="btn btn-default" id="search">조회하기</button>
 
-
-
-
+				</div>
+			</c:if>
 
 		</div>
+
+
 
 
 		<table class="table table-striped header-fixed">
@@ -190,21 +195,25 @@
 
 	});
 
-	
 	var s = "${pageContext.request.contextPath}/heartrate";
-	
-	
+
 	//s = s + "/search?" + username + "/" + $('#fromDate').val() + "/" + $('#toDate').val();
 
-	$("button#search").on("click", function() {
-		var username = "${username}";
-		var toDate = $('#toDate').val();
-		var fromDate = $('#fromDate').val();
-		
-		var url = s + "/search?" + username + "/" +fromDate + "/" + toDate;
-		
-		window.location.href=url;
-	});
-	
-	
+	$("button#search").on(
+			"click",
+			function() {
+
+				var username = "${heartRates[0].username}";
+				var toDate = $('#toDate').val();
+				var fromDate = $('#fromDate').val();
+
+				if (toDate == "" || fromDate == "") {
+					alert("날짜를 입력해주세요!");
+				} else {
+					var url = s + "/search?" + username + "/" + fromDate + "/"
+							+ toDate;
+
+					window.location.href = url;
+				}
+			});
 </script>
