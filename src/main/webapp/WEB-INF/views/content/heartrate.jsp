@@ -52,9 +52,16 @@
 
 			<c:if test="${not empty heartRates }">
 				<div class="input-group-addon">
-					<i class="fa fa-calendar"></i> 시작<input type="text" id="fromDate">
-					종료<input type="text" id="toDate">
-					<button type="button" class="btn btn-default" id="search">조회하기</button>
+					<div class="col-md-4">
+						<i class="fa fa-calendar"></i> 시작<input type="text" id="fromDate">
+					</div>
+					<div class="col-md-4">
+						종료<input type="text" id="toDate">
+
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-default" id="search">조회하기</button>
+					</div>
 
 				</div>
 			</c:if>
