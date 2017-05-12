@@ -37,7 +37,7 @@ public class UserCheckList {
 	@Column
 	private int height;
 	@Column
-	private int weight;
+	private double weight;
 	
 	
 	@Column

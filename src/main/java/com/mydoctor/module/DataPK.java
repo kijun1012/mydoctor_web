@@ -1,7 +1,6 @@
 package com.mydoctor.module;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;

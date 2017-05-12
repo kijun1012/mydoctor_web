@@ -8,12 +8,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +18,13 @@ import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
-import com.mydoctor.model.User;
 import com.mydoctor.model.Weight;
 import com.mydoctor.module.JsonPassingModule;
 import com.mydoctor.module.MyHttpModule;
 import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.service.WeightService;
 import com.mydoctor.vo.DataListObject;
 import com.mydoctor.vo.IhealthData;
 import com.mydoctor.vo.IhealthDataListStatus;
@@ -47,6 +41,8 @@ public class IhealthController {
 	private final String BGSV = "77536ef99f044e738394b216707be8fc";
 	private final String WEIGHT_SC = "10eda0dc26b94cf78450a5ba62186806";
 	private final String WEIGHT_SV = "d00ed5569b4e4c16b3e4c276ac102101";
+	private final String BO_SC = "10eda0dc26b94cf78450a5ba62186806";
+	private final String BO_SV = "49d9dce307a74ee389cf654f8a29fc73";
 	private String user_open_id;
 	private String accessToken;
 	private String username;
@@ -58,10 +54,7 @@ public class IhealthController {
 	private List<IhealthDataListStatus> categoryList;
 
 	private DataListObject dataListObject = new DataListObject();
-	
 
-	@Autowired
-	private BloodPressureDao bpDao;
 
 	@Autowired
 	private BloodPressureService bloodPressureService;
@@ -71,6 +64,9 @@ public class IhealthController {
 
 	@Autowired
 	private BloodOxygenService bloodOxygenService;
+	
+	@Autowired
+	private WeightService weightService;
 
 	/**
 	 * getBp(). getBG(). getWeight...매소드를 실행하면 각model에 측정날짜가 들어감 DB에서 가장 최근의
@@ -89,7 +85,7 @@ public class IhealthController {
 
 		getBP();
 		getBG();
-		getBO();
+		// getBO();
 		getWeight();
 
 		this.dataListObject.setStatus(categoryList);
@@ -97,12 +93,10 @@ public class IhealthController {
 		return dataListObject;
 	}
 
-	
-
 	// ------------------------혈압
 	public void getBP() throws ClientProtocolException, IOException {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		
+
 		StringBuilder query = new StringBuilder();
 		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/bp.json/?");
 		query.append("client_id=" + clientId + "&");
@@ -159,21 +153,30 @@ public class IhealthController {
 		query.append("client_id=" + clientId + "&");
 		query.append("client_secret=" + clientSecret + "&");
 		query.append("access_token=" + accessToken + "&");
-		query.append("sc=" + BGSC + "&");
-		query.append("sv=" + BGSV);
+		query.append("sc=" + BO_SC + "&");
+		query.append("sv=" + BO_SV);
 
 		MyHttpModule module = new MyHttpModule();
 		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
-		int count = obj.getInt("RecordCount");
-		JSONArray jsonArray = obj.getJSONArray("BODataList");
+		
+		System.out.println("bo : "+ obj.toString());
+		
+		IhealthDataListStatus bgStatus = new IhealthDataListStatus("", "0","0","0");
 
-		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodOxygen.class);
-
-		this.bloodOxygenService.addBloodOxygen(boList, userId);
+		categoryList.add(bgStatus);
+		
+//		int count = obj.getInt("RecordCount");
+//		JSONArray jsonArray = obj.getJSONArray("BODataList");
+//		
+//		
+//
+//		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodOxygen.class);
+//
+//		this.bloodOxygenService.addBloodOxygen(boList, userId);
 	}
 
 	// -----------------------몸무게
-	public void getWeight() {
+	public void getWeight() throws ClientProtocolException, IOException {
 		StringBuilder query = new StringBuilder();
 		query.append("https://api.ihealthlabs.com:8443/openapiv2/user/" + user_open_id + "/weight.json/?");
 		query.append("client_id=" + clientId + "&");
@@ -181,7 +184,20 @@ public class IhealthController {
 		query.append("access_token=" + accessToken + "&");
 		query.append("sc=" + this.WEIGHT_SC + "&");
 		query.append("sv=" + this.WEIGHT_SV);
+		
+		MyHttpModule module = new MyHttpModule();
+		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
+		System.out.println(obj.toString());
+		int count = obj.getInt("RecordCount");
+		JSONArray jsonArray = obj.getJSONArray("WeightDataList");
+
+		weightList = JsonPassingModule.jsonArrayToObject(jsonArray, Weight.class);
+
+		List<String> status = this.weightService.addWeight(weightList, username);
+
+		IhealthDataListStatus weightStatus = new IhealthDataListStatus("체중", status.get(0), status.get(1), status.get(2));
+
+		categoryList.add(weightStatus);
+		
 	}
 }
-
-

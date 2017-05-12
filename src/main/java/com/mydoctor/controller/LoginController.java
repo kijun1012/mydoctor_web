@@ -107,6 +107,7 @@ public class LoginController {
 		System.out.println(user.getPassword());
 		//UserInfo userInfo = new UserInfo();
 		UserCheckList currentUserCheckList = new UserCheckList();
+		currentUserCheckList.setUser(user);
 		try {
 			Authentication request = new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword());
 			Authentication result = am.authenticate(request);
@@ -140,6 +141,7 @@ public class LoginController {
 			//System.out.println("app dashboard" + userInfo);
 
 		} catch (AuthenticationException e) {
+		
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 		System.out.println("success  " + SecurityContextHolder.getContext().getAuthentication());

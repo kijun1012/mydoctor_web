@@ -32,7 +32,7 @@ public class StepCountController {
 			if (st.nextToken().equals("webview")) {
 				String id = st.nextToken();
 				List<StepCount> stepCountWeb = this.stepCountService.getStepCount(id);
-				model.addAttribute("heartRates", stepCountWeb);
+				model.addAttribute("stepCounts", stepCountWeb);
 			}
 			return "webview_stepCount";
 		} else {

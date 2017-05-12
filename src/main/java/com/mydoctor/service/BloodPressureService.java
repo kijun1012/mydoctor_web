@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodPressure;
-import com.mydoctor.model.HeartRate;
 
 @Service
 public class BloodPressureService {
+
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 
@@ -20,6 +20,7 @@ public class BloodPressureService {
 
 	public BloodPressure getRecentBloodPressure(String userId) {
 		List<BloodPressure> bloodPressureList = this.bloodPressureDao.getBloodPressure(userId);
+		
 		if (bloodPressureList.isEmpty())
 			return null;
 		else
