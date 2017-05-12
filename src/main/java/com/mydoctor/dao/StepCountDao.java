@@ -31,7 +31,8 @@ public class StepCountDao {
 
 	public void addStepCount(StepCount stepCount) {
 		Session session = sessionFactory.getCurrentSession();
-		session.save(stepCount);
+		session.saveOrUpdate("StepCount",stepCount);
 		session.flush();
+		session.clear();
 	}
 }

@@ -31,7 +31,7 @@ public class HeartRateDao {
 
 	public void addHeartRate(HeartRate heartRate) {
 		Session session = sessionFactory.getCurrentSession();
-		session.save(heartRate);
+		session.save("HeartRate",heartRate);
 		session.flush();
 		session.clear();
 	}

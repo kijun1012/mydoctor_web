@@ -6,10 +6,15 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
@@ -39,6 +44,16 @@ public class StepCountController {
 			return "stepCount";
 		}
 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/stepCount/add", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<StepCount> addHeartRate(@RequestBody StepCount stepCount){
+		
+		this.stepCountService.addStepCount(stepCount);
+		
+		
+		return new ResponseEntity<StepCount>(stepCount,HttpStatus.OK);
 	}
 
 }
