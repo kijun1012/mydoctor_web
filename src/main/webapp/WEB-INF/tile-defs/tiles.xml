@@ -44,7 +44,11 @@
 		<put-attribute name="title" value="Blood Oxygen graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodOxygen.jsp" />
 	</definition>
-
+	
+<definition name="weight" extends="base">
+		<put-attribute name="title" value="Weight graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/weight.jsp" />
+	</definition>
 
 
 
@@ -80,6 +84,27 @@
 		<put-attribute name="title" value="Blood Oxygen graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodOxygen.jsp" />
 	</definition>
+	
+	<definition name="webview_weight" extends="webview">
+		<put-attribute name="title" value="Weight graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/weight.jsp" />
+	</definition>
 
+
+
+
+
+<!-- doctor 용 definition-->
+
+	<definition name="doctor" template="/WEB-INF/views/include/layout.jsp">
+		<put-attribute name="title" value="My Doctor - doctor" />
+		<put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
+	</definition>
+	
+	<definition name="doctor_dashboard" extends="doctor">
+		<put-attribute name="title" value="My Doctor's DashBoard" />
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctor_dashboard.jsp" />
+	</definition>
 
 </tiles-definitions>
