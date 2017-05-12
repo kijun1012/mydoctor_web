@@ -136,14 +136,14 @@
 				<!-- small box -->
 				<div class="small-box bg-purple">
 					<div class="inner">
-						<h3>65</h3>
+						<h3>${weight}</h3>
 
 						<p>체중</p>
 					</div>
 					<div class="icon">
 						<i class="ion-ios-body"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i
+					<a href="<c:url value="weight"/>" class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
