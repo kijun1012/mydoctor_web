@@ -61,5 +61,10 @@ public class DashboardController {
 
 		return "dashboard";
 	}
+	
+	@RequestMapping(value="/advice")
+	public String advice(){
+		return "webview_advice";
+	}
 
 }

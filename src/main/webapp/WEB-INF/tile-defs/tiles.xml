@@ -89,6 +89,11 @@
 		<put-attribute name="title" value="Weight graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/weight.jsp" />
 	</definition>
+	
+	<definition name="webview_advice" extends="webview">
+		<put-attribute name="title" value="Weight graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/webview_advice.jsp" />
+	</definition>
 
 
 

@@ -88,6 +88,9 @@ public class IhealthController {
 		// getBO();
 		getWeight();
 
+		categoryList.add( new IhealthDataListStatus("수면", "0","0","0"));
+		categoryList.add( new IhealthDataListStatus("혈중산소", "0","0","0"));
+		
 		this.dataListObject.setStatus(categoryList);
 
 		return dataListObject;
