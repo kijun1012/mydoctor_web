@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -143,15 +144,23 @@
 					<div class="icon">
 						<i class="ion-ios-body"></i>
 					</div>
-					<a href="<c:url value="weight"/>" class="small-box-footer">More info <i
-						class="fa fa-arrow-circle-right"></i></a>
+					<a href="<c:url value="weight"/>" class="small-box-footer">More
+						info <i class="fa fa-arrow-circle-right"></i>
+					</a>
 				</div>
 			</div>
 			<!-- ./col -->
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+
+
+
+
 				<h4>위험 지수</h4>
+
+
+
 				<div class="row">
 					<div class="col-md-12">
 						<div class="info-box">
@@ -159,8 +168,8 @@
 								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text">심혈관 위험</span> <span
-									class="info-box-number">1,410</span>
+								<span class="info-box-text">고혈압 위험</span> <span
+									class="info-box-number" style="color: orange">주의</span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
@@ -175,12 +184,14 @@
 
 							<div class="info-box-content">
 								<span class="info-box-text">제2형 당뇨병</span> <span
-									class="info-box-number">1,410</span>
+									class="info-box-number" style="color: green">보통</span>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
 					</div>
 				</div>
+
+
 				<div class="row">
 					<div class="col-md-12">
 						<!-- small box -->
@@ -189,10 +200,11 @@
 								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text">비만도</span> 
-								<span class="info-box-number">
-									<c:if test="${height != null }">
-										${weight/(height*height)}
+								<span class="info-box-text">BMI 지수</span> <span
+									class="info-box-number"> <c:if test="${height != null }">
+										<fmt:formatNumber var="bmi"
+											value="${weight/((height/100)*(height/100))}" pattern=".00" />
+										${bmi }
 									</c:if>
 								</span>
 							</div>
@@ -200,35 +212,89 @@
 						</div>
 					</div>
 				</div>
+
+
+
 			</div>
-
-
 			<div class="col-md-6">
-				<div class="box box-warning box-solid">
+				<div
+					class="box box-success direct-chat direct-chat-success">
 					<div class="box-header with-border">
-						<h3 class="box-title">조언</h3>
+						<h3 class="box-title">데이터 분석 결과</h3>
 
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool"
-								data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-						</div>
-						<!-- /.box-tools -->
+
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body" style="min-height: 300px;">
-						조언1<br>조언2
+						<!-- Conversations are loaded here -->
+						<div class="direct-chat-messages">
+							
+							
+							<!-- Message. Default to the left -->
+							<div class="direct-chat-msg">
+
+								<!-- /.direct-chat-info -->
+								<img class="direct-chat-img"
+									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+									alt="Message User Image">
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">혈압 관리가 필요합니다.</div>
+								<!-- /.direct-chat-text -->
+							</div>
+							
+							<div class="direct-chat-msg">
+
+								<!-- /.direct-chat-info -->
+								<img class="direct-chat-img"
+									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+									alt="Message User Image">
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">혈당 관리가 필요합니다.</div>
+								<!-- /.direct-chat-text -->
+							</div>
+							
+							<div class="direct-chat-msg">
+
+								<!-- /.direct-chat-info -->
+								<img class="direct-chat-img"
+									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+									alt="Message User Image">
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">혈압과 혈당 모두 관리가 필요합니다.</div>
+								<!-- /.direct-chat-text -->
+							</div>
+							
+							
+								<!-- Message. Default to the left -->
+							<div class="direct-chat-msg">
+								<!-- /.direct-chat-info -->
+								<img class="direct-chat-img"
+									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+									alt="Message User Image">
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">건강합니다!</div>
+								<!-- /.direct-chat-text -->
+							</div>
+						
+						
+						
+						
+						</div>
+						
+
 					</div>
 					<!-- /.box-body -->
+
+					<!-- /.box-footer-->
 				</div>
 				<!-- /.box -->
 			</div>
-
 		</div>
 
 
 	</section>
 	<!-- /.content -->
 </div>
+
+
 <!-- /.content-wrapper -->
