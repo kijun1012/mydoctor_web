@@ -53,10 +53,10 @@
 			<c:if test="${not empty heartRates }">
 				<div class="input-group-addon">
 					<div class="col-md-4">
-						<i class="fa fa-calendar"></i> 시작<input type="text" id="fromDate">
+						 시작 <input type="text" id="fromDate">
 					</div>
 					<div class="col-md-4">
-						종료<input type="text" id="toDate">
+						종료 <input type="text" id="toDate">
 
 					</div>
 					<div class="col-md-4">
