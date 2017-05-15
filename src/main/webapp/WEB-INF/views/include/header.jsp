@@ -151,8 +151,9 @@
 		<c:if test="${pageContext.request.userPrincipal.name != null }">
 			<div class="user-panel">
 				<div class="pull-left image">
-					<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="img-circle"
-						alt="User Image">
+					<img
+						src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg"
+						class="img-circle" alt="User Image">
 				</div>
 				<div class="pull-left info">
 					<p>${pageContext.request.userPrincipal.name}</p>
@@ -168,30 +169,25 @@
 		<ul class="sidebar-menu">
 			<li class="header">MENU</li>
 			<!-- Optionally, you can add icons to the links -->
-			<li class="active"><a href="<c:url value="/"/>"><i
-					class="fa fa-link"></i> <span>Dash Board</span></a></li>
+			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-link"></i>
+					<span>Dash Board</span></a></li>
 
-			<li class="treeview"><a href="#"><i class="fa fa-link"></i>
-					<span>Data</span> <span class="pull-right-container"> <i
+			<li class="treeview active"><a href="#"><i
+					class="fa fa-link"></i> <span>Data</span> <span
+					class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span></a>
 				<ul class="treeview-menu">
-					<li><a href="<c:url value="heartrate"/>">심박수</a></li>
-					<li><a href="<c:url value="bloodPressure"/>">혈압</a></li>
-					<li><a href="<c:url value="stepCount"/>">걸음수</a></li>
-					<li><a href="<c:url value="bloodSugar"/>">혈당</a></li>
-					<li><a href="<c:url value="bloodOxygen"/>">혈중산소농도</a></li>
-					<li><a href="<c:url value="weight"/>">체중</a></li>
+					<li><a href="${pageContext.request.contextPath}/heartrate">심박수</a></li>
+					<li><a href="${pageContext.request.contextPath}/bloodPressure">혈압</a></li>
+					<li><a href="${pageContext.request.contextPath}/stepCount">걸음수</a></li>
+					<li><a href="${pageContext.request.contextPath}/bloodSugar">혈당</a></li>
+					<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
+					<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
 				</ul></li>
 
-			<li class="treeview"><a href="#"><i class="fa fa-link"></i>
-					<span>Multilevel</span> <span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-				</span> </a>
-				<ul class="treeview-menu">
-					<li><a href="#">Link in level 2</a></li>
-					<li><a href="#">Link in level 2</a></li>
-				</ul></li>
+			<li><a href="${pageContext.request.contextPath}/chooseDoctor"> <i
+					class="fa fa-link"></i> <span>Choose a doctor</span></a></li>
 		</ul>
 		<!-- /.sidebar-menu -->
 	</section>

@@ -45,10 +45,16 @@
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodOxygen.jsp" />
 	</definition>
 	
-<definition name="weight" extends="base">
+	<definition name="weight" extends="base">
 		<put-attribute name="title" value="Weight graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/weight.jsp" />
 	</definition>
+	
+	<definition name="chooseDoctor" extends="base">
+		<put-attribute name="title" value="choose a Doctor" />
+		<put-attribute name="body" value="/WEB-INF/views/content/chooseDoctor.jsp" />
+	</definition>
+	
 
 
 
