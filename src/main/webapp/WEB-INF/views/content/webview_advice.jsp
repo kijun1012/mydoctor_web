@@ -11,7 +11,7 @@
 
 		</div>
 		<!-- /.box-header -->
-		<div class="box-body" style="min-height: 300px;">
+		<div class="box-body" style="min-height: 500px;">
 			<!-- Conversations are loaded here -->
 			<div class="direct-chat-messages">
 
