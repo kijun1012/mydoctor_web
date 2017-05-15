@@ -22,10 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/").access("hasRole('ROLE_USER')").and().formLogin()
-				.successHandler(savedRequestAwareAuthenticationSuccessHandler()).loginPage("/login")
-				.failureUrl("/login?error=1").and().logout().logoutSuccessUrl("/logout").and().csrf().and().rememberMe()
-				.tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1209600);
+		// http.authorizeRequests().antMatchers("/").access("hasRole('ROLE_USER')").and().formLogin()
+		// .successHandler(savedRequestAwareAuthenticationSuccessHandler()).loginPage("/login")
+		// .failureUrl("/login?error=1").and().logout().logoutSuccessUrl("/logout").and().csrf().and().rememberMe()
+		// .tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1209600);
 	}
 
 	@Bean
@@ -35,11 +35,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return db;
 	}
 
-	@Bean
-	public SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() {
-
-		SavedRequestAwareAuthenticationSuccessHandler auth = new SavedRequestAwareAuthenticationSuccessHandler();
-		auth.setTargetUrlParameter("targetUrl");
-		return auth;
-	}
 }
