@@ -153,19 +153,18 @@
 
 		<div class="row">
 			<div class="col-md-6">
-			환자 선택 : 
+				환자 선택 :
 				<div class="btn-group">
 					<button type="button" class="btn btn-default">환자 선택</button>
 					<button type="button" class="btn btn-default dropdown-toggle"
 						data-toggle="dropdown" aria-expanded="false">
 						<span class="caret"></span> <span class="sr-only">Toggle
-							Dropdown</span>
+							Drop down</span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">test</a></li>
-						<li><a href="#">kim</a></li>
-						<li><a href="#">park</a></li>
-						
+						<c:forEach var="assignedUser" items="${userList}">
+							<li><a href="#">${assignedUser.username}</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
