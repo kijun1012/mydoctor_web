@@ -1,17 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
+
 
 
 <!-- Main Header -->
 <header class="main-header">
 
 	<!-- Logo -->
-	<a href="<c:url value="/"/>" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><b>MY</b>Doctor</span>
-	</a>
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<a href="${pageContext.request.contextPath}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
+			<span class="logo-lg"><b>MY</b>Doctor</span>
+		</a>
+	</sec:authorize>
 
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a href="${pageContext.request.contextPath}/doctor" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<span class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
+			<span class="logo-lg"><b>MY</b>Doctor</span>
+		</a>
+	</sec:authorize>
 	<!-- Header Navbar -->
 	<nav class="navbar navbar-static-top" role="navigation">
 		<!-- Sidebar toggle button-->
@@ -169,25 +180,53 @@
 		<ul class="sidebar-menu">
 			<li class="header">MENU</li>
 			<!-- Optionally, you can add icons to the links -->
-			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-link"></i>
-					<span>Dash Board</span></a></li>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<li><a href="${pageContext.request.contextPath}"><i
+						class="fa fa-link"></i> <span>Dash Board</span></a></li>
+			</sec:authorize>
+
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li><a href="${pageContext.request.contextPath}/doctor"><i
+						class="fa fa-link"></i> <span>Dash Board</span></a></li>
+			</sec:authorize>
 
 			<li class="treeview active"><a href="#"><i
 					class="fa fa-link"></i> <span>Data</span> <span
 					class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
-				</span></a>
-				<ul class="treeview-menu">
-					<li><a href="${pageContext.request.contextPath}/heartrate">심박수</a></li>
-					<li><a href="${pageContext.request.contextPath}/bloodPressure">혈압</a></li>
-					<li><a href="${pageContext.request.contextPath}/stepCount">걸음수</a></li>
-					<li><a href="${pageContext.request.contextPath}/bloodSugar">혈당</a></li>
-					<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
-					<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
-				</ul></li>
+				</span></a> <sec:authorize access="hasRole('ROLE_USER')">
+					<ul class="treeview-menu">
+						<li><a href="${pageContext.request.contextPath}/heartrate">심박수</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/bloodPressure">혈압</a></li>
+						<li><a href="${pageContext.request.contextPath}/stepCount">걸음수</a></li>
+						<li><a href="${pageContext.request.contextPath}/bloodSugar">혈당</a></li>
+						<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
+						<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
+					</ul>
+				</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
+					<ul class="treeview-menu">
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/heartrate">심박수</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/bloodPressure">혈압</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/stepCount">걸음수</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/bloodSugar">혈당</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/bloodOxygen">혈중산소농도</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/weight">체중</a></li>
+					</ul>
+				</sec:authorize></li>
 
-			<li><a href="${pageContext.request.contextPath}/chooseDoctor"> <i
-					class="fa fa-link"></i> <span>Choose a doctor</span></a></li>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<li><a href="${pageContext.request.contextPath}/chooseDoctor">
+						<i class="fa fa-link"></i> <span>Choose a doctor</span>
+				</a></li>
+			</sec:authorize>
+
 		</ul>
 		<!-- /.sidebar-menu -->
 	</section>
