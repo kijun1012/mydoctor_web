@@ -36,7 +36,7 @@ public class HeartRate {
 	private int heartRate;
 
 	@MapsId("username")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "username")
 	private User user;
 }
