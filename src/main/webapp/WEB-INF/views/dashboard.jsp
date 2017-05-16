@@ -121,7 +121,7 @@
 				<!-- small box -->
 				<div class="small-box bg-green">
 					<div class="inner">
-						<h3>44</h3>
+						<h3>7.1</h3>
 
 						<p>수면</p>
 					</div>
