@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mydoctor.model.HeartRate;
+import com.mydoctor.module.DataPK;
 
 @Repository
 @Transactional
@@ -50,6 +51,21 @@ public class HeartRateDao {
 		
 		return heartRateList;
 
+	}
+
+	public void deleteHeartRate(String username, String measurement_time) {
+		// TODO Auto-generated method stub
+		DataPK pk = new DataPK(username,measurement_time);
+		Session session = sessionFactory.getCurrentSession();
+		HeartRate heartRate = session.get(HeartRate.class,pk);
+		
+		System.out.println(heartRate.toString());
+		
+		session.delete(heartRate);
+		session.flush();
+		session.clear();
+		
+		
 	}
 
 }

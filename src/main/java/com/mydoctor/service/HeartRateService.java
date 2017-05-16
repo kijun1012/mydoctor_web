@@ -40,4 +40,9 @@ public class HeartRateService {
 		return data;
 
 	}
+
+	public void deleteHeartRate(String username,String measurement_time) {
+		this.heartRateDao.deleteHeartRate(username,measurement_time);
+		
+	}
 }

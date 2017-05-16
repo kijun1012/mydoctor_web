@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mydoctor.model.HeartRate;
@@ -26,30 +30,33 @@ public class HeartRateController {
 	private HeartRateService heartRateService;
 
 	@RequestMapping("/heartrate")
-	public String graph(Model model, HttpServletRequest request) {
+	public String graph(Model model, HttpServletRequest request,
+			@RequestParam(value = "username", required = false) String username) {
 
-		if (request.getQueryString() != null) {
-			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
-			if (st.nextToken().equals("webview")) {
-				String id = st.nextToken();
-				List<HeartRate> heartRatesWeb = this.heartRateService.getHeartRate(id);
-				model.addAttribute("heartRates", heartRatesWeb);
-			}
-			return "webview_heartrate";
+		Device device = DeviceUtils.getCurrentDevice(request);
 
-		} 
-		else {
-			String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		String userId = username;
 
-			List<HeartRate> heartRates = this.heartRateService.getHeartRate(userId);
-			model.addAttribute("heartRates", heartRates);
-			System.out.println(request.getQueryString());
-			return "heartrate";
+		if (username == null) {
+			userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
+
+		
+		List<HeartRate> heartRates = this.heartRateService.getHeartRate(userId);
+		model.addAttribute("heartRates", heartRates);
+
+		if (device.isMobile()) {
+			return "webview_heartrate";
+		}
+
+		return "heartrate";
+
 	}
 
 	@RequestMapping("/heartrate/search")
 	public String search(HttpServletRequest request, Model model) {
+		Device device = DeviceUtils.getCurrentDevice(request);
+
 		StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
 
 		String username = st.nextToken();
@@ -61,17 +68,31 @@ public class HeartRateController {
 
 		model.addAttribute("heartRates", searchData);
 
+		if (device.isMobile()) {
+			return "webview_heartrate";
+		}
+
 		return "heartrate";
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/heartrate/add", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<HeartRate> addHeartRate(@RequestBody HeartRate heartRate){
-		
+	public ResponseEntity<HeartRate> addHeartRate(@RequestBody HeartRate heartRate) {
+
 		this.heartRateService.addHeartRate(heartRate);
-		
-		
-		return new ResponseEntity<HeartRate>(heartRate,HttpStatus.OK);
+
+		return new ResponseEntity<HeartRate>(heartRate, HttpStatus.OK);
 	}
+	
+	@RequestMapping("/heartrate/delete/{username}/{measurement_time}")
+	public String deleteProduct(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request){
+		System.out.println(measurement_time);
+		this.heartRateService.deleteHeartRate(username,measurement_time);
+		
+		return "redirect:/heartrate";
+	}
+	
+	
+	
 }

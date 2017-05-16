@@ -53,7 +53,7 @@
 			<c:if test="${not empty heartRates }">
 				<div class="input-group-addon">
 					<div class="col-md-4">
-						 시작 <input type="text" id="fromDate">
+						시작 <input type="text" id="fromDate">
 					</div>
 					<div class="col-md-4">
 						종료 <input type="text" id="toDate">
@@ -70,29 +70,35 @@
 
 
 
-
-		<table class="table table-striped header-fixed">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>heartRate</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="heartRate" items="${heartRates}">
-
+		<div style="width:100%; height:250px; overflow:auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${heartRate.measurement_time}</td>
-						<td>${heartRate.heartRate }</td>
+						<th>number</th>
+						<th>date</th>
+						<th>heartRate</th>
+						<th></th>
 					</tr>
-					<c:set var="id" value="${id+1}" />
-				</c:forEach>
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="heartRate" items="${heartRates}">
 
-			</tbody>
-		</table>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${heartRate.measurement_time}</td>
+							<td>${heartRate.heartRate }</td>
+							<td><a
+								href="${pageContext.request.contextPath}/heartrate/delete/${heartRate.username}/${heartRate.measurement_time}">
+									<i class="glyphicon glyphicon-remove"></i>
+							</a></td>
+						</tr>
+						<c:set var="id" value="${id+1}" />
+					</c:forEach>
+
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
