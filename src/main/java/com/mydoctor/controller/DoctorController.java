@@ -7,16 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mydoctor.model.AssignedUser;
+import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
+import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.DoctorService;
@@ -45,6 +46,9 @@ public class DoctorController {
 	@Autowired
 	UserCheckListService userCheckListService;
 
+	@Autowired
+	BloodOxygenService bloodOxygenService;
+
 	public static String selectUsername;
 
 	@RequestMapping(value = "")
@@ -59,6 +63,9 @@ public class DoctorController {
 
 		if (username != null) {
 			selectUsername = username;
+		}
+
+		if (selectUsername != null) {
 			System.out.println(selectUsername);
 			model.addAttribute("selectUsername", selectUsername + "님을 선택하였습니다.");
 
@@ -80,15 +87,54 @@ public class DoctorController {
 
 		return "doctor_dashboard";
 	}
-	
+
 	@RequestMapping("/heartrate")
-	public String heartrateByUser(Model model){
-		
+	public String heartrateByUser(Model model) {
+
 		List<HeartRate> heartRates = this.heartRateService.getHeartRate(selectUsername);
 		model.addAttribute("heartRates", heartRates);
-		
-		
-		return "doctor_heartrate";
+
+		return "heartrate";
+	}
+
+	@RequestMapping("/bloodPressure")
+	public String bloodPressureByUser(Model model) {
+		List<BloodPressure> bloodPressure = this.bloodPressureService.getAllBloodPressure(selectUsername);
+		model.addAttribute("bloodPressures", bloodPressure);
+		return "bloodPressure";
+
+	}
+
+	@RequestMapping("/stepCount")
+	public String stepCountByUser(Model model) {
+		List<StepCount> stepCounts = this.stepCountService.getStepCount(selectUsername);
+		model.addAttribute("stepCounts", stepCounts);
+		return "stepCount";
+	}
+
+	@RequestMapping("/bloodSugar")
+	public String bloodSugarByUser(Model model) {
+		List<BloodSugar> bloodSugar = this.bloodSugarService.getBloodSugar(selectUsername);
+		model.addAttribute("bloodSugars", bloodSugar);
+
+		return "bloodSugar";
+	}
+
+	@RequestMapping("/bloodOxygen")
+	public String bloodOxygenByUser(Model model) {
+		List<BloodOxygen> bloodOxygen = this.bloodOxygenService.getAllBloodOxygen(selectUsername);
+		model.addAttribute("bloodOxygens", bloodOxygen);
+
+		return "bloodOxygen";
+	}
+
+	@RequestMapping("/weight")
+	public String weightByUser(Model model) {
+
+		List<Weight> weights = this.weightService.getAllWeight(selectUsername);
+		model.addAttribute("weights", weights);
+
+		return "weight";
 	}
 
 }
