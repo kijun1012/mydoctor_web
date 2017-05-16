@@ -109,13 +109,18 @@
 
 	<definition name="doctor" template="/WEB-INF/views/include/layout.jsp">
 		<put-attribute name="title" value="My Doctor - doctor" />
-		<put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/doctor/doctor_header.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
 	</definition>
 	
 	<definition name="doctor_dashboard" extends="doctor">
 		<put-attribute name="title" value="My Doctor's DashBoard" />
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctor_dashboard.jsp" />
+	</definition>
+	
+	<definition name="doctor_heartrate" extends="doctor">
+		<put-attribute name="title" value="Heart Rate graph" />
+		<put-attribute name="body" value="/WEB-INF/views/content/heartrate.jsp" />
 	</definition>
 
 </tiles-definitions>
