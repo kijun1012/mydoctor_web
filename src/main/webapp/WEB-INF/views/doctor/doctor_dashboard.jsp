@@ -163,10 +163,13 @@
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<c:forEach var="assignedUser" items="${userList}">
-							<li><a href="#">${assignedUser.username}</a></li>
+							<li><a href="?username=${assignedUser.username}">${assignedUser.username}</a></li>
 						</c:forEach>
 					</ul>
 				</div>
+				<c:if test="${not empty selectUsername}">
+					${selectUsername}
+				</c:if>
 			</div>
 		</div>
 
@@ -174,4 +177,17 @@
 	</section>
 	<!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+<script>
+
+
+
+</script>
+<script type="text/javascript">
+function selectUser(s_page,s_name,s_value){
+	  var f=document.goLink;  //폼 name
+	  f.s_name.value = s_name;  //POST방식으로 넘기고 싶은 값
+	  f.s_value.value = s_value;  //POST방식으로 넘기고 싶은 값
+	  f.action="XXXXXXX.php";  //이동할 페이지
+	  f.method="post";  //POST방식
+	  f.submit();
+</script>
