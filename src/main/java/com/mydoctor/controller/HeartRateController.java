@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.service.HeartRateService;
@@ -85,10 +86,14 @@ public class HeartRateController {
 		return new ResponseEntity<HeartRate>(heartRate, HttpStatus.OK);
 	}
 	
+	
+	
 	@RequestMapping("/heartrate/delete/{username}/{measurement_time}")
-	public String deleteProduct(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request){
+	public String deleteProduct(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request,RedirectAttributes redirectAttributes){
 		System.out.println(measurement_time);
 		this.heartRateService.deleteHeartRate(username,measurement_time);
+		
+		redirectAttributes.addAttribute("username",username);
 		
 		return "redirect:/heartrate";
 	}
