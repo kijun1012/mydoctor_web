@@ -47,14 +47,14 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	
+
 	<!-- spring security 사용을 위한 filter 선언 -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
-	
- 	<filter-mapping>
+
+	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
@@ -63,4 +63,15 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+<!-- spring moblie device 사용을 위한 filter 선언 -->
+	<filter>
+		<filter-name>deviceResolverRequestFilter</filter-name>
+		<filter-class>org.springframework.mobile.device.DeviceResolverRequestFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>deviceResolverRequestFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>
