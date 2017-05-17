@@ -46,8 +46,10 @@
 		<div class="input-group">
 
 			<c:if test="${empty heartRates}">
-
-				<h2 class="text-yellow">저장된 데이터가 없습니다.</h2>
+				<h2 class="text-yellow">
+					저장된 데이터가 없습니다. <a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/heartrate" role="button">Back</a>
+				</h2>
 			</c:if>
 
 			<c:if test="${not empty heartRates }">
@@ -105,6 +107,7 @@
 <script type="text/javascript">
 	var result = new Array();
 	var time = new Array();
+	var date = new Array();
 	var number = 1;
 
 	<c:forEach var="heartRate" items = "${heartRates}">

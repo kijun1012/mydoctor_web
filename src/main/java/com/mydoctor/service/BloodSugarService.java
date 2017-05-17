@@ -38,4 +38,19 @@ public class BloodSugarService {
 		return this.bloodSugarDao.addBloodSugar(bgList);
 
 	}
+	
+	public List<BloodSugar> getBloodSugarByDate(String username, String fromDate, String toDate) {
+
+		fromDate = fromDate + " 00:00:00";
+		toDate = toDate + " 23:59:59";
+		List<BloodSugar> data = this.bloodSugarDao.getBloodSugarByDate(username, fromDate, toDate);
+
+		return data;
+
+	}
+
+	public void deleteBloodSugar(String username,String measurement_time) {
+		this.bloodSugarDao.deleteBloodSugar(username,measurement_time);
+		
+	}
 }

@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.HeartRate;
+import com.mydoctor.module.DataPK;
 
 @Repository
 @Transactional
@@ -60,6 +62,37 @@ public class BloodSugarDao {
 		status.add(Integer.toString(lastCount));
 		return status;
 
+	}
+	
+	public List<BloodSugar> getBloodSugarByDate(String username, String fromDate, String toDate) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from BloodSugar as hr where hr.username=:username and hr.measurement_time between :fromDate and :toDate";
+		Query query = session.createQuery(hql);
+		query.setParameter("username", username);
+		query.setParameter("fromDate", fromDate);
+		query.setParameter("toDate", toDate);
+
+		@SuppressWarnings("unchecked")
+		List<BloodSugar> bloodSugarList = query.list();
+		session.clear();
+		
+		return bloodSugarList;
+
+	}
+	
+	public void deleteBloodSugar(String username, String measurement_time) {
+		// TODO Auto-generated method stub
+		DataPK pk = new DataPK(username,measurement_time);
+		Session session = sessionFactory.getCurrentSession();
+		BloodSugar bloodSugar = session.get(BloodSugar.class, pk);
+		
+		System.out.println(bloodSugar.toString());
+		
+		session.delete(bloodSugar);
+		session.flush();
+		session.clear();
+		
+		
 	}
 
 }

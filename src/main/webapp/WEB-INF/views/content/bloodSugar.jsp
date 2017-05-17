@@ -42,29 +42,62 @@
 	</div>
 	<div class="col-md-6">
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>bloodSugar</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="bloodSugar" items="${bloodSugars}">
+		<div class="input-group">
 
+			<c:if test="${empty bloodSugars}">
+				<h2 class="text-yellow">
+					저장된 데이터가 없습니다. <a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/bloodSugar" role="button">Back</a>
+				</h2>
+
+			</c:if>
+
+			<c:if test="${not empty bloodSugars }">
+				<div class="input-group-addon">
+					<div class="col-md-4">
+						시작 <input type="text" id="fromDate">
+					</div>
+					<div class="col-md-4">
+						종료 <input type="text" id="toDate">
+
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-default" id="search">조회하기</button>
+					</div>
+
+				</div>
+			</c:if>
+
+		</div>
+		<div style="width: 100%; height: 250px; overflow: auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${bloodSugar.measurement_time}</td>
-						<td>${bloodSugar.BG }</td>
+						<th>number</th>
+						<th>date</th>
+						<th>bloodSugar</th>
 					</tr>
-					<c:set var="id" value="${id+1}" />
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="bloodSugar" items="${bloodSugars}">
 
-				</c:forEach>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${bloodSugar.measurement_time}</td>
+							<td>${bloodSugar.BG }</td>
+							<td><a
+								href="${pageContext.request.contextPath}/heartrate/delete/${heartRate.username}/${heartRate.measurement_time}">
+									<i class="glyphicon glyphicon-remove"></i>
+							</a></td>
+						</tr>
+						<c:set var="id" value="${id+1}" />
 
-			</tbody>
-		</table>
+					</c:forEach>
+
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -90,7 +123,7 @@
 	var lineChartData = {
 		labels : time,
 		datasets : [ {
-			label : "Electronics",
+			label : "BloodSugar",
 			fillColor : "rgba(210, 214, 222, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
 			pointColor : "rgba(210, 214, 222, 1)",
@@ -164,4 +197,43 @@
 			console.log(activePoints[i].value);
 		}
 	});
+
+	//기간 입력 JS--------------------------------------------------------------------------
+
+	$('#fromDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+	$('#toDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+
+	var s = "${pageContext.request.contextPath}/bloodSugar";
+
+	//s = s + "/search?" + username + "/" + $('#fromDate').val() + "/" + $('#toDate').val();
+
+	$("button#search").on(
+			"click",
+			function() {
+
+				var username = "${bloodSugars[0].username}";
+				var toDate = $('#toDate').val();
+				var fromDate = $('#fromDate').val();
+
+				if (toDate == "" || fromDate == "") {
+					alert("날짜를 입력해주세요!");
+				} else {
+					var url = s + "/search?" + username + "/" + fromDate + "/"
+							+ toDate;
+
+					window.location.href = url;
+				}
+			});
 </script>
