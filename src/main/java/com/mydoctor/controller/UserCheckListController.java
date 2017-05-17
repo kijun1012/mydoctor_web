@@ -47,7 +47,7 @@ public class UserCheckListController {
 		currentUserCheckList.setWeight(checkList.getWeight());
 		currentUserCheckList.setSex(checkList.getSex());
 		
-		
+		//weight 테이블에 레코드 없는 경우 checklist/set 요청 올때 weight을 테이블에 추가
 		Weight weight = new Weight();
 		weight.setUsername(checkList.getUsername());
 		Date date = new Date();
