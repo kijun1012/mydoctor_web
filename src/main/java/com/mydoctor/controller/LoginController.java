@@ -34,7 +34,6 @@ import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
 import com.mydoctor.model.UserCheckList;
-import com.mydoctor.model.UserInfo;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.HeartRateService;
@@ -58,10 +57,10 @@ public class LoginController {
 
 	@Autowired
 	private StepCountService stepCountService;
-	
+
 	@Autowired
 	private UserCheckListService userCheckListService;
-	
+
 	static AuthenticationManager am = new SampleAuthenticationManager();
 
 	@RequestMapping("/login")
@@ -105,7 +104,7 @@ public class LoginController {
 	public UserCheckList login(@RequestBody User user) throws ClientProtocolException, IOException {
 		System.out.println(user.getId());
 		System.out.println(user.getPassword());
-		//UserInfo userInfo = new UserInfo();
+		// UserInfo userInfo = new UserInfo();
 		UserCheckList currentUserCheckList = new UserCheckList();
 		currentUserCheckList.setUser(user);
 		try {
@@ -113,13 +112,12 @@ public class LoginController {
 			Authentication result = am.authenticate(request);
 			SecurityContextHolder.getContext().setAuthentication(result);
 
-			//user.setIslogin(true);
-			//this.loginService.setIsLogin(user);
+			// user.setIslogin(true);
+			// this.loginService.setIsLogin(user);
 			/*
 			 * 최근꺼 가져와야함.
 			 */
 
-			
 			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(user.getId());
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(user.getId());
 			StepCount stepCount = this.stepCountService.getRecentStepCount(user.getId());
@@ -127,21 +125,40 @@ public class LoginController {
 
 			currentUserCheckList = userCheckListService.findById(user.getId());
 			System.out.println(currentUserCheckList);
+
 			currentUserCheckList.getUser().setIslogin(true);
-			currentUserCheckList.setLastHP(Integer.parseInt(bloodPressure.getHP()));
-			currentUserCheckList.setLastHR(Integer.parseInt(bloodPressure.getHR()));
-			currentUserCheckList.setLastHeartrate(heartRate.getHeartRate());
-			currentUserCheckList.setLastStepcount(stepCount.getStepCount());
-			currentUserCheckList.setLastBloodsugar(Integer.parseInt(bloodSugar.getBG()));
-			
 			if (currentUserCheckList == null) {
 				throw new UserNotFoundException(user.getId());
 			}
-			
-			//System.out.println("app dashboard" + userInfo);
+
+			if (bloodPressure == null) {
+				currentUserCheckList.setLastHP(0);
+				currentUserCheckList.setLastHR(0);
+			} else {
+				currentUserCheckList.setLastHP(Integer.parseInt(bloodPressure.getHP()));
+				currentUserCheckList.setLastHR(Integer.parseInt(bloodPressure.getHR()));
+			}
+
+			if (heartRate == null)
+				currentUserCheckList.setLastHeartrate(0);
+			else
+				currentUserCheckList.setLastHeartrate(heartRate.getHeartRate());
+
+			if (stepCount == null)
+				currentUserCheckList.setLastStepcount(0);
+			else
+				currentUserCheckList.setLastStepcount(stepCount.getStepCount());
+
+			if (bloodSugar == null)
+				currentUserCheckList.setLastBloodsugar(0);
+			else
+				currentUserCheckList.setLastBloodsugar(Integer.parseInt(bloodSugar.getBG()));
+
+		
+			// System.out.println("app dashboard" + userInfo);
 
 		} catch (AuthenticationException e) {
-		
+
 			System.out.println("Authentication failed: " + e.getMessage());
 		}
 		System.out.println("success  " + SecurityContextHolder.getContext().getAuthentication());
@@ -151,7 +168,8 @@ public class LoginController {
 
 	/**
 	 * Check if user is login by remember me cookie, refer
-	 * org.springframework.security.authentication.AuthenticationTrustResolverImpl
+	 * org.springframework.security.authentication.
+	 * AuthenticationTrustResolverImpl
 	 */
 	private boolean isRememberMeAuthenticated() {
 
