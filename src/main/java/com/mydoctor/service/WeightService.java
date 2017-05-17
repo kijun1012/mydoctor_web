@@ -27,11 +27,15 @@ public class WeightService {
 			return weightList.get(weightList.size() - 1);
 	}
 	
-	public List<String> addWeight(List<Weight> weightList, String userId){
+	public List<String> addWeightByList(List<Weight> weightList, String userId){
 		for (int i = 0; i < weightList.size(); i++) {
 			weightList.get(i).setUsername(userId);
 		}
-		return this.weightDao.addWeight(weightList,userId);
+		return this.weightDao.addWeightByList(weightList,userId);
+	}
+	
+	public void addWeight(Weight weight) {
+		this.weightDao.addWeight(weight);
 	}
 
 }

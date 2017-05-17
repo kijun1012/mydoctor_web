@@ -196,7 +196,7 @@ public class IhealthController {
 
 		weightList = JsonPassingModule.jsonArrayToObject(jsonArray, Weight.class);
 
-		List<String> status = this.weightService.addWeight(weightList, username);
+		List<String> status = this.weightService.addWeightByList(weightList, username);
 
 		IhealthDataListStatus weightStatus = new IhealthDataListStatus("Ã¼Áß", status.get(0), status.get(1), status.get(2));
 
