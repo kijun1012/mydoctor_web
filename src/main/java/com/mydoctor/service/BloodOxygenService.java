@@ -18,7 +18,7 @@ public class BloodOxygenService {
 		return this.bloodOxygenDao.getBloodOxygen(userId);
 	}
 
-	public BloodOxygen getRecentBloodPressure(String userId) {
+	public BloodOxygen getRecentBloodOxygen(String userId) {
 		List<BloodOxygen> bloodOxygenList = this.bloodOxygenDao.getBloodOxygen(userId);
 		if (bloodOxygenList.isEmpty())
 			return null;

@@ -28,12 +28,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mydoctor.exception.UserNotFoundException;
+import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
 import com.mydoctor.model.UserCheckList;
+import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.HeartRateService;
@@ -57,6 +59,9 @@ public class LoginController {
 
 	@Autowired
 	private StepCountService stepCountService;
+	
+	@Autowired
+	private BloodOxygenService bloodOxygenService;
 
 	@Autowired
 	private UserCheckListService userCheckListService;
@@ -122,7 +127,8 @@ public class LoginController {
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(user.getId());
 			StepCount stepCount = this.stepCountService.getRecentStepCount(user.getId());
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
-
+			BloodOxygen bloodOxygen = this.bloodOxygenService.getRecentBloodOxygen(user.getId());
+			
 			currentUserCheckList = userCheckListService.findById(user.getId());
 			System.out.println(currentUserCheckList);
 
@@ -153,6 +159,11 @@ public class LoginController {
 				currentUserCheckList.setLastBloodsugar(0);
 			else
 				currentUserCheckList.setLastBloodsugar(Integer.parseInt(bloodSugar.getBG()));
+			
+			if (bloodOxygen == null)
+				currentUserCheckList.setLastBloodoxygen(0);
+			else
+				currentUserCheckList.setLastBloodoxygen(bloodOxygen.getBO());
 
 		
 			// System.out.println("app dashboard" + userInfo);
