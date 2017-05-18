@@ -18,6 +18,7 @@ import com.mydoctor.model.AssignedUser;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
+import com.mydoctor.model.SleepingTime;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
@@ -26,6 +27,7 @@ import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.ChooseDoctorService;
 import com.mydoctor.service.HeartRateService;
+import com.mydoctor.service.SleepingTimeService;
 import com.mydoctor.service.StepCountService;
 import com.mydoctor.service.UserCheckListService;
 import com.mydoctor.service.WeightService;
@@ -52,6 +54,8 @@ public class DashboardController {
 	ChooseDoctorService chooseDoctorService;
 	@Autowired
 	AdviceService adviceService;
+	@Autowired
+	SleepingTimeService sleepingTimeService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String dashboard(Model model) {
@@ -62,6 +66,7 @@ public class DashboardController {
 		StepCount stepCount = this.stepCountService.getRecentStepCount(userId);
 		BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(userId);
 		Weight weight = this.weightService.getRecentWeight(userId);
+		SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(userId);
 		UserCheckList curCheckList = userCheckListService.findById(userId);
 		List<Advice> adviceList = this.adviceService.getAdvice(userId);
 
@@ -71,6 +76,7 @@ public class DashboardController {
 		model.addAttribute("stepCount", stepCount);
 		model.addAttribute("height", curCheckList.getHeight());
 		model.addAttribute("weight", curCheckList.getWeight());
+		model.addAttribute("sleepingTime",sleepingTime);
 		model.addAttribute("advices",adviceList);
 
 		return "dashboard";
