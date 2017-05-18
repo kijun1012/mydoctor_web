@@ -105,11 +105,11 @@ public class DoctorController {
 
 	}
 
-	@RequestMapping("/stepCount")
+	@RequestMapping("/stepcount")
 	public String stepCountByUser(Model model) {
 		List<StepCount> stepCounts = this.stepCountService.getStepCount(selectUsername);
 		model.addAttribute("stepCounts", stepCounts);
-		return "stepCount";
+		return "stepcount";
 	}
 
 	@RequestMapping("/bloodSugar")
