@@ -30,7 +30,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodPressure.jsp" />
 	</definition>
 	
-	<definition name="stepCount" extends="base">
+	<definition name="stepcount" extends="base">
 		<put-attribute name="title" value="Step Count graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
 	</definition>
@@ -76,7 +76,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/content/bloodPressure.jsp" />
 	</definition>
 	
-	<definition name="webview_stepCount" extends="webview">
+	<definition name="webview_stepcount" extends="webview">
 		<put-attribute name="title" value="Step count graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/stepCount.jsp" />
 	</definition>

@@ -87,7 +87,7 @@
 					<div class="icon">
 						<i class="ion-android-walk"></i>
 					</div>
-					<a href="<c:url value="/stepCount"/>" class="small-box-footer">More
+					<a href="<c:url value="/stepcount"/>" class="small-box-footer">More
 						info <i class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>

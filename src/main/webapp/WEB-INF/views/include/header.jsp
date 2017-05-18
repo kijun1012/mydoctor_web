@@ -199,7 +199,7 @@
 						<li><a href="${pageContext.request.contextPath}/heartrate">심박수</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/bloodPressure">혈압</a></li>
-						<li><a href="${pageContext.request.contextPath}/stepCount">걸음수</a></li>
+						<li><a href="${pageContext.request.contextPath}/stepcount">걸음수</a></li>
 						<li><a href="${pageContext.request.contextPath}/bloodSugar">혈당</a></li>
 						<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
 						<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
@@ -211,7 +211,7 @@
 						<li><a
 							href="${pageContext.request.contextPath}/doctor/bloodPressure">혈압</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/doctor/stepCount">걸음수</a></li>
+							href="${pageContext.request.contextPath}/doctor/stepcount">걸음수</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/doctor/bloodSugar">혈당</a></li>
 						<li><a
