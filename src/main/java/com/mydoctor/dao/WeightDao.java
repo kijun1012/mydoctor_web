@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
+import com.mydoctor.module.DataPK;
 
 @Repository
 @Transactional
@@ -69,6 +71,35 @@ public class WeightDao {
 		
 		session.flush();
 		session.clear();
+	}
+
+	public List<Weight> getWeightByDate(String username, String fromDate, String toDate) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Weight as w where w.username=:username and w.measurement_time between :fromDate and :toDate";
+		Query query = session.createQuery(hql);
+		query.setParameter("username", username);
+		query.setParameter("fromDate", fromDate);
+		query.setParameter("toDate", toDate);
+
+		@SuppressWarnings("unchecked")
+		List<Weight> weightList = query.list();
+		session.clear();
+		
+		return weightList;
+	}
+
+	public void deleteWeight(String username, String measurement_time) {
+		// TODO Auto-generated method stub
+				DataPK pk = new DataPK(username,measurement_time);
+				Session session = sessionFactory.getCurrentSession();
+				Weight weight = session.get(Weight.class,pk);
+				
+				System.out.println(weight.toString());
+				
+				session.delete(weight);
+				session.flush();
+				session.clear();
+		
 	}
 
 }

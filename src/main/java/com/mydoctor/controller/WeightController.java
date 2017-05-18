@@ -6,11 +6,17 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.Weight;
 import com.mydoctor.service.WeightService;
 
@@ -21,25 +27,82 @@ public class WeightController {
 	private WeightService weightService;
 
 	@RequestMapping("/weight")
-	public String step(Model model, HttpServletRequest request) {
-		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<Weight> weights = this.weightService.getAllWeight(userId);
-		model.addAttribute("weights", weights);
-		
-		//System.out.println(weights.get(0).toString());
+	public String weight(Model model, HttpServletRequest request,
+			@RequestParam(value = "username", required = false) String username) {
 
-		if (request.getQueryString() != null) {
-			StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
-			if (st.nextToken().equals("webview")) {
-				String id = st.nextToken();
-				List<Weight> weightsWeb = this.weightService.getAllWeight(id);
-				model.addAttribute("weights", weightsWeb);
-			}
-			return "webview_weight";
-		} else {
-			return "weight";
+		Device device = DeviceUtils.getCurrentDevice(request);
+
+		String userId = username;
+
+		if (username == null) {
+			userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
 
+		List<Weight> weights = this.weightService.getAllWeight(userId);
+		model.addAttribute("weights", weights);
+
+		if (device.isMobile()) {
+			return "webview_weight";
+		}
+
+		return "weight";
+
+		// String userId =
+		// SecurityContextHolder.getContext().getAuthentication().getName();
+		// List<Weight> weights = this.weightService.getAllWeight(userId);
+		// model.addAttribute("weights", weights);
+		//
+		// //System.out.println(weights.get(0).toString());
+		//
+		// if (request.getQueryString() != null) {
+		// StringTokenizer st = new StringTokenizer(request.getQueryString(),
+		// "/");
+		// if (st.nextToken().equals("webview")) {
+		// String id = st.nextToken();
+		// List<Weight> weightsWeb = this.weightService.getAllWeight(id);
+		// model.addAttribute("weights", weightsWeb);
+		// }
+		// return "webview_weight";
+		// } else {
+		// return "weight";
+		// }
+
 	}
+	
+	@RequestMapping("/weight/search")
+	public String search(HttpServletRequest request, Model model) {
+		Device device = DeviceUtils.getCurrentDevice(request);
+
+		StringTokenizer st = new StringTokenizer(request.getQueryString(), "/");
+
+		String username = st.nextToken();
+		String fromDate = st.nextToken();
+		String toDate = st.nextToken();
+		System.out.println(username + fromDate + toDate);
+
+		List<Weight> searchData = this.weightService.getWeightByDate(username, fromDate, toDate);
+
+		model.addAttribute("weights", searchData);
+
+		if (device.isMobile()) {
+			return "webview_weight";
+		}
+
+		return "weight";
+
+	}
+	
+	@RequestMapping("/weight/delete/{username}/{measurement_time}")
+	public String deleteProduct(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request,RedirectAttributes redirectAttributes){
+		System.out.println(measurement_time);
+		this.weightService.deleteWeight(username,measurement_time);
+		
+		redirectAttributes.addAttribute("username",username);
+		
+		return "redirect:/weight";
+	}
+	
+	
+	
 
 }
