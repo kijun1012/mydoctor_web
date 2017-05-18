@@ -1,5 +1,7 @@
 package com.mydoctor.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mydoctor.model.Advice;
 import com.mydoctor.model.AssignedUser;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
@@ -18,6 +21,7 @@ import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
+import com.mydoctor.service.AdviceService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.ChooseDoctorService;
@@ -46,6 +50,8 @@ public class DashboardController {
 	UserCheckListService userCheckListService;
 	@Autowired
 	ChooseDoctorService chooseDoctorService;
+	@Autowired
+	AdviceService adviceService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String dashboard(Model model) {
@@ -57,6 +63,7 @@ public class DashboardController {
 		BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(userId);
 		Weight weight = this.weightService.getRecentWeight(userId);
 		UserCheckList curCheckList = userCheckListService.findById(userId);
+		List<Advice> adviceList = this.adviceService.getAdvice(userId);
 
 		model.addAttribute("heartRate", heartRate);
 		model.addAttribute("bloodPressure", bloodPressure);
@@ -64,13 +71,9 @@ public class DashboardController {
 		model.addAttribute("stepCount", stepCount);
 		model.addAttribute("height", curCheckList.getHeight());
 		model.addAttribute("weight", curCheckList.getWeight());
+		model.addAttribute("advices",adviceList);
 
 		return "dashboard";
-	}
-
-	@RequestMapping(value = "/advice")
-	public String advice() {
-		return "webview_advice";
 	}
 
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
@@ -87,10 +90,15 @@ public class DashboardController {
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.POST)
 	public String chooseDoctorPost(@Valid AssignedUser assignedUser, BindingResult result, HttpServletRequest request) {
 		System.out.println(assignedUser.toString());
-		
+
 		this.chooseDoctorService.addDoctor(assignedUser);
-		
+
 		return "chooseDoctor";
+	}
+
+	@RequestMapping(value = "/advice")
+	public String advice() {
+		return "webview_advice";
 	}
 
 }

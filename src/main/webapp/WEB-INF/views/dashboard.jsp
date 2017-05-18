@@ -220,7 +220,7 @@
 				<div
 					class="box box-success direct-chat direct-chat-success">
 					<div class="box-header with-border">
-						<h3 class="box-title">데이터 분석 결과</h3>
+						<h3 class="box-title">데이터 분석 결과 및 담당의사 조언</h3>
 
 
 					</div>
@@ -231,6 +231,7 @@
 							
 							
 							<!-- Message. Default to the left -->
+							<c:forEach var="advice" items="${advices}">
 							<div class="direct-chat-msg">
 
 								<!-- /.direct-chat-info -->
@@ -238,43 +239,11 @@
 									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
 									alt="Message User Image">
 								<!-- /.direct-chat-img -->
-								<div class="direct-chat-text">혈압 관리가 필요합니다.</div>
+								<div class="direct-chat-text">${advice.advice}</div>
 								<!-- /.direct-chat-text -->
 							</div>
+							</c:forEach>
 							
-							<div class="direct-chat-msg">
-
-								<!-- /.direct-chat-info -->
-								<img class="direct-chat-img"
-									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-									alt="Message User Image">
-								<!-- /.direct-chat-img -->
-								<div class="direct-chat-text">혈당 관리가 필요합니다.</div>
-								<!-- /.direct-chat-text -->
-							</div>
-							
-							<div class="direct-chat-msg">
-
-								<!-- /.direct-chat-info -->
-								<img class="direct-chat-img"
-									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-									alt="Message User Image">
-								<!-- /.direct-chat-img -->
-								<div class="direct-chat-text">혈압과 혈당 모두 관리가 필요합니다.</div>
-								<!-- /.direct-chat-text -->
-							</div>
-							
-							
-								<!-- Message. Default to the left -->
-							<div class="direct-chat-msg">
-								<!-- /.direct-chat-info -->
-								<img class="direct-chat-img"
-									src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-									alt="Message User Image">
-								<!-- /.direct-chat-img -->
-								<div class="direct-chat-text">건강합니다!</div>
-								<!-- /.direct-chat-text -->
-							</div>
 						
 						
 						
