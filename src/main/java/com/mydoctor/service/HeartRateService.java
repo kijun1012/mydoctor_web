@@ -27,10 +27,6 @@ public class HeartRateService {
 
 	}
 
-	public void addHeartRate(HeartRate heartRate) {
-		this.heartRateDao.addHeartRate(heartRate);
-	}
-
 	public List<HeartRate> getHeartRateByDate(String username, String fromDate, String toDate) {
 
 		fromDate = fromDate + " 00:00:00";
@@ -41,8 +37,12 @@ public class HeartRateService {
 
 	}
 
-	public void deleteHeartRate(String username,String measurement_time) {
-		this.heartRateDao.deleteHeartRate(username,measurement_time);
-		
+	public void addHeartRate(HeartRate heartRate) {
+		this.heartRateDao.addHeartRate(heartRate);
+	}
+
+	public void deleteHeartRate(String username, String measurement_time) {
+		this.heartRateDao.deleteHeartRate(username, measurement_time);
+
 	}
 }
