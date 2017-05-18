@@ -40,6 +40,7 @@ public class BloodSugarDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(bloodSugar);
 		session.flush();
+		session.clear();
 	}
 
 	public List<String> addBloodSugar(List<BloodSugar> bgList) {
