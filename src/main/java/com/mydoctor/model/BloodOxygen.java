@@ -36,7 +36,7 @@ public class BloodOxygen {
 	private int BO; // Ç÷Áß»ê¼Ò³óµµ
 
 	@MapsId("username")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "username")
 	private User user;
 	
