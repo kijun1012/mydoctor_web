@@ -71,5 +71,13 @@ public class BloodOxygenDao {
 		
 	}
 
+	public void addBloodOxygen(BloodOxygen bloodOxygen) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(bloodOxygen);
+		session.flush();
+		session.clear();
+		
+	}
+
 	
 }

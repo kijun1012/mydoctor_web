@@ -47,4 +47,9 @@ public class BloodOxygenService {
 		
 		
 	}
+
+	public void addBloodOxygen(BloodOxygen bloodOxygen) {
+		this.bloodOxygenDao.addBloodOxygen(bloodOxygen);
+		
+	}
 }
