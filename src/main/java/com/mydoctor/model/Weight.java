@@ -34,7 +34,7 @@ public class Weight {
 	private double WeightValue;
 	
 	@MapsId("username")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "username")
 	private User user;
 	
