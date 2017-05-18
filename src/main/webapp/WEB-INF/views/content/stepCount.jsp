@@ -19,7 +19,7 @@
 		<!-- BAR CHART -->
 		<div class="box box-success">
 			<div class="box-header with-border">
-				<h3 class="box-title">Bar Chart</h3>
+				<h3 class="box-title">걸음수</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
@@ -40,13 +40,42 @@
 		</div>
 	</div>
 	<div class="col-md-6">
+	
+		<div class="input-group">
 
+			<c:if test="${empty stepCounts}">
+				<h2 class="text-yellow">
+					저장된 데이터가 없습니다. <a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/stepcount" role="button">Back</a>
+				</h2>
+			</c:if>
+
+			<c:if test="${not empty stepCounts }">
+				<div class="input-group-addon">
+					<div class="col-md-4">
+						시작 <input type="text" id="fromDate">
+					</div>
+					<div class="col-md-4">
+						종료 <input type="text" id="toDate">
+
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-default" id="search">조회하기</button>
+					</div>
+
+				</div>
+			</c:if>
+
+		</div>
+		
+		<div style="width:100%; height:250px; overflow:auto">
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>number</th>
 					<th>date</th>
 					<th>stepCount</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,12 +86,17 @@
 						<td><c:out value="${id}" /></td>
 						<td>${stepCount.measurement_time}</td>
 						<td>${stepCount.stepCount }</td>
+						<td><a
+								href="${pageContext.request.contextPath}/stepcount/delete/${stepCount.username}/${stepCount.measurement_time}">
+									<i class="glyphicon glyphicon-remove"></i>
+							</a></td>
 					</tr>
 					<c:set var="id" value="${id+1}" />
 				</c:forEach>
 
 			</tbody>
 		</table>
+		</div>
 	</div>
 </div>
 
@@ -70,6 +104,7 @@
 	var result = new Array();
 	var time = new Array();
 	var number = 1;
+	
 	<c:forEach var="stepCount" items = "${stepCounts}">
 	result.push("${stepCount.stepCount}");
 	//time.push("${stepCount.measurement_time}");
@@ -147,4 +182,43 @@
 			console.log(activeBars[i].value);
 		}
 	});
+	
+	//기간 입력 JS--------------------------------------------------------------------------
+
+	$('#fromDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+	$('#toDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+
+	var s = "${pageContext.request.contextPath}/stepcount";
+
+	//s = s + "/search?" + username + "/" + $('#fromDate').val() + "/" + $('#toDate').val();
+
+	$("button#search").on(
+			"click",
+			function() {
+
+				var username = "${stepCounts[0].username}";
+				var toDate = $('#toDate').val();
+				var fromDate = $('#fromDate').val();
+
+				if (toDate == "" || fromDate == "") {
+					alert("날짜를 입력해주세요!");
+				} else {
+					var url = s + "/search?" + username + "/" + fromDate + "/"
+							+ toDate;
+
+					window.location.href = url;
+				}
+			});
 </script>
