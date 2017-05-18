@@ -2,13 +2,19 @@ package com.mydoctor.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mydoctor.model.Advice;
 import com.mydoctor.model.AssignedUser;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
@@ -135,6 +141,28 @@ public class DoctorController {
 		model.addAttribute("weights", weights);
 
 		return "weight";
+	}
+	
+	@RequestMapping(value = "/advice", method = RequestMethod.GET)
+	public String advice(Model model){
+		Advice advice = new Advice();
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		advice.setDoctorname(userId);
+		advice.setUsername(selectUsername);
+		
+		model.addAttribute("advice",advice);
+		
+		
+		return "advice";
+	}
+	
+	@RequestMapping(value = "/advice", method = RequestMethod.POST)
+	public String advicePost(@Valid Advice advice, BindingResult result, HttpServletRequest request){
+	
+		System.out.println(advice.toString());
+		this.doctorService.addAdvice(advice);
+		
+		return "advice";
 	}
 
 }

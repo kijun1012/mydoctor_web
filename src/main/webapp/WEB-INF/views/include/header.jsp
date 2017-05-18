@@ -226,6 +226,12 @@
 						<i class="fa fa-link"></i> <span>Choose a doctor</span>
 				</a></li>
 			</sec:authorize>
+			
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li><a href="${pageContext.request.contextPath}/doctor/advice">
+						<i class="fa fa-link"></i> <span>advice</span>
+				</a></li>
+			</sec:authorize>
 
 		</ul>
 		<!-- /.sidebar-menu -->

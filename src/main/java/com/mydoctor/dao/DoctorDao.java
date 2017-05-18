@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mydoctor.model.Advice;
 import com.mydoctor.model.AssignedUser;
 
 @Repository
@@ -27,6 +28,15 @@ public class DoctorDao {
 		List<AssignedUser> userList = query.list();
 		System.out.println(userList.get(0).toString());
 		return userList;
+	}
+
+	public void addAdvice(Advice advice) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save("Advice", advice);
+		
+		session.flush();
+		session.clear();
+		
 	}
 
 }
