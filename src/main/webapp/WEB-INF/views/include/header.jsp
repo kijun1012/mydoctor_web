@@ -18,8 +18,9 @@
 	</sec:authorize>
 
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<a href="${pageContext.request.contextPath}/doctor" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
+		<a href="${pageContext.request.contextPath}/doctor" class="logo">
+			<!-- mini logo for sidebar mini 50x50 pixels --> <span
+			class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
 			<span class="logo-lg"><b>MY</b>Doctor</span>
 		</a>
 	</sec:authorize>
@@ -203,6 +204,7 @@
 						<li><a href="${pageContext.request.contextPath}/bloodSugar">혈당</a></li>
 						<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
 						<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
+						<li><a href="${pageContext.request.contextPath}/sleepingtime">수면시간</a></li>
 					</ul>
 				</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
 					<ul class="treeview-menu">
@@ -218,6 +220,8 @@
 							href="${pageContext.request.contextPath}/doctor/bloodOxygen">혈중산소농도</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/doctor/weight">체중</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/doctor/sleepingtime">수면시간</a></li>
 					</ul>
 				</sec:authorize></li>
 
@@ -226,7 +230,7 @@
 						<i class="fa fa-link"></i> <span>Choose a doctor</span>
 				</a></li>
 			</sec:authorize>
-			
+
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li><a href="${pageContext.request.contextPath}/doctor/advice">
 						<i class="fa fa-link"></i> <span>advice</span>
