@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.HeartRate;
+import com.mydoctor.module.DataPK;
 
 @Repository
 @Transactional
@@ -54,5 +56,34 @@ public class BloodPressureDao {
 		System.out.println(userId);
 		return bloodPressureList;
 
+	}
+
+	public List<BloodPressure> getBloodPressureByDate(String username, String fromDate, String toDate) {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from BloodPressure as bp where bp.username=:username and bp.measurement_time between :fromDate and :toDate";
+		Query query = session.createQuery(hql);
+		query.setParameter("username", username);
+		query.setParameter("fromDate", fromDate);
+		query.setParameter("toDate", toDate);
+
+		@SuppressWarnings("unchecked")
+		List<BloodPressure> bloodPressureList = query.list();
+		session.clear();
+		
+		return bloodPressureList;
+	}
+
+	public void deletebloodPressure(String username, String measurement_time) {
+		
+		DataPK pk = new DataPK(username,measurement_time);
+		Session session = sessionFactory.getCurrentSession();
+		BloodPressure bloodPressure = session.get(BloodPressure.class,pk);
+		
+		System.out.println(bloodPressure.toString());
+		
+		session.delete(bloodPressure);
+		session.flush();
+		session.clear();
+		
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodPressure;
+import com.mydoctor.model.HeartRate;
 
 @Service
 public class BloodPressureService {
@@ -33,5 +34,20 @@ public class BloodPressureService {
 		}
 		return this.bloodPressureDao.addBloodPressure(bpList);
 
+	}
+
+	public List<BloodPressure> getBloodPressureByDate(String username, String fromDate, String toDate) {
+		
+		
+		fromDate = fromDate + " 00:00:00";
+		toDate = toDate + " 23:59:59";
+		List<BloodPressure> data = this.bloodPressureDao.getBloodPressureByDate(username, fromDate, toDate);
+
+		return data;
+	}
+
+	public void deletebloodPressure(String username, String measurement_time) {
+		this.bloodPressureDao.deletebloodPressure(username,measurement_time);
+		
 	}
 }

@@ -42,30 +42,65 @@
 	</div>
 	<div class="col-md-6">
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>min</th>
-					<th>max</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="bloodPressure" items="${bloodPressures}">
+		<div class="input-group">
 
+			<c:if test="${empty bloodPressures}">
+				<h2 class="text-yellow">
+					저장된 데이터가 없습니다. <a class="btn btn-primary"
+						href="${pageContext.request.contextPath}/bloodPressure"
+						role="button">Back</a>
+				</h2>
+			</c:if>
+
+			<c:if test="${not empty bloodPressures }">
+				<div class="input-group-addon">
+					<div class="col-md-4">
+						시작 <input type="text" id="fromDate">
+					</div>
+					<div class="col-md-4">
+						종료 <input type="text" id="toDate">
+
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-default" id="search">조회하기</button>
+					</div>
+
+				</div>
+			</c:if>
+
+		</div>
+
+		<div style="width: 100%; height: 250px; overflow: auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${bloodPressure.measurement_time}</td>
-						<td>${bloodPressure.HR}</td>
-						<td>${bloodPressure.HP}</td>
+						<th>number</th>
+						<th>date</th>
+						<th>min</th>
+						<th>max</th>
+						<th></th>
 					</tr>
-					<c:set var="id" value="${id+1}" />
-				</c:forEach>
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="bloodPressure" items="${bloodPressures}">
 
-			</tbody>
-		</table>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${bloodPressure.measurement_time}</td>
+							<td>${bloodPressure.HR}</td>
+							<td>${bloodPressure.HP}</td>
+							<td><a
+								href="${pageContext.request.contextPath}/bloodPressure/delete/${bloodPressure.username}/${bloodPressure.measurement_time}">
+									<i class="glyphicon glyphicon-remove"></i>
+							</a></td>
+						</tr>
+						<c:set var="id" value="${id+1}" />
+					</c:forEach>
+
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -156,4 +191,43 @@
 			console.log(activeBars[i].value);
 		}
 	});
+
+	//기간 입력 JS--------------------------------------------------------------------------
+
+	$('#fromDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+	$('#toDate').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		language : 'kr',
+		todayHighlight : true
+
+	});
+
+	var s = "${pageContext.request.contextPath}/bloodPressure";
+
+	//s = s + "/search?" + username + "/" + $('#fromDate').val() + "/" + $('#toDate').val();
+
+	$("button#search").on(
+			"click",
+			function() {
+
+				var username = "${bloodPressures[0].username}";
+				var toDate = $('#toDate').val();
+				var fromDate = $('#fromDate').val();
+
+				if (toDate == "" || fromDate == "") {
+					alert("날짜를 입력해주세요!");
+				} else {
+					var url = s + "/search?" + username + "/" + fromDate + "/"
+							+ toDate;
+
+					window.location.href = url;
+				}
+			});
 </script>
