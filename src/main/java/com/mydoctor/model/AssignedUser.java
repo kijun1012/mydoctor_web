@@ -25,12 +25,12 @@ public class AssignedUser {
 	private String username;
 
 	@MapsId("doctorname")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "doctorname")
 	private User doctor;
 
 	@MapsId("username")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "username")
 	private User user;
 }
