@@ -6,14 +6,19 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mydoctor.model.BloodPressure;
@@ -89,6 +94,16 @@ public class BloodPressureController {
 
 		return "bloodPressure";
 
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/bloodPressure/add", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<BloodPressure> addBloodPressure(@RequestBody BloodPressure bloodPressure) {
+
+		this.bloodPressureService.addBloodPressure(bloodPressure);
+
+		return new ResponseEntity<BloodPressure>(bloodPressure, HttpStatus.OK);
 	}
 	
 	@RequestMapping("/bloodPressure/delete/{username}/{measurement_time}")

@@ -50,4 +50,9 @@ public class BloodPressureService {
 		this.bloodPressureDao.deletebloodPressure(username,measurement_time);
 		
 	}
+
+	public void addBloodPressure(BloodPressure bloodPressure) {
+		this.bloodPressureDao.addBloodPressure(bloodPressure);
+		
+	}
 }

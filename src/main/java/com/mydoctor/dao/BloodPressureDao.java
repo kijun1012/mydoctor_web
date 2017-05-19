@@ -86,4 +86,12 @@ public class BloodPressureDao {
 		session.clear();
 		
 	}
+
+	public void addBloodPressure(BloodPressure bloodPressure) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save("BloodPressure",bloodPressure);
+		session.flush();
+		session.clear();
+		
+	}
 }
