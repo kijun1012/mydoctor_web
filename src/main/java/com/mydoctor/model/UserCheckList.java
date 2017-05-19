@@ -74,6 +74,8 @@ public class UserCheckList {
 	private int lastHR;
 	@Transient
 	private int lastBloodOxygen;
+	@Transient
+	private String lastSleepingTime;
 	
 	@MapsId("username")
 	@ManyToOne(cascade = CascadeType.ALL)
