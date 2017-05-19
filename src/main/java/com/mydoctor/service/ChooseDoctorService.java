@@ -17,5 +17,10 @@ public class ChooseDoctorService {
 		
 	}
 
+	public AssignedUser getAssignedUserById(String userId) {
+		return this.chooseDoctorDao.getAssignedUserById(userId);
+		
+	}
+
 	
 }

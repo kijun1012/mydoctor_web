@@ -8,7 +8,14 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="container">
-				<h4>의사를 선택해주세요.</h4>
+				<h4>
+					<c:if test="${assignedUser == null}">
+							의사를 선택해주세요.
+						</c:if>
+					<c:if test="${assignedUser != null}">
+							${assignedUser.doctorname} 님이 선택되어 있습니다.
+						</c:if>
+				</h4>
 			</div>
 			<sf:form action="${pageContext.request.contextPath}/chooseDoctor"
 				method="post" modelAttribute="assignedUser">

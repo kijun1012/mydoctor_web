@@ -76,18 +76,24 @@ public class DashboardController {
 		model.addAttribute("stepCount", stepCount);
 		model.addAttribute("height", curCheckList.getHeight());
 		model.addAttribute("weight", curCheckList.getWeight());
-		model.addAttribute("sleepingTime",sleepingTime);
-		model.addAttribute("advices",adviceList);
+		model.addAttribute("sleepingTime", sleepingTime);
+		model.addAttribute("advices", adviceList);
 
 		return "dashboard";
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
 	public String chooseDoctor(Model model) {
-		AssignedUser assignedUser = new AssignedUser();
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-		assignedUser.setUsername(userId);
+		AssignedUser assignedUser = this.chooseDoctorService.getAssignedUserById(userId);
+
+		if (assignedUser == null) {
+			assignedUser = new AssignedUser();
+			assignedUser.setUsername(userId);
+		}
+
 		model.addAttribute("assignedUser", assignedUser);
 
 		return "chooseDoctor";

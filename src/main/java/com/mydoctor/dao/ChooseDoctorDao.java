@@ -18,9 +18,16 @@ public class ChooseDoctorDao {
 	public void addDoctor(AssignedUser assignedUser) {
 		Session session = sessionFactory.getCurrentSession();
 		
-		session.save("AssignedUser",assignedUser);
+		session.saveOrUpdate("AssignedUser",assignedUser);
 		session.flush();
 		session.clear();
 		
+	}
+
+	public AssignedUser getAssignedUserById(String userId) {
+		Session session = sessionFactory.getCurrentSession();
+		AssignedUser assignedUser =  (AssignedUser) session.get(AssignedUser.class, userId);
+		
+		return assignedUser;
 	}
 }
