@@ -78,7 +78,8 @@
 					<tr>
 						<th>number</th>
 						<th>date</th>
-						<th>sleeping time</th>
+						<th>sleep</th>
+						<th>wake up</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -89,7 +90,8 @@
 						<tr>
 							<td><c:out value="${id}" /></td>
 							<td>${sleepingTime.measurement_time}</td>
-							<td>${sleepingTime.sleepingTime }</td>
+							<td>${sleepingTime.startSleepTime}</td>
+							<td>${sleepingTime.endSleepTime}</td>
 							<td><a
 								href="${pageContext.request.contextPath}/sleepingtime/delete/${sleepingTime.username}/${sleepingTime.measurement_time}">
 									<i class="glyphicon glyphicon-remove"></i>
@@ -108,12 +110,15 @@
 	var result = new Array();
 	var time = new Array();
 	var date = new Array();
+	var startSleepTime = new Array();
+	var endSleepTime = new Array();
 	var number = 1;
 
 	<c:forEach var="sleepingTime" items = "${sleepingTimes}">
 	result.push("${sleepingTime.sleepingTime}");
-	//time.push("${sleepingTime.measurement_time}");
 	time.push(number);
+	startSleepTime.push("${sleepingTime.startSleepTime}");
+	endSleepTime.push("${sleepingTime.endSleepTime}");
 	number += 1;
 	</c:forEach>
 
@@ -127,7 +132,8 @@
 	var lineChartData = {
 		labels : time,
 		datasets : [ {
-			label : "sleepingTime",
+			label : "startSleepTime",
+			labelData : startSleepTime,
 			fillColor : "rgba(210, 214, 222, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
 			pointColor : "rgba(210, 214, 222, 1)",
@@ -135,7 +141,9 @@
 			pointHighlightFill : "#fff",
 			pointHighlightStroke : "rgba(220,220,220,1)",
 			data : result
-		} ]
+			
+		} 
+		]
 
 	};
 

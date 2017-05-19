@@ -32,6 +32,10 @@ public class SleepingTime {
 
 	@Column(nullable = false)
 	private String sleepingTime;
+	
+	private String startSleepTime;
+	
+	private String endSleepTime;
 
 	@MapsId("username")
 	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
