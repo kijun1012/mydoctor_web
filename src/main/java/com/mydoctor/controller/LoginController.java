@@ -32,6 +32,7 @@ import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
 import com.mydoctor.model.HeartRate;
+import com.mydoctor.model.SleepingTime;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
 import com.mydoctor.model.UserCheckList;
@@ -40,6 +41,7 @@ import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.HeartRateService;
 import com.mydoctor.service.LoginService;
+import com.mydoctor.service.SleepingTimeService;
 import com.mydoctor.service.StepCountService;
 import com.mydoctor.service.UserCheckListService;
 
@@ -62,6 +64,9 @@ public class LoginController {
 	
 	@Autowired
 	private BloodOxygenService bloodOxygenService;
+	
+	@Autowired
+	private SleepingTimeService sleepingTimeService;
 
 	@Autowired
 	private UserCheckListService userCheckListService;
@@ -128,6 +133,7 @@ public class LoginController {
 			StepCount stepCount = this.stepCountService.getRecentStepCount(user.getId());
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
 			BloodOxygen bloodOxygen = this.bloodOxygenService.getRecentBloodOxygen(user.getId());
+			SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(user.getId());
 			
 			currentUserCheckList = userCheckListService.findById(user.getId());
 			System.out.println(currentUserCheckList);
@@ -164,7 +170,10 @@ public class LoginController {
 				currentUserCheckList.setLastBloodoxygen(0);
 			else
 				currentUserCheckList.setLastBloodoxygen(bloodOxygen.getBO());
-
+			if(sleepingTime == null)
+				currentUserCheckList.setLastSleepingTime("0");
+			else
+				currentUserCheckList.setLastSleepingTime(sleepingTime.getSleepingTime());
 		
 			// System.out.println("app dashboard" + userInfo);
 
