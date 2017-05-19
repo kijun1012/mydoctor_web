@@ -14,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mydoctor.dao.BloodPressureDao;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
 import com.mydoctor.module.JsonPassingModule;
 import com.mydoctor.module.MyHttpModule;
 import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.service.UserCheckListService;
 import com.mydoctor.service.WeightService;
 import com.mydoctor.vo.DataListObject;
 import com.mydoctor.vo.IhealthData;
@@ -55,7 +56,6 @@ public class IhealthController {
 
 	private DataListObject dataListObject = new DataListObject();
 
-
 	@Autowired
 	private BloodPressureService bloodPressureService;
 
@@ -64,7 +64,10 @@ public class IhealthController {
 
 	@Autowired
 	private BloodOxygenService bloodOxygenService;
-	
+
+	@Autowired
+	private UserCheckListService userCheckListService;
+
 	@Autowired
 	private WeightService weightService;
 
@@ -88,9 +91,9 @@ public class IhealthController {
 		// getBO();
 		getWeight();
 
-		categoryList.add( new IhealthDataListStatus("수면", "0","0","0"));
-		categoryList.add( new IhealthDataListStatus("혈중산소", "0","0","0"));
-		
+		categoryList.add(new IhealthDataListStatus("수면", "0", "0", "0"));
+		categoryList.add(new IhealthDataListStatus("혈중산소", "0", "0", "0"));
+
 		this.dataListObject.setStatus(categoryList);
 
 		return dataListObject;
@@ -161,21 +164,22 @@ public class IhealthController {
 
 		MyHttpModule module = new MyHttpModule();
 		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
-		
-		System.out.println("bo : "+ obj.toString());
-		
-		IhealthDataListStatus bgStatus = new IhealthDataListStatus("", "0","0","0");
+
+		System.out.println("bo : " + obj.toString());
+
+		IhealthDataListStatus bgStatus = new IhealthDataListStatus("", "0", "0", "0");
 
 		categoryList.add(bgStatus);
-		
-//		int count = obj.getInt("RecordCount");
-//		JSONArray jsonArray = obj.getJSONArray("BODataList");
-//		
-//		
-//
-//		bpList = JsonPassingModule.jsonArrayToObject(jsonArray, BloodOxygen.class);
-//
-//		this.bloodOxygenService.addBloodOxygen(boList, userId);
+
+		// int count = obj.getInt("RecordCount");
+		// JSONArray jsonArray = obj.getJSONArray("BODataList");
+		//
+		//
+		//
+		// bpList = JsonPassingModule.jsonArrayToObject(jsonArray,
+		// BloodOxygen.class);
+		//
+		// this.bloodOxygenService.addBloodOxygen(boList, userId);
 	}
 
 	// -----------------------몸무게
@@ -187,7 +191,7 @@ public class IhealthController {
 		query.append("access_token=" + accessToken + "&");
 		query.append("sc=" + this.WEIGHT_SC + "&");
 		query.append("sv=" + this.WEIGHT_SV);
-		
+
 		MyHttpModule module = new MyHttpModule();
 		JSONObject obj = module.requestToServerUsingGetJSON(query.toString());
 		System.out.println(obj.toString());
@@ -198,9 +202,15 @@ public class IhealthController {
 
 		List<String> status = this.weightService.addWeightByList(weightList, username);
 
-		IhealthDataListStatus weightStatus = new IhealthDataListStatus("체중", status.get(0), status.get(1), status.get(2));
+		Weight weight = this.weightService.getRecentWeight(username);
+		UserCheckList userCheckList = this.userCheckListService.findById(username);
+		userCheckList.setWeight(weight.getWeightValue());
+		this.userCheckListService.updateCheckList(userCheckList);
+
+		IhealthDataListStatus weightStatus = new IhealthDataListStatus("체중", status.get(0), status.get(1),
+				status.get(2));
 
 		categoryList.add(weightStatus);
-		
+
 	}
 }
