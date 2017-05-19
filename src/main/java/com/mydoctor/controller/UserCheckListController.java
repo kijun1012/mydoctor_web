@@ -46,6 +46,10 @@ public class UserCheckListController {
 		currentUserCheckList.setWeight(checkList.getWeight());
 		currentUserCheckList.setSex(checkList.getSex());
 
+		
+		userCheckListService.updateCheckList(currentUserCheckList);
+		
+		
 		// checklist/set 요청 올때 weight을 테이블에 추가
 		Weight weight = new Weight();
 		weight.setUsername(checkList.getUsername());
@@ -57,7 +61,7 @@ public class UserCheckListController {
 
 		weightService.addWeight(weight);
 
-		userCheckListService.updateCheckList(currentUserCheckList);
+	
 
 		return new ResponseEntity<UserCheckList>(currentUserCheckList, HttpStatus.OK);
 
