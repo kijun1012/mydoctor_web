@@ -87,7 +87,7 @@
 							<td>${bloodSugar.measurement_time}</td>
 							<td>${bloodSugar.BG }</td>
 							<td><a
-								href="${pageContext.request.contextPath}/heartrate/delete/${bloodSugar.username}/${bloodSugar.measurement_time}">
+								href="${pageContext.request.contextPath}/bloodSugar/delete/${bloodSugar.username}/${bloodSugar.measurement_time}">
 									<i class="glyphicon glyphicon-remove"></i>
 							</a></td>
 						</tr>
