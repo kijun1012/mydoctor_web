@@ -15,7 +15,6 @@ public class AdviceService {
 	AdviceDao adviceDao;
 
 	public List<Advice> getAdvice(String userId) {
-		// TODO Auto-generated method stub
 		return this.adviceDao.getAdvice(userId);
 	}
 

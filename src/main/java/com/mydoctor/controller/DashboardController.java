@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mydoctor.model.Advice;
+import com.mydoctor.model.AnalysisData;
 import com.mydoctor.model.AssignedUser;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
@@ -23,6 +24,7 @@ import com.mydoctor.model.StepCount;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
 import com.mydoctor.service.AdviceService;
+import com.mydoctor.service.AnalysisDataService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
 import com.mydoctor.service.ChooseDoctorService;
@@ -56,6 +58,8 @@ public class DashboardController {
 	AdviceService adviceService;
 	@Autowired
 	SleepingTimeService sleepingTimeService;
+	@Autowired
+	AnalysisDataService analysisDataService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String dashboard(Model model) {
@@ -78,6 +82,9 @@ public class DashboardController {
 		model.addAttribute("weight", curCheckList.getWeight());
 		model.addAttribute("sleepingTime", sleepingTime);
 		model.addAttribute("advices", adviceList);
+		
+		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
+		model.addAttribute("analysisData", analysisData);
 
 		return "dashboard";
 	}
