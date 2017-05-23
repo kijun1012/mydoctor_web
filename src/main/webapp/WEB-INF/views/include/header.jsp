@@ -205,6 +205,7 @@
 						<li><a href="${pageContext.request.contextPath}/bloodOxygen">혈중산소농도</a></li>
 						<li><a href="${pageContext.request.contextPath}/weight">체중</a></li>
 						<li><a href="${pageContext.request.contextPath}/sleepingtime">수면시간</a></li>
+						<li><a href="${pageContext.request.contextPath}/calorie">칼로리</a></li>
 					</ul>
 				</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
 					<ul class="treeview-menu">
@@ -222,6 +223,7 @@
 							href="${pageContext.request.contextPath}/doctor/weight">체중</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/doctor/sleepingtime">수면시간</a></li>
+							<li><a href="${pageContext.request.contextPath}/doctor/calorie">칼로리</a></li>
 					</ul>
 				</sec:authorize></li>
 

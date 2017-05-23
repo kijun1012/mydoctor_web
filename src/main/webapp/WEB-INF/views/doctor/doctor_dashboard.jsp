@@ -120,7 +120,14 @@
 				<!-- small box -->
 				<div class="small-box bg-green">
 					<div class="inner">
-						<h3>44</h3>
+						<h3>
+							<c:if test="${sleepingTime == null }">
+							-
+						</c:if>
+							<c:if test="${sleepingTime != null }">
+							${sleepingTime.sleepingTime}
+						</c:if>
+						</h3>
 
 						<p>수면</p>
 					</div>
@@ -136,7 +143,14 @@
 				<!-- small box -->
 				<div class="small-box bg-purple">
 					<div class="inner">
-						<h3>65</h3>
+						<h3>
+							<c:if test="${weight == null }">
+							-
+						</c:if>
+							<c:if test="${weight != null }">
+							${weight.weightValue}
+						</c:if>
+						</h3>
 
 						<p>체중</p>
 					</div>
@@ -177,11 +191,7 @@
 	</section>
 	<!-- /.content -->
 </div>
-<script>
 
-
-
-</script>
 <script type="text/javascript">
 function selectUser(s_page,s_name,s_value){
 	  var f=document.goLink;  //폼 name

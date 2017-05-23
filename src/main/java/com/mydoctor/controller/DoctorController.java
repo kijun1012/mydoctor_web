@@ -19,15 +19,19 @@ import com.mydoctor.model.AssignedUser;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.Calorie;
 import com.mydoctor.model.HeartRate;
+import com.mydoctor.model.SleepingTime;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.UserCheckList;
 import com.mydoctor.model.Weight;
 import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.service.CalorieService;
 import com.mydoctor.service.DoctorService;
 import com.mydoctor.service.HeartRateService;
+import com.mydoctor.service.SleepingTimeService;
 import com.mydoctor.service.StepCountService;
 import com.mydoctor.service.UserCheckListService;
 import com.mydoctor.service.WeightService;
@@ -40,20 +44,26 @@ public class DoctorController {
 	private DoctorService doctorService;
 
 	@Autowired
-	BloodPressureService bloodPressureService;
+	private BloodPressureService bloodPressureService;
 	@Autowired
-	HeartRateService heartRateService;
+	private HeartRateService heartRateService;
 	@Autowired
-	BloodSugarService bloodSugarService;
+	private BloodSugarService bloodSugarService;
 	@Autowired
-	StepCountService stepCountService;
+	private StepCountService stepCountService;
 	@Autowired
-	WeightService weightService;
+	private WeightService weightService;
 	@Autowired
-	UserCheckListService userCheckListService;
+	private UserCheckListService userCheckListService;
 
 	@Autowired
-	BloodOxygenService bloodOxygenService;
+	private BloodOxygenService bloodOxygenService;
+	
+	@Autowired
+	private SleepingTimeService sleepingTimeService;
+	
+	@Autowired
+	private CalorieService calorieService;
 
 	public static String selectUsername;
 
@@ -80,14 +90,16 @@ public class DoctorController {
 			StepCount stepCount = this.stepCountService.getRecentStepCount(selectUsername);
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(selectUsername);
 			Weight weight = this.weightService.getRecentWeight(selectUsername);
-			UserCheckList curCheckList = userCheckListService.findById(selectUsername);
+			SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(selectUsername);
+			
 
 			model.addAttribute("heartRate", heartRate);
 			model.addAttribute("bloodPressure", bloodPressure);
 			model.addAttribute("bloodSugar", bloodSugar);
 			model.addAttribute("stepCount", stepCount);
-			model.addAttribute("height", curCheckList.getHeight());
-			model.addAttribute("weight", curCheckList.getWeight());
+			model.addAttribute("weight", weight);
+			model.addAttribute("sleepingTime", sleepingTime);
+			
 
 		}
 
@@ -142,6 +154,28 @@ public class DoctorController {
 
 		return "weight";
 	}
+	
+	@RequestMapping("/sleepingtime")
+	public String sleepingTimeByUser(Model model) {
+
+		List<SleepingTime> sleepingTimes = this.sleepingTimeService.getSleepingTime(selectUsername);
+		model.addAttribute("sleepingTimes", sleepingTimes);
+
+		return "sleepingtime";
+	}
+	
+	@RequestMapping("/calorie")
+	public String calorieByUser(Model model) {
+
+		List<Calorie> calories = this.calorieService.getAllCalorie(selectUsername);
+		model.addAttribute("calories", calories);
+
+		return "calorie";
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/advice", method = RequestMethod.GET)
 	public String advice(Model model){
