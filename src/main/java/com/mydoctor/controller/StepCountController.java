@@ -98,7 +98,7 @@ public class StepCountController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/stepcount/add", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<StepCount> addHeartRate(@RequestBody StepCount stepCount){
+	public ResponseEntity<StepCount> addStepCount(@RequestBody StepCount stepCount){
 		
 		this.stepCountService.addStepCount(stepCount);
 		
@@ -108,7 +108,7 @@ public class StepCountController {
 	
 	
 	@RequestMapping("/stepcount/delete/{username}/{measurement_time}")
-	public String deleteProduct(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request,RedirectAttributes redirectAttributes){
+	public String deleteStepCount(@PathVariable String username,@PathVariable String measurement_time,HttpServletRequest request,RedirectAttributes redirectAttributes){
 		System.out.println(measurement_time);
 		this.stepCountService.deleteStepCount(username,measurement_time);
 		
