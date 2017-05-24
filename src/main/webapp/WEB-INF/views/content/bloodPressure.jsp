@@ -79,7 +79,7 @@
 						<th>date</th>
 						<th>min</th>
 						<th>max</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -93,7 +93,7 @@
 							<td>${bloodPressure.measurement_time}</td>
 							<td>${bloodPressure.HR}</td>
 							<td>${bloodPressure.HP}</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/bloodPressure/delete/${bloodPressure.username}/${bloodPressure.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>

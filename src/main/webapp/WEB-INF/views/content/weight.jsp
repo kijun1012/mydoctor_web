@@ -80,7 +80,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>weight</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -93,7 +93,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${weight.measurement_time}</td>
 							<td>${weight.weightValue}</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/weight/delete/${weight.username}/${weight.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>

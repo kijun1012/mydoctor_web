@@ -76,7 +76,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>stepCount</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -89,7 +89,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${stepCount.measurement_time}</td>
 							<td>${stepCount.stepCount }</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/stepcount/delete/${stepCount.username}/${stepCount.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>

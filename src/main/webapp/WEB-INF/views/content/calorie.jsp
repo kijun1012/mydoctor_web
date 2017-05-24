@@ -76,7 +76,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>calorie</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -89,7 +89,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${calorie.measurement_time}</td>
 							<td>${calorie.calorie}</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/calorie/delete/${calorie.username}/${calorie.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>

@@ -80,7 +80,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>heartRate</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -93,7 +93,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${heartRate.measurement_time}</td>
 							<td>${heartRate.heartRate }</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<td><a
 								href="${pageContext.request.contextPath}/heartrate/delete/${heartRate.username}/${heartRate.measurement_time}">
 									<i class="glyphicon glyphicon-remove"></i>

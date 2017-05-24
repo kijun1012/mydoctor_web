@@ -79,7 +79,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>혈중산소농도</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -92,7 +92,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${bloodOxygen.measurement_time}</td>
 							<td>${bloodOxygen.BO }</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/bloodOxygen/delete/${bloodOxygen.username}/${bloodOxygen.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>

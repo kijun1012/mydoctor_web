@@ -15,52 +15,38 @@
 			<!-- Conversations are loaded here -->
 			<div class="direct-chat-messages">
 
-
 				<!-- Message. Default to the left -->
-				<div class="direct-chat-msg">
+				<c:if test="${analysisData.dis != null }">
+					<div class="direct-chat-msg">
 
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img"
-						src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-						alt="Message User Image">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">혈압 관리가 필요합니다.</div>
-					<!-- /.direct-chat-text -->
-				</div>
+						<!-- /.direct-chat-info -->
+						<img class="direct-chat-img"
+							src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+							alt="Message User Image">
+						<!-- /.direct-chat-img -->
 
-				<div class="direct-chat-msg">
+						<c:if test="${analysisData.dis == '1' }">
+							<div class="direct-chat-text">
+								데이터 분석 결과 당신은 고혈압과 당뇨가 의심됩니다. 혈압과,혈당 모두 관리가 필요합니다.</br>담당의사와 상담하세요.
+							</div>
+						</c:if>
+						<c:if test="${analysisData.dis == '2' }">
+							<div class="direct-chat-text">
+								데이터 분석 결과 당신은 고혈압이 의심됩니다. 혈압관리가 필요합니다.</br>담당의사와 상담하세요.
+							</div>
+						</c:if>
+						<c:if test="${analysisData.dis == '3' }">
+							<div class="direct-chat-text">
+								데이터 분석 결과 당신은 당뇨가 의심됩니다. 혈당관리가 필요합니다.</br>담당의사와 상담하세요.
+							</div>
+						</c:if>
+						<c:if test="${analysisData.dis == '4' }">
+							<div class="direct-chat-text">데이터 분석 결과 당신은 건강합니다.</div>
+						</c:if>
 
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img"
-						src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-						alt="Message User Image">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">혈당 관리가 필요합니다.</div>
-					<!-- /.direct-chat-text -->
-				</div>
-
-				<div class="direct-chat-msg">
-
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img"
-						src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-						alt="Message User Image">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">혈압과 혈당 모두 관리가 필요합니다.</div>
-					<!-- /.direct-chat-text -->
-				</div>
-
-
-				<!-- Message. Default to the left -->
-				<div class="direct-chat-msg">
-					<!-- /.direct-chat-info -->
-					<img class="direct-chat-img"
-						src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-						alt="Message User Image">
-					<!-- /.direct-chat-img -->
-					<div class="direct-chat-text">건강합니다!</div>
-					<!-- /.direct-chat-text -->
-				</div>
+						<!-- /.direct-chat-text -->
+					</div>
+				</c:if>
 
 
 

@@ -77,7 +77,7 @@
 						<th>number</th>
 						<th>date</th>
 						<th>bloodSugar</th>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
 					</tr>
@@ -90,7 +90,7 @@
 							<td><c:out value="${id}" /></td>
 							<td>${bloodSugar.measurement_time}</td>
 							<td>${bloodSugar.BG }</td>
-							<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
 								<td><a
 									href="${pageContext.request.contextPath}/bloodSugar/delete/${bloodSugar.username}/${bloodSugar.measurement_time}">
 										<i class="glyphicon glyphicon-remove"></i>
