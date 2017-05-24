@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 
 <!-- Content Wrapper. Contains page content -->
@@ -39,8 +40,9 @@
 					<div class="icon">
 						<i class="ion-ios-pulse-strong"></i>
 					</div>
-					<a href="<c:url value="/heartrate"/>" class="small-box-footer">More
-						info <i class="fa fa-arrow-circle-right"></i>
+					<a href="${pageContext.request.contextPath}/doctor/heartrate"
+						class="small-box-footer">More info <i
+						class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
@@ -63,8 +65,9 @@
 					<div class="icon">
 						<i class="ion-android-favorite"></i>
 					</div>
-					<a href="<c:url value="/bloodPressure"/>" class="small-box-footer">More
-						info <i class="fa fa-arrow-circle-right"></i>
+					<a href="${pageContext.request.contextPath}/doctor/bloodPressure"
+						class="small-box-footer">More info <i
+						class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
@@ -86,8 +89,9 @@
 					<div class="icon">
 						<i class="ion-android-walk"></i>
 					</div>
-					<a href="<c:url value="/stepCount"/>" class="small-box-footer">More
-						info <i class="fa fa-arrow-circle-right"></i>
+					<a href="${pageContext.request.contextPath}/doctor/stepcount"
+						class="small-box-footer">More info <i
+						class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
@@ -110,8 +114,9 @@
 					<div class="icon">
 						<i class="ion-waterdrop"></i>
 					</div>
-					<a href="<c:url value="/bloodSugar"/>" class="small-box-footer">More
-						info <i class="fa fa-arrow-circle-right"></i>
+					<a href="${pageContext.request.contextPath}/doctor/bloodSugar"
+						class="small-box-footer">More info <i
+						class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
 			</div>
@@ -134,7 +139,8 @@
 					<div class="icon">
 						<i class="ion-ios-alarm"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i
+					<a href="${pageContext.request.contextPath}/doctor/sleepingtime"
+						class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
@@ -157,7 +163,8 @@
 					<div class="icon">
 						<i class="ion-ios-body"></i>
 					</div>
-					<a href="#" class="small-box-footer">More info <i
+					<a href="${pageContext.request.contextPath}/doctor/weight"
+						class="small-box-footer">More info <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
@@ -167,7 +174,7 @@
 
 		<div class="row">
 			<div class="col-md-6">
-				환자 선택 :
+				<h4>환자 선택</h4>  
 				<div class="btn-group">
 					<button type="button" class="btn btn-default">환자 선택</button>
 					<button type="button" class="btn btn-default dropdown-toggle"
@@ -185,19 +192,41 @@
 					${selectUsername}
 				</c:if>
 			</div>
+
+			<c:if test="${not empty selectUsername}">
+
+				<div class="col-md-6">
+					<h4>조언을 입력하세요</h4>
+					<sf:form action="${pageContext.request.contextPath}/doctor/advice"
+						method="post" modelAttribute="advice">
+
+						<input type="hidden" name="doctorname"
+							value="${advice.doctorname}" id="doctorname" />
+
+						<input type="hidden" name="username" value="${advice.username}"
+							id="username" />
+
+						<div class="input-group margin">
+							<sf:input path="advice" id="advice" class="form-control" />
+							
+							<span class="input-group-btn">
+								<button type="submit" value="Submit"
+									class="btn btn-info btn-flat">Go!</button>
+							</span>
+						</div>
+					</sf:form>
+				</div>
+
+			</c:if>
 		</div>
-
-
 	</section>
 	<!-- /.content -->
 </div>
 
 <script type="text/javascript">
-function selectUser(s_page,s_name,s_value){
-	  var f=document.goLink;  //폼 name
-	  f.s_name.value = s_name;  //POST방식으로 넘기고 싶은 값
-	  f.s_value.value = s_value;  //POST방식으로 넘기고 싶은 값
-	  f.action="XXXXXXX.php";  //이동할 페이지
-	  f.method="post";  //POST방식
-	  f.submit();
+	var advice = document.getElementById('advice');
+	
+	if((Trim(advice)=="") || (advice == null)){
+		alert("조언을 입력해주세요.");
+	}
 </script>

@@ -22,5 +22,15 @@ public class ChooseDoctorService {
 		
 	}
 
+	public boolean deleteDoctor(String userId) {
+		return this.chooseDoctorDao.deleteDoctor(userId);
+		
+	}
+
+	public boolean checkDoctor(String doctorname) {
+		
+		return this.chooseDoctorDao.checkDoctor(doctorname);
+	}
+
 	
 }

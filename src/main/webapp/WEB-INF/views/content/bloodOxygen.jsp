@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <div class="content-wrapper" style="min-height: 1000px;">
 	<!-- Content Header (Page header) -->
@@ -48,7 +49,8 @@
 			<c:if test="${empty bloodOxygens}">
 				<h2 class="text-yellow">
 					저장된 데이터가 없습니다. <a class="btn btn-primary"
-						href="${pageContext.request.contextPath}/bloodOxygen" role="button">Back</a>
+						href="${pageContext.request.contextPath}/bloodOxygen"
+						role="button">Back</a>
 				</h2>
 			</c:if>
 
@@ -70,34 +72,38 @@
 
 		</div>
 
-<div style="width:100%; height:250px; overflow:auto">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>혈중산소농도</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="bloodOxygen" items="${bloodOxygens}">
-
+		<div style="width: 100%; height: 250px; overflow: auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${bloodOxygen.measurement_time}</td>
-						<td>${bloodOxygen.BO }</td>
-						<td><a
-								href="${pageContext.request.contextPath}/bloodOxygen/delete/${bloodOxygen.username}/${bloodOxygen.measurement_time}">
-									<i class="glyphicon glyphicon-remove"></i>
-							</a></td>
+						<th>number</th>
+						<th>date</th>
+						<th>혈중산소농도</th>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<th></th>
+						</sec:authorize>
 					</tr>
-					<c:set var="id" value="${id+1}" />
-				</c:forEach>
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="bloodOxygen" items="${bloodOxygens}">
 
-			</tbody>
-		</table>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${bloodOxygen.measurement_time}</td>
+							<td>${bloodOxygen.BO }</td>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<td><a
+									href="${pageContext.request.contextPath}/bloodOxygen/delete/${bloodOxygen.username}/${bloodOxygen.measurement_time}">
+										<i class="glyphicon glyphicon-remove"></i>
+								</a></td>
+							</sec:authorize>
+						</tr>
+						<c:set var="id" value="${id+1}" />
+					</c:forEach>
+
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
@@ -198,9 +204,7 @@
 			console.log(activePoints[i].value);
 		}
 	});
-	
-	
-	
+
 	//기간 입력 JS--------------------------------------------------------------------------
 
 	$('#fromDate').datepicker({
@@ -239,7 +243,4 @@
 					window.location.href = url;
 				}
 			});
-	
-	
-	
 </script>

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <div class="content-wrapper" style="min-height: 1000px;">
 	<!-- Content Header (Page header) -->
@@ -76,6 +77,9 @@
 						<th>number</th>
 						<th>date</th>
 						<th>bloodSugar</th>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<th></th>
+						</sec:authorize>
 					</tr>
 				</thead>
 				<tbody>
@@ -86,10 +90,12 @@
 							<td><c:out value="${id}" /></td>
 							<td>${bloodSugar.measurement_time}</td>
 							<td>${bloodSugar.BG }</td>
-							<td><a
-								href="${pageContext.request.contextPath}/bloodSugar/delete/${bloodSugar.username}/${bloodSugar.measurement_time}">
-									<i class="glyphicon glyphicon-remove"></i>
-							</a></td>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<td><a
+									href="${pageContext.request.contextPath}/bloodSugar/delete/${bloodSugar.username}/${bloodSugar.measurement_time}">
+										<i class="glyphicon glyphicon-remove"></i>
+								</a></td>
+							</sec:authorize>
 						</tr>
 						<c:set var="id" value="${id+1}" />
 

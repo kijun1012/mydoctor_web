@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <div class="content-wrapper" style="min-height: 1000px;">
 	<!-- Content Header (Page header) -->
@@ -40,7 +41,7 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-	
+
 		<div class="input-group">
 
 			<c:if test="${empty stepCounts}">
@@ -67,35 +68,39 @@
 			</c:if>
 
 		</div>
-		
-		<div style="width:100%; height:250px; overflow:auto">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>stepCount</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="stepCount" items="${stepCounts}">
 
+		<div style="width: 100%; height: 250px; overflow: auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${stepCount.measurement_time}</td>
-						<td>${stepCount.stepCount }</td>
-						<td><a
-								href="${pageContext.request.contextPath}/stepcount/delete/${stepCount.username}/${stepCount.measurement_time}">
-									<i class="glyphicon glyphicon-remove"></i>
-							</a></td>
+						<th>number</th>
+						<th>date</th>
+						<th>stepCount</th>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<th></th>
+						</sec:authorize>
 					</tr>
-					<c:set var="id" value="${id+1}" />
-				</c:forEach>
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="stepCount" items="${stepCounts}">
 
-			</tbody>
-		</table>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${stepCount.measurement_time}</td>
+							<td>${stepCount.stepCount }</td>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<td><a
+									href="${pageContext.request.contextPath}/stepcount/delete/${stepCount.username}/${stepCount.measurement_time}">
+										<i class="glyphicon glyphicon-remove"></i>
+								</a></td>
+							</sec:authorize>
+						</tr>
+						<c:set var="id" value="${id+1}" />
+					</c:forEach>
+
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
@@ -104,7 +109,7 @@
 	var result = new Array();
 	var time = new Array();
 	var number = 1;
-	
+
 	<c:forEach var="stepCount" items = "${stepCounts}">
 	result.push("${stepCount.stepCount}");
 	//time.push("${stepCount.measurement_time}");
@@ -182,7 +187,7 @@
 			console.log(activeBars[i].value);
 		}
 	});
-	
+
 	//기간 입력 JS--------------------------------------------------------------------------
 
 	$('#fromDate').datepicker({

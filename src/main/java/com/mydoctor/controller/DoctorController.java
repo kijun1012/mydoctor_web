@@ -58,10 +58,10 @@ public class DoctorController {
 
 	@Autowired
 	private BloodOxygenService bloodOxygenService;
-	
+
 	@Autowired
 	private SleepingTimeService sleepingTimeService;
-	
+
 	@Autowired
 	private CalorieService calorieService;
 
@@ -83,7 +83,7 @@ public class DoctorController {
 
 		if (selectUsername != null) {
 			System.out.println(selectUsername);
-			model.addAttribute("selectUsername", selectUsername + "¥‘¿ª º±≈√«œø¥Ω¿¥œ¥Ÿ.");
+			model.addAttribute("selectUsername", selectUsername + "¬¥√î√Ä¬ª ¬º¬±√Ö√É√á√è¬ø¬¥¬Ω√Ä¬¥√è¬¥√ô.");
 
 			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(selectUsername);
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(selectUsername);
@@ -91,7 +91,6 @@ public class DoctorController {
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(selectUsername);
 			Weight weight = this.weightService.getRecentWeight(selectUsername);
 			SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(selectUsername);
-			
 
 			model.addAttribute("heartRate", heartRate);
 			model.addAttribute("bloodPressure", bloodPressure);
@@ -99,11 +98,38 @@ public class DoctorController {
 			model.addAttribute("stepCount", stepCount);
 			model.addAttribute("weight", weight);
 			model.addAttribute("sleepingTime", sleepingTime);
-			
 
+			Advice advice = new Advice();
+			String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+			advice.setDoctorname(userId);
+			advice.setUsername(selectUsername);
+
+			model.addAttribute("advice", advice);
+			
 		}
 
 		return "doctor_dashboard";
+	}
+
+	@RequestMapping(value = "/advice", method = RequestMethod.GET)
+	public String advice(Model model) {
+		Advice advice = new Advice();
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		advice.setDoctorname(userId);
+		advice.setUsername(selectUsername);
+
+		model.addAttribute("advice", advice);
+
+		return "advice";
+	}
+
+	@RequestMapping(value = "/advice", method = RequestMethod.POST)
+	public String advicePost(@Valid Advice advice, BindingResult result, HttpServletRequest request) {
+
+		System.out.println(advice.toString());
+		this.doctorService.addAdvice(advice);
+
+		return "redirect:/doctor";
 	}
 
 	@RequestMapping("/heartrate")
@@ -154,7 +180,7 @@ public class DoctorController {
 
 		return "weight";
 	}
-	
+
 	@RequestMapping("/sleepingtime")
 	public String sleepingTimeByUser(Model model) {
 
@@ -163,7 +189,7 @@ public class DoctorController {
 
 		return "sleepingtime";
 	}
-	
+
 	@RequestMapping("/calorie")
 	public String calorieByUser(Model model) {
 
@@ -171,32 +197,6 @@ public class DoctorController {
 		model.addAttribute("calories", calories);
 
 		return "calorie";
-	}
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/advice", method = RequestMethod.GET)
-	public String advice(Model model){
-		Advice advice = new Advice();
-		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		advice.setDoctorname(userId);
-		advice.setUsername(selectUsername);
-		
-		model.addAttribute("advice",advice);
-		
-		
-		return "advice";
-	}
-	
-	@RequestMapping(value = "/advice", method = RequestMethod.POST)
-	public String advicePost(@Valid Advice advice, BindingResult result, HttpServletRequest request){
-	
-		System.out.println(advice.toString());
-		this.doctorService.addAdvice(advice);
-		
-		return "advice";
 	}
 
 }
