@@ -9,14 +9,26 @@
 		<div class="col-md-6">
 			<div class="container">
 				<h4>
-					<c:if test="${assignedUser == null}">
+					<c:if test="${assignedUser.doctorname == null}">
 							의사를 선택해주세요.
 						</c:if>
-					<c:if test="${assignedUser != null}">
+
+					<c:if test="${assignedUser.doctorname != null}">
 							${assignedUser.doctorname} 님이 선택되어 있습니다.
-						</c:if>
+							</br>
+						<small>(재 입력시 변경. 공백 입력시 선택 해제 됩니다.)</small>
+					</c:if>
+
+					<c:if test="${not empty error}">
+						<div style="color: #ff0000">
+							<h6>${error}</h6>
+						</div>
+					</c:if>
 				</h4>
 			</div>
+
+
+
 			<sf:form action="${pageContext.request.contextPath}/chooseDoctor"
 				method="post" modelAttribute="assignedUser">
 
@@ -26,7 +38,7 @@
 				<div class="input-group margin">
 					<sf:input path="doctorname" id="doctorname" class="form-control" />
 					<span class="input-group-btn">
-						<button type="submit" value="Submit" class="btn btn-info btn-flat">Go!</button>
+						<button type="submit" value="Submit" class="btn btn-info btn-flat">선택</button>
 					</span>
 				</div>
 			</sf:form>

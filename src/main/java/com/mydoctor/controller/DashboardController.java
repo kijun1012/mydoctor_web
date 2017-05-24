@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mydoctor.model.Advice;
 import com.mydoctor.model.AnalysisData;
@@ -82,16 +84,15 @@ public class DashboardController {
 		model.addAttribute("weight", curCheckList.getWeight());
 		model.addAttribute("sleepingTime", sleepingTime);
 		model.addAttribute("advices", adviceList);
-		
+
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
 		model.addAttribute("analysisData", analysisData);
 
 		return "dashboard";
 	}
 
-	@SuppressWarnings("null")
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
-	public String chooseDoctor(Model model) {
+	public String chooseDoctor(@RequestParam(value = "error", required = false) String error, Model model) {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		AssignedUser assignedUser = this.chooseDoctorService.getAssignedUserById(userId);
@@ -102,17 +103,36 @@ public class DashboardController {
 		}
 
 		model.addAttribute("assignedUser", assignedUser);
-
+		if (error != null) {
+			if (error.equals("1"))
+				model.addAttribute("error", "의사를 입력해주세요.");
+			if (error.equals("2"))
+				model.addAttribute("error", "등록되지 않은 의사입니다.");
+		}
 		return "chooseDoctor";
 	}
 
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.POST)
-	public String chooseDoctorPost(@Valid AssignedUser assignedUser, BindingResult result, HttpServletRequest request) {
+	public String chooseDoctorPost(@Valid AssignedUser assignedUser, BindingResult result, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		System.out.println(assignedUser.toString());
 
-		this.chooseDoctorService.addDoctor(assignedUser);
+		if (assignedUser.getDoctorname().equals("")) {
 
-		return "chooseDoctor";
+			if (!(this.chooseDoctorService.deleteDoctor(assignedUser.getUsername()))) {
+				redirectAttributes.addAttribute("error", "1");
+				// assignedUser.setDoctorname(null);
+
+			}
+		} else {
+			if (!(this.chooseDoctorService.checkDoctor(assignedUser.getDoctorname()))) {
+				redirectAttributes.addAttribute("error", "2");
+				// assignedUser.setDoctorname(null);
+			} else
+				this.chooseDoctorService.addDoctor(assignedUser);
+		}
+
+		return "redirect:/chooseDoctor";
 	}
 
 	@RequestMapping(value = "/advice")
