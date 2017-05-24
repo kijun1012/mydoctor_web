@@ -137,7 +137,22 @@ public class DashboardController {
 	}
 
 	@RequestMapping(value = "/advice")
-	public String advice() {
+	public String advice(Model model, HttpServletRequest request,
+			@RequestParam(value = "username", required = false) String username) {
+		
+		String userId = username;
+		System.out.println(userId);
+		
+		if (username == null) {
+			userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		}
+		
+		List<Advice> adviceList = this.adviceService.getAdvice(userId);
+		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
+		
+		model.addAttribute("analysisData", analysisData);
+		model.addAttribute("advices", adviceList);
+		
 		return "webview_advice";
 	}
 

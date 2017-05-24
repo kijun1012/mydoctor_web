@@ -83,7 +83,7 @@ public class DoctorController {
 
 		if (selectUsername != null) {
 			System.out.println(selectUsername);
-			model.addAttribute("selectUsername", selectUsername + "´ÔÀ» ¼±ÅÃÇÏ¿´½À´Ï´Ù.");
+			model.addAttribute("selectUsername", selectUsername + "님이 선택되었습니다.");
 
 			BloodPressure bloodPressure = this.bloodPressureService.getRecentBloodPressure(selectUsername);
 			HeartRate heartRate = this.heartRateService.getRecentHeartRate(selectUsername);
