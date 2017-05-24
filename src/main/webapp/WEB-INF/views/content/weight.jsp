@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <div class="content-wrapper" style="min-height: 1000px;">
 	<!-- Content Header (Page header) -->
@@ -42,7 +43,7 @@
 	<div class="col-md-6">
 
 
-	<div class="input-group">
+		<div class="input-group">
 
 			<c:if test="${empty weights}">
 				<h2 class="text-yellow">
@@ -72,34 +73,38 @@
 
 
 
-<div style="width:100%; height:250px; overflow:auto">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>number</th>
-					<th>date</th>
-					<th>weight</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set var="id" value="1" />
-				<c:forEach var="weight" items="${weights}">
-
+		<div style="width: 100%; height: 250px; overflow: auto">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><c:out value="${id}" /></td>
-						<td>${weight.measurement_time}</td>
-						<td>${weight.weightValue}</td>
-						<td><a
-								href="${pageContext.request.contextPath}/weight/delete/${weight.username}/${weight.measurement_time}">
-									<i class="glyphicon glyphicon-remove"></i>
-							</a></td>
+						<th>number</th>
+						<th>date</th>
+						<th>weight</th>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<th></th>
+						</sec:authorize>
 					</tr>
-					<c:set var="id" value="${id+1}" />
-				</c:forEach>
+				</thead>
+				<tbody>
+					<c:set var="id" value="1" />
+					<c:forEach var="weight" items="${weights}">
 
-			</tbody>
-		</table>
+						<tr>
+							<td><c:out value="${id}" /></td>
+							<td>${weight.measurement_time}</td>
+							<td>${weight.weightValue}</td>
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<td><a
+									href="${pageContext.request.contextPath}/weight/delete/${weight.username}/${weight.measurement_time}">
+										<i class="glyphicon glyphicon-remove"></i>
+								</a></td>
+							</sec:authorize>
+						</tr>
+						<c:set var="id" value="${id+1}" />
+					</c:forEach>
+
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
@@ -200,7 +205,7 @@
 			console.log(activePoints[i].value);
 		}
 	});
-	
+
 	//기간 입력 JS--------------------------------------------------------------------------
 
 	$('#fromDate').datepicker({
@@ -239,6 +244,4 @@
 					window.location.href = url;
 				}
 			});
-	
-	
 </script>
