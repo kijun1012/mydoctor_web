@@ -12,8 +12,8 @@
 	<!-- Logo -->
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<a href="${pageContext.request.contextPath}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>MY</b>D</span> <!-- logo for regular state and mobile devices -->
-			<span class="logo-lg"><b>MY</b>Doctor</span>
+			<span class="logo-mini"><b>My</b>D</span> <!-- logo for regular state and mobile devices -->
+			<span class="logo-lg"><b>My</b>Doctor</span>
 		</a>
 	</sec:authorize>
 

@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -47,6 +49,7 @@ public class AnalysisData {
 	@MapsId("username")
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username")
+	@JsonIgnore
 	private User user;
 
 }

@@ -21,7 +21,7 @@ public class AnalysisDataController {
 	private AnalysisDataService analysisDataService;
 	
 	@ResponseBody
-	@RequestMapping(value="/{username}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value="/{username}", method = RequestMethod.POST)
 	public ResponseEntity<AnalysisData> getAnalysisDataByUsername(@PathVariable(value="username") String username) {
 		
 		AnalysisData analysisData = analysisDataService.getAnalysisDataByUsername(username);

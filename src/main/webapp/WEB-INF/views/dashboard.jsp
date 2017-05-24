@@ -255,21 +255,31 @@
 								<div class="direct-chat-msg">
 
 									<!-- /.direct-chat-info -->
-									<img class="direct-chat-img"
-										src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
-										alt="Message User Image">
+									
 									<!-- /.direct-chat-img -->
 									<c:if test = "${analysisData.dis != null }">
 										<c:if test = "${analysisData.dis == '1' }">
+											<img class="direct-chat-img"
+										src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+										alt="Message User Image">
 											<div class="direct-chat-text">데이터 분석 결과 당신은 고혈압과 당뇨가 의심됩니다. 혈압과,혈당 모두 관리가 필요합니다.</br>담당의사와 상담하세요.</div>
 										</c:if>
 										<c:if test = "${analysisData.dis == '2' }">
+											<img class="direct-chat-img"
+										src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+										alt="Message User Image">
 											<div class="direct-chat-text">데이터 분석 결과 당신은 고혈압이 의심됩니다. 혈압관리가 필요합니다.</br>담당의사와 상담하세요.</div>
 										</c:if>
 										<c:if test = "${analysisData.dis == '3' }">
+											<img class="direct-chat-img"
+										src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+										alt="Message User Image">
 											<div class="direct-chat-text">데이터 분석 결과 당신은 당뇨가 의심됩니다. 혈당관리가 필요합니다.</br>담당의사와 상담하세요.</div>
 										</c:if>
 										<c:if test = "${analysisData.dis == '4' }">
+											<img class="direct-chat-img"
+										src="${pageContext.request.contextPath}/resources/dist/img/user1-128x128.jpg"
+										alt="Message User Image">
 											<div class="direct-chat-text">데이터 분석 결과 당신은 건강합니다.</div>
 										</c:if>
 									</c:if>

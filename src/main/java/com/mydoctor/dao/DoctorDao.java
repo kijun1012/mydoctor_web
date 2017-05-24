@@ -26,7 +26,7 @@ public class DoctorDao {
 		query.setParameter("doctorname",doctorId);
 		
 		List<AssignedUser> userList = query.list();
-		System.out.println(userList.get(0).toString());
+		//System.out.println(userList.get(0).toString());
 		return userList;
 	}
 

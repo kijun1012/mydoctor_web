@@ -73,7 +73,7 @@ public class DashboardController {
 		SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(userId);
 		UserCheckList curCheckList = userCheckListService.findById(userId);
 		List<Advice> adviceList = this.adviceService.getAdvice(userId);
-
+		
 		model.addAttribute("heartRate", heartRate);
 		model.addAttribute("bloodPressure", bloodPressure);
 		model.addAttribute("bloodSugar", bloodSugar);
@@ -85,17 +85,17 @@ public class DashboardController {
 		
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
 		model.addAttribute("analysisData", analysisData);
+		System.out.println(analysisData);
 
 		return "dashboard";
 	}
 
-	@SuppressWarnings("null")
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
 	public String chooseDoctor(Model model) {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		AssignedUser assignedUser = this.chooseDoctorService.getAssignedUserById(userId);
-
+		
 		if (assignedUser == null) {
 			assignedUser = new AssignedUser();
 			assignedUser.setUsername(userId);

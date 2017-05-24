@@ -4,10 +4,13 @@
 <!-- Main Footer -->
 <footer class="main-footer">
 	<!-- To the right -->
-	<div class="pull-right hidden-xs">Anything you want</div>
+	<div class="pull-right hidden-xs"><strong>MyDoctor by <a href="#">Dr.Pepper</a>
+	</strong></div>
 	<!-- Default to the left -->
-	<strong>Copyright &copy; 2016 <a href="#">Company</a>.
-	</strong> All rights reserved.
+	Hansung University Engineering of Computer</br>
+	2017 Capstone Design
+	</br>
+	
 </footer>
 
 
