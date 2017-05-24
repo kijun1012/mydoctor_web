@@ -84,6 +84,7 @@ public class LoginController {
 		}
 		// 받은 parameter가 logout인 경우
 		if (logout != null) {
+			DoctorController.selectUsername = null;
 			model.addAttribute("logout", "You have been logged out successfully");
 		}
 		if (isRememberMeAuthenticated()) {
@@ -104,7 +105,8 @@ public class LoginController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-
+		
+		
 		return "redirect:/login?logout";
 	}
 
