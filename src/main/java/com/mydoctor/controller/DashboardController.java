@@ -77,7 +77,7 @@ public class DashboardController {
 		SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(userId);
 		UserCheckList curCheckList = userCheckListService.findById(userId);
 		List<Advice> adviceList = this.adviceService.getAdvice(userId);
-		
+
 		model.addAttribute("heartRate", heartRate);
 		model.addAttribute("bloodPressure", bloodPressure);
 		model.addAttribute("bloodSugar", bloodSugar);
@@ -90,43 +90,60 @@ public class DashboardController {
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
 		model.addAttribute("analysisData", analysisData);
 		System.out.println(analysisData);
-		
-		
-		String BPpoint = null;
-		BPpoint = this.getDangerPoint(bloodPressure, BPpoint);
-		System.out.println("위험지수는~~~~~~" + BPpoint);
+
+		String BPpoint = this.getDangerPointByBP(bloodPressure);
+		String BSpoint = this.getDangerPointByBS(bloodSugar);
+		System.out.println(BSpoint + "위험지수는~~~~~~" + BPpoint);
 		model.addAttribute("BPpoint", BPpoint);
+		model.addAttribute("BSpoint", BSpoint);
 
 		return "dashboard";
 	}
-	
-	public String getDangerPoint(BloodPressure bloodPressure, String BPpoint) {
-		
-		
-		int curHP = Integer.parseInt(bloodPressure.getHP());
-		int curHR = Integer.parseInt(bloodPressure.getHR());
-		
-		//int curSugar = Integer.parseInt(bloodSugar.getBG());
-		
-		
-		if(curHP < 120 && curHR < 80 ) {
-			
-			return BPpoint = "4";
+
+	public String getDangerPointByBP(BloodPressure bloodPressure) {
+		if (bloodPressure == null) {
+			return "0";
+		} else {
+			int curHP = Integer.parseInt(bloodPressure.getHP());
+			int curHR = Integer.parseInt(bloodPressure.getHR());
+
+			// int curSugar = Integer.parseInt(bloodSugar.getBG());
+
+			if (curHP < 120 && curHR < 80) {
+
+				return "4";
+			} else if ((curHP >= 120 && curHP <= 139) || (curHR >= 80 && curHR <= 89)) {
+				if ((curHP >= 120 && curHP <= 129) || (curHR >= 80 && curHR <= 84))
+					return "3-1";
+				else
+					return "3-2";
+			} else if ((curHP >= 140 && curHP <= 160) || (curHR >= 90 && curHR <= 100)) {
+				if ((curHP >= 140 && curHP <= 159) || (curHR >= 90 && curHR <= 99))
+					return "2-1";
+				else
+					return "2-2";
+			} else
+				return "1";
 		}
-		else if((curHP>=120 && curHP<=139) || (curHR>=80 && curHR<=89)) {
-			if((curHP>=120 && curHP<=129) || (curHR>=80 && curHR<=84))
-				return BPpoint = "3-1";
+	}
+
+	public String getDangerPointByBS(BloodSugar bloodSugar) {
+		if (bloodSugar == null) {
+			return "0";
+		} else {
+			int curBS = Integer.parseInt(bloodSugar.getBG());
+			if (curBS >= 125) {
+				return "3";
+
+			}
+
+			else if (curBS >= 100 && curBS <= 124) {
+				return "2";
+			}
+
 			else
-				return BPpoint = "3-2";
+				return "1";
 		}
-		else if((curHP>=140 && curHP<=160) || (curHR>=90 && curHR<=100)) {
-			if((curHP>=140 && curHP<=159) || (curHR>=90 && curHR<=99))
-				return BPpoint = "2-1";
-			else
-				return BPpoint = "2-2";
-		}
-		else
-			return BPpoint = "1";
 	}
 
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
@@ -134,7 +151,7 @@ public class DashboardController {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		AssignedUser assignedUser = this.chooseDoctorService.getAssignedUserById(userId);
-		
+
 		if (assignedUser == null) {
 			assignedUser = new AssignedUser();
 			assignedUser.setUsername(userId);
@@ -176,20 +193,20 @@ public class DashboardController {
 	@RequestMapping(value = "/advice")
 	public String advice(Model model, HttpServletRequest request,
 			@RequestParam(value = "username", required = false) String username) {
-		
+
 		String userId = username;
 		System.out.println(userId);
-		
+
 		if (username == null) {
 			userId = SecurityContextHolder.getContext().getAuthentication().getName();
 		}
-		
+
 		List<Advice> adviceList = this.adviceService.getAdvice(userId);
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
-		
+
 		model.addAttribute("analysisData", analysisData);
 		model.addAttribute("advices", adviceList);
-		
+
 		return "webview_advice";
 	}
 

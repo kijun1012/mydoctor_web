@@ -179,6 +179,10 @@
 
 							<div class="info-box-content">
 								<span class="info-box-text">고혈압 위험</span>
+								<c:if test="${BPpoint == '0'}">
+									<span class="info-box-number" style="color: black">데이터
+										없음</span>
+								</c:if>
 								<c:if test="${BPpoint == '4'}">
 									<span class="info-box-number" style="color: green">정상</span>
 								</c:if>
@@ -215,8 +219,20 @@
 								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text">제2형 당뇨병</span> <span
-									class="info-box-number" style="color: green">보통</span>
+								<span class="info-box-text">제2형 당뇨병</span>
+								<c:if test="${BSpoint == '0'}">
+									<span class="info-box-number" style="color: black">데이터
+										없음</span>
+								</c:if>
+								<c:if test="${BSpoint == '1'}">
+									<span class="info-box-number" style="color: green">정상</span>
+								</c:if>
+								<c:if test="${BSpoint == '2'}">
+									<span class="info-box-number" style="color: orange">주의</span>
+								</c:if>
+								<c:if test="${BSpoint == '3'}">
+									<span class="info-box-number" style="color: red">위험</span>
+								</c:if>
 							</div>
 							<!-- /.info-box-content -->
 						</div>
