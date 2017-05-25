@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mydoctor.exception.UserNotFoundException;
+import com.mydoctor.model.AnalysisData;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
@@ -36,6 +37,7 @@ import com.mydoctor.model.SleepingTime;
 import com.mydoctor.model.StepCount;
 import com.mydoctor.model.User;
 import com.mydoctor.model.UserCheckList;
+import com.mydoctor.service.AnalysisDataService;
 import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
@@ -70,6 +72,9 @@ public class LoginController {
 
 	@Autowired
 	private UserCheckListService userCheckListService;
+	
+	@Autowired
+	private AnalysisDataService analysisDataService;
 
 	static AuthenticationManager am = new SampleAuthenticationManager();
 
@@ -136,6 +141,7 @@ public class LoginController {
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
 			BloodOxygen bloodOxygen = this.bloodOxygenService.getRecentBloodOxygen(user.getId());
 			SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(user.getId());
+			AnalysisData analysisdata = this.analysisDataService.getAnalysisDataByUsername(user.getId());
 			
 			currentUserCheckList = userCheckListService.findById(user.getId());
 			System.out.println(currentUserCheckList);
@@ -176,6 +182,10 @@ public class LoginController {
 				currentUserCheckList.setLastSleepingTime("0");
 			else
 				currentUserCheckList.setLastSleepingTime(sleepingTime.getSleepingTime());
+			if(analysisdata == null)
+				currentUserCheckList.setDis("0");
+			else
+				currentUserCheckList.setDis(analysisdata.getDis());
 		
 			// System.out.println("app dashboard" + userInfo);
 
