@@ -178,8 +178,25 @@
 								class="ion-android-alert"></i></span>
 
 							<div class="info-box-content">
-								<span class="info-box-text">고혈압 위험</span> <span
-									class="info-box-number" style="color: orange">주의</span>
+								<span class="info-box-text">고혈압 위험</span>
+								<c:if test="${BPpoint == '4'}"> 
+									<span class="info-box-number" style="color: green">정상</span>
+								</c:if>
+								<c:if test="${BPpoint == '3-1'}"> 
+									<span class="info-box-number" style="color: yello">고혈압 전단계 1기</span>
+								</c:if>
+								<c:if test="${BPpoint == '3-2'}"> 
+									<span class="info-box-number" style="color: yello">고혈압 전단계 2기</span>
+								</c:if>
+								<c:if test="${BPpoint == '2-1'}"> 
+									<span class="info-box-number" style="color: orange">고혈압 1기</span>
+								</c:if>
+								<c:if test="${BPpoint == '2-2'}"> 
+									<span class="info-box-number" style="color: orange">고혈압 2기</span>
+								</c:if>
+								<c:if test="${BPpoint == '1'}"> 
+									<span class="info-box-number" style="color: red">수축기 단독 고혈압(위험)</span>
+								</c:if>
 							</div>
 							<!-- /.info-box-content -->
 						</div>

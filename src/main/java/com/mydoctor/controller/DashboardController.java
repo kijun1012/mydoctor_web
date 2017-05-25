@@ -36,6 +36,8 @@ import com.mydoctor.service.StepCountService;
 import com.mydoctor.service.UserCheckListService;
 import com.mydoctor.service.WeightService;
 
+import antlr.ParserSharedInputState;
+
 /**
  * Handles requests for the application home page.
  */
@@ -88,8 +90,43 @@ public class DashboardController {
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
 		model.addAttribute("analysisData", analysisData);
 		System.out.println(analysisData);
+		
+		
+		String BPpoint = null;
+		BPpoint = this.getDangerPoint(bloodPressure, BPpoint);
+		System.out.println("위험지수는~~~~~~" + BPpoint);
+		model.addAttribute("BPpoint", BPpoint);
 
 		return "dashboard";
+	}
+	
+	public String getDangerPoint(BloodPressure bloodPressure, String BPpoint) {
+		
+		
+		int curHP = Integer.parseInt(bloodPressure.getHP());
+		int curHR = Integer.parseInt(bloodPressure.getHR());
+		
+		//int curSugar = Integer.parseInt(bloodSugar.getBG());
+		
+		
+		if(curHP < 120 && curHR < 80 ) {
+			
+			return BPpoint = "4";
+		}
+		else if((curHP>=120 && curHP<=139) || (curHR>=80 && curHR<=89)) {
+			if((curHP>=120 && curHP<=129) || (curHR>=80 && curHR<=84))
+				return BPpoint = "3-1";
+			else
+				return BPpoint = "3-2";
+		}
+		else if((curHP>=140 && curHP<=160) || (curHR>=90 && curHR<=100)) {
+			if((curHP>=140 && curHP<=159) || (curHR>=90 && curHR<=99))
+				return BPpoint = "2-1";
+			else
+				return BPpoint = "2-2";
+		}
+		else
+			return BPpoint = "1";
 	}
 
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)
