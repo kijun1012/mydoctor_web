@@ -150,11 +150,15 @@ desired effect
 |---------------------------------------------------------|
 -->
 <sec:authorize access="hasRole('ROLE_USER')">
-	<body class="hold-transition skin-green-light sidebar-mini">
+	<body class="hold-transition skin-blue sidebar-mini">
 </sec:authorize>
 
 <sec:authorize access="hasRole('ROLE_ADMIN')">
-	<body class="hold-transition skin-black-light sidebar-mini">
+	<body class="hold-transition skin-green sidebar-mini">
+</sec:authorize>
+
+<sec:authorize access="isAnonymous()">
+	<body class="hold-transition skin-black sidebar-mini">
 </sec:authorize>
 
 <div class="wrapper">
