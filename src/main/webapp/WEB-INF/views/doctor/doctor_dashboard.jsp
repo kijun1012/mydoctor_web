@@ -174,7 +174,7 @@
 
 		<div class="row">
 			<div class="col-md-6">
-				<h4>환자 선택</h4>  
+				<h4>환자 선택</h4>
 				<div class="btn-group">
 					<button type="button" class="btn btn-default">환자 선택</button>
 					<button type="button" class="btn btn-default dropdown-toggle"
@@ -198,7 +198,8 @@
 				<div class="col-md-6">
 					<h4>조언을 입력하세요</h4>
 					<sf:form action="${pageContext.request.contextPath}/doctor/advice"
-						method="post" modelAttribute="advice">
+						method="post" modelAttribute="advice" name="adviceForm"
+						onsubmit="return frmsubmit();">
 
 						<input type="hidden" name="doctorname"
 							value="${advice.doctorname}" id="doctorname" />
@@ -207,11 +208,12 @@
 							id="username" />
 
 						<div class="input-group margin">
-							<sf:input path="advice" id="advice" class="form-control" />
-							
+							<sf:input path="advice" id="advice" name="advice"
+								class="form-control" />
+
 							<span class="input-group-btn">
 								<button type="submit" value="Submit"
-									class="btn btn-info btn-flat">Go!</button>
+									class="btn btn-info btn-flat" onclick="chkValue()">Go!</button>
 							</span>
 						</div>
 					</sf:form>
@@ -224,9 +226,21 @@
 </div>
 
 <script type="text/javascript">
-	var advice = document.getElementById('advice');
-	
-	if((Trim(advice)=="") || (advice == null)){
-		alert("조언을 입력해주세요.");
+	function chkValue() {
+	}
+
+	function frmsubmit() {
+		var tmp = document.adviceForm.advice.value.replace(/\s|　/gi, '');
+		// 정규식으로 공백, 엔터, 탭, 특수문자 공백 문자를 빈문자로 바꿈
+		// 입력된 값에 대하여 위 정규식 처리를 하고 뭔가 남아있지 않다면
+		// 값이 무의미 하다고 판단함.
+
+		if (tmp == '') {
+			alert('내용을 입력해 주세요.');
+			return false;
+		} else {
+			alert('${advice.username}님에게 조언이 입력되었습니다.');
+			return true;
+		}
 	}
 </script>
