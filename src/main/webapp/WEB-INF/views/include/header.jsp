@@ -183,7 +183,7 @@
 			<!-- Optionally, you can add icons to the links -->
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<li><a href="${pageContext.request.contextPath}"><i
-						class="fa fa-link"></i> <span>Dash Board</span></a></li>
+						class="fa fa-th"></i> <span>Dash Board</span></a></li>
 			</sec:authorize>
 
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -192,7 +192,7 @@
 			</sec:authorize>
 
 			<li class="treeview active"><a href="#"><i
-					class="fa fa-link"></i> <span>Data</span> <span
+					class="fa fa-database"></i> <span>Data</span> <span
 					class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span></a> <sec:authorize access="hasRole('ROLE_USER')">
@@ -229,7 +229,7 @@
 
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<li><a href="${pageContext.request.contextPath}/chooseDoctor">
-						<i class="fa fa-link"></i> <span>Choose a doctor</span>
+						<i class="fa fa-user-md"></i> <span>Choose a doctor</span>
 				</a></li>
 			</sec:authorize>
 
