@@ -111,18 +111,6 @@ public class DoctorController {
 		return "doctor_dashboard";
 	}
 
-	@RequestMapping(value = "/advice", method = RequestMethod.GET)
-	public String advice(Model model) {
-		Advice advice = new Advice();
-		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-		advice.setDoctorname(userId);
-		advice.setUsername(selectUsername);
-
-		model.addAttribute("advice", advice);
-
-		return "advice";
-	}
-
 	@RequestMapping(value = "/advice", method = RequestMethod.POST)
 	public String advicePost(@Valid Advice advice, BindingResult result, HttpServletRequest request) {
 

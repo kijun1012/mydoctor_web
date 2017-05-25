@@ -132,10 +132,7 @@
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctor_dashboard.jsp" />
 	</definition>
 	
-	<definition name="advice" extends="base">
-		<put-attribute name="title" value="My Doctor - doctor" />
-		<put-attribute name="body" value="/WEB-INF/views/doctor/advice.jsp" />
-	</definition>
+
 	
 	
 
