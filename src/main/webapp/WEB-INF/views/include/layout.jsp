@@ -57,8 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/plugins/select2/select2.min.css">
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/dist/css/table.css">
+
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
