@@ -93,9 +93,11 @@ public class DashboardController {
 
 		String BPpoint = this.getDangerPointByBP(bloodPressure);
 		String BSpoint = this.getDangerPointByBS(bloodSugar);
+		String SCpoint = this.getAdviceByStepCount(stepCount);
 		System.out.println(BSpoint + "위험지수는~~~~~~" + BPpoint);
 		model.addAttribute("BPpoint", BPpoint);
 		model.addAttribute("BSpoint", BSpoint);
+		model.addAttribute("SCpoint", SCpoint);
 
 		return "dashboard";
 	}
@@ -132,6 +134,7 @@ public class DashboardController {
 			return "0";
 		} else {
 			int curBS = Integer.parseInt(bloodSugar.getBG());
+
 			if (curBS >= 125) {
 				return "3";
 
@@ -144,6 +147,26 @@ public class DashboardController {
 			else
 				return "1";
 		}
+	}
+
+	public String getAdviceByStepCount(StepCount stepCount) {
+		if (stepCount == null) {
+			return "0";
+		} else {
+			int curSC = stepCount.getStepCount();
+			
+				if (curSC <= 5000) {
+					return "1";
+				}
+				else if(curSC <= 7500) {
+					return "2";
+				}
+				else if(curSC <= 10000) {
+					return "3";
+				}
+				else 
+					return "4";
+			}
 	}
 
 	@RequestMapping(value = "/chooseDoctor", method = RequestMethod.GET)

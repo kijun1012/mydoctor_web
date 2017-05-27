@@ -188,7 +188,7 @@
 
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li><a href="${pageContext.request.contextPath}/doctor"><i
-						class="fa fa-link"></i> <span>Dash Board</span></a></li>
+						class="fa fa-th"></i> <span>Dash Board</span></a></li>
 			</sec:authorize>
 
 			<li class="treeview active"><a href="#"><i
