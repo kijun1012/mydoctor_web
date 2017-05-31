@@ -11,7 +11,7 @@
 			혈중산소농도<small>혈중산소농도 기록</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
 			<li class="active">혈중산소농도</li>
 		</ol>
 	</section>
@@ -26,9 +26,7 @@
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
+					
 				</div>
 			</div>
 			<div class="box-body">
@@ -76,8 +74,8 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>number</th>
-						<th>date</th>
+						<th>번호</th>
+						<th>날짜</th>
 						<th>혈중산소농도</th>
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
@@ -130,11 +128,11 @@
 	var lineChartData = {
 		labels : time,
 		datasets : [ {
-			label : "Electronics",
-			fillColor : "rgba(210, 214, 222, 1)",
-			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
+			label : "bloodOxygen",
+			fillColor : "rgba(0, 0, 0, 1)",
+			strokeColor : "rgba(0, 0, 0, 1)",
+			pointColor : "rgba(220, 220, 220, 1)",
+			
 			pointHighlightFill : "#fff",
 			pointHighlightStroke : "rgba(220,220,220,1)",
 			data : result

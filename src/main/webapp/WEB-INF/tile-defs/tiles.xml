@@ -51,7 +51,7 @@
 	</definition>
 	
 	<definition name="sleepingtime" extends="base">
-		<put-attribute name="title" value="Weight graph" />
+		<put-attribute name="title" value="Sleeping Time graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/sleepingTime.jsp" />
 	</definition>
 	
@@ -107,7 +107,7 @@
 	</definition>
 	
 	<definition name="webview_sleepingtime" extends="webview">
-		<put-attribute name="title" value="Weight graph" />
+		<put-attribute name="title" value="Sleeping Time graph" />
 		<put-attribute name="body" value="/WEB-INF/views/content/sleepingTime.jsp" />
 	</definition>
 	

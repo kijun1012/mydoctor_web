@@ -11,7 +11,7 @@
 			혈압 <small>혈압 기록</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
 			<li class="active">혈압</li>
 		</ol>
 	</section>
@@ -26,9 +26,7 @@
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
+					
 				</div>
 			</div>
 			<div class="box-body">
@@ -75,10 +73,10 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>number</th>
-						<th>date</th>
-						<th>min</th>
-						<th>max</th>
+						<th>번호</th>
+						<th>날짜</th>
+						<th>최저혈압</th>
+						<th>최고혈압</th>
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>

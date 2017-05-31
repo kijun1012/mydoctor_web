@@ -187,11 +187,11 @@
 									<span class="info-box-number" style="color: green">정상</span>
 								</c:if>
 								<c:if test="${BPpoint == '3-1'}">
-									<span class="info-box-number" style="color: yello">고혈압
+									<span class="info-box-number" style="color: orange">고혈압
 										전단계 1기</span>
 								</c:if>
 								<c:if test="${BPpoint == '3-2'}">
-									<span class="info-box-number" style="color: yello">고혈압
+									<span class="info-box-number" style="color: orange">고혈압
 										전단계 2기</span>
 								</c:if>
 								<c:if test="${BPpoint == '2-1'}">

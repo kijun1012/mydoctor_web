@@ -11,7 +11,7 @@
 			수면 시간<small>수면 시간 기록 </small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
 			<li class="active">수면 시간</li>
 		</ol>
 	</section>
@@ -26,9 +26,7 @@
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
+					
 				</div>
 			</div>
 			<div class="box-body">
@@ -78,10 +76,10 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>number</th>
-						<th>date</th>
-						<th>sleep</th>
-						<th>wake up</th>
+						<th>번호</th>
+						<th>날짜</th>
+						<th>취침시간</th>
+						<th>기상시간</th>
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
@@ -139,11 +137,11 @@
 		labels : time,
 		datasets : [ {
 			label : "startSleepTime",
-			labelData : startSleepTime,
-			fillColor : "rgba(210, 214, 222, 1)",
-			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
+			
+			fillColor : "rgba(0, 0, 0, 1)",
+			strokeColor : "rgba(0, 0, 0, 1)",
+			pointColor : "rgba(220, 220, 220, 1)",
+			
 			pointHighlightFill : "#fff",
 			pointHighlightStroke : "rgba(220,220,220,1)",
 			data : result

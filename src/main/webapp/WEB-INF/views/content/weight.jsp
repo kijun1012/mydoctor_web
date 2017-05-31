@@ -11,25 +11,23 @@
 			체중<small>체중 기록</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/"><i class="fa fa-dashboard"></i>DashBoard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-dashboard"></i>DashBoard</a></li>
 			<li class="active">체중</li>
 		</ol>
 	</section>
 
 	<div class="col-md-6">
 		<!-- BAR CHART -->
-		<div class="box box-success">
+		<div class="box box-info">
 			<div class="box-header with-border">
-				<h3 class="box-title">체중 그래프</h3>
+				<h3 class="box-title">체중</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
+				
 				</div>
 			</div>
 			<div class="box-body">
@@ -77,9 +75,9 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>number</th>
-						<th>date</th>
-						<th>weight</th>
+						<th>번호</th>
+						<th>날짜</th>
+						<th>체중</th>
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
@@ -131,11 +129,11 @@
 	var lineChartData = {
 		labels : time,
 		datasets : [ {
-			label : "Electronics",
-			fillColor : "rgba(210, 214, 222, 1)",
-			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
+			label : "Weight",
+			fillColor : "rgba(0, 0, 0, 1)",
+			strokeColor : "rgba(0, 0, 0, 1)",
+			pointColor : "rgba(220, 220, 220, 1)",
+			
 			pointHighlightFill : "#fff",
 			pointHighlightStroke : "rgba(220,220,220,1)",
 			data : result

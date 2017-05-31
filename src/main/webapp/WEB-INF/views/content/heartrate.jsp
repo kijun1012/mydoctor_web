@@ -11,7 +11,8 @@
 			심박<small>심박 기록 </small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i
+					class="fa fa-dashboard"></i>Dashboard</a></li>
 			<li class="active">심박</li>
 		</ol>
 	</section>
@@ -26,9 +27,7 @@
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
+
 				</div>
 			</div>
 			<div class="box-body">
@@ -73,13 +72,13 @@
 
 
 
-		<div style="width:100%; height:250px; overflow:auto">
+		<div style="width: 100%; height: 250px; overflow: auto">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>number</th>
-						<th>date</th>
-						<th>heartRate</th>
+						<th>번호</th>
+						<th>날짜</th>
+						<th>심박수</th>
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<th></th>
 						</sec:authorize>
@@ -94,10 +93,10 @@
 							<td>${heartRate.measurement_time}</td>
 							<td>${heartRate.heartRate }</td>
 							<sec:authorize access="!hasRole('ROLE_ADMIN')">
-							<td><a
-								href="${pageContext.request.contextPath}/heartrate/delete/${heartRate.username}/${heartRate.measurement_time}">
-									<i class="glyphicon glyphicon-remove"></i>
-							</a></td>
+								<td><a
+									href="${pageContext.request.contextPath}/heartrate/delete/${heartRate.username}/${heartRate.measurement_time}">
+										<i class="glyphicon glyphicon-remove"></i>
+								</a></td>
 							</sec:authorize>
 						</tr>
 						<c:set var="id" value="${id+1}" />
@@ -133,10 +132,10 @@
 		labels : time,
 		datasets : [ {
 			label : "HeartRate",
-			fillColor : "rgba(210, 214, 222, 1)",
-			strokeColor : "rgba(210, 214, 222, 1)",
-			pointColor : "rgba(210, 214, 222, 1)",
-			pointStrokeColor : "#c1c7d1",
+			fillColor : "rgba(0, 0, 0, 1)",
+			strokeColor : "rgba(0, 0, 0, 1)",
+			pointColor : "rgba(220, 220, 220, 1)",
+			
 			pointHighlightFill : "#fff",
 			pointHighlightStroke : "rgba(220,220,220,1)",
 			data : result
@@ -150,7 +149,7 @@
 		scaleBeginAtZero : true,
 
 		//Boolean - Whether grid lines are shown across the chart
-		scaleShowGridLines : false,
+		scaleShowGridLines : true,
 		//String - Colour of the grid lines
 		scaleGridLineColor : "rgba(0,0,0,.05)",
 		//Number - Width of the grid lines

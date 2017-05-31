@@ -34,16 +34,17 @@ import com.mydoctor.vo.IhealthDataListStatus;
 @RequestMapping("/ihealth")
 public class IhealthController {
 
-	private final String BPSC = "10eda0dc26b94cf78450a5ba62186806";
-	private final String BPSV = "5d995c97be8748059e22310169ea14eb";
-	private final String clientId = "836c0bba2dcf4359b1cfedd527f8870a";
-	private final String clientSecret = "bc75b752768e41869efeda1c071f19bc";
-	private final String BGSC = "10eda0dc26b94cf78450a5ba62186806";
-	private final String BGSV = "77536ef99f044e738394b216707be8fc";
-	private final String WEIGHT_SC = "10eda0dc26b94cf78450a5ba62186806";
-	private final String WEIGHT_SV = "d00ed5569b4e4c16b3e4c276ac102101";
-	private final String BO_SC = "10eda0dc26b94cf78450a5ba62186806";
-	private final String BO_SV = "49d9dce307a74ee389cf654f8a29fc73";
+	
+	private final String clientId = "c4ce1e9cee9e4cf5997b92f264aea51b";
+	private final String clientSecret = "42dde8e32f3c4de0b7b8d091eb2c5130";
+	private final String BPSC = "dd46623886864692b7032b2ac35e46f0";
+	private final String BPSV = "7be86544924c44c9a66e6d3879eac524";
+	private final String BGSC = "dd46623886864692b7032b2ac35e46f0";
+	private final String BGSV = "c2ad15379f674591bd5c3ea603f09aa9";
+	private final String WEIGHT_SC = "dd46623886864692b7032b2ac35e46f0";
+	private final String WEIGHT_SV = "064b5b81fc804e069e60461d2b6983a5";
+	private final String BO_SC = "dd46623886864692b7032b2ac35e46f0";
+	private final String BO_SV = "6a11211abc28431a8f775f757ee537c8";
 	private String user_open_id;
 	private String accessToken;
 	private String username;
