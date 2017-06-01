@@ -124,8 +124,8 @@
 	var barChartData = {
 		labels : time,
 		datasets : [ {
-			fillColor : "rgba(220,220,220,0.5)",
-			strokeColor : "rgba(220,220,220,0.8)",
+			fillColor : "#757575",
+			strokeColor : "#757575",
 			highlightFill : "rgba(220,220,220,0.75)",
 			highlightStroke : "rgba(220,220,220,1)",
 			data : result

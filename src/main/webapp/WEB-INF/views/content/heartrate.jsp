@@ -133,7 +133,7 @@
 		datasets : [ {
 			label : "HeartRate",
 			fillColor : "rgba(0, 0, 0, 1)",
-			strokeColor : "rgba(0, 0, 0, 1)",
+			strokeColor : "#78909C",
 			pointColor : "rgba(220, 220, 220, 1)",
 			
 			pointHighlightFill : "#fff",

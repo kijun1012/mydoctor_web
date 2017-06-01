@@ -11,7 +11,8 @@
 			혈압 <small>혈압 기록</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="${pageContext.request.contextPath}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+			<li><a href="${pageContext.request.contextPath}"><i
+					class="fa fa-dashboard"></i>Dashboard</a></li>
 			<li class="active">혈압</li>
 		</ol>
 	</section>
@@ -26,7 +27,7 @@
 						data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-					
+
 				</div>
 			</div>
 			<div class="box-body">
@@ -131,19 +132,19 @@
 	var barChartData = {
 		labels : time,
 		datasets : [ {
-			label : "max",
-			fillColor : "rgba(255, 178, 245, 1)",
-			strokeColor : "rgba(210, 214, 222, 1)",
-			HighlightFill : "#fff",
-			HighlightStroke : "rgba(220,220,220,1)",
-			data : max
-		}, {
 			label : "min",
 			fillColor : "rgba(181,178,255, 1)",
 			strokeColor : "rgba(210, 214, 222, 1)",
 			HighlightFill : "#fff",
 			HighlightStroke : "rgba(220,220,220,1)",
 			data : min
+		}, {
+			label : "max",
+			fillColor : "rgba(255, 178, 245, 1)",
+			strokeColor : "rgba(210, 214, 222, 1)",
+			HighlightFill : "#fff",
+			HighlightStroke : "rgba(220,220,220,1)",
+			data : max
 		}
 
 		]
