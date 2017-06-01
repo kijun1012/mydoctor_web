@@ -78,6 +78,8 @@ public class UserCheckList {
 	private int lastBloodOxygen;
 	@Transient
 	private String lastSleepingTime;
+	@Transient
+	private int lastCalorie;
 	
 	@Transient
 	private String dis;

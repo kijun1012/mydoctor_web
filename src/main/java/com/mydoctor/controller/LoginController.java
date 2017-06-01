@@ -32,6 +32,7 @@ import com.mydoctor.model.AnalysisData;
 import com.mydoctor.model.BloodOxygen;
 import com.mydoctor.model.BloodPressure;
 import com.mydoctor.model.BloodSugar;
+import com.mydoctor.model.Calorie;
 import com.mydoctor.model.HeartRate;
 import com.mydoctor.model.SleepingTime;
 import com.mydoctor.model.StepCount;
@@ -41,6 +42,7 @@ import com.mydoctor.service.AnalysisDataService;
 import com.mydoctor.service.BloodOxygenService;
 import com.mydoctor.service.BloodPressureService;
 import com.mydoctor.service.BloodSugarService;
+import com.mydoctor.service.CalorieService;
 import com.mydoctor.service.HeartRateService;
 import com.mydoctor.service.LoginService;
 import com.mydoctor.service.SleepingTimeService;
@@ -63,16 +65,19 @@ public class LoginController {
 
 	@Autowired
 	private StepCountService stepCountService;
-	
+
 	@Autowired
 	private BloodOxygenService bloodOxygenService;
-	
+
 	@Autowired
 	private SleepingTimeService sleepingTimeService;
 
 	@Autowired
+	private CalorieService calorieService;
+
+	@Autowired
 	private UserCheckListService userCheckListService;
-	
+
 	@Autowired
 	private AnalysisDataService analysisDataService;
 
@@ -110,8 +115,7 @@ public class LoginController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		
-		
+
 		return "redirect:/login?logout";
 	}
 
@@ -141,8 +145,9 @@ public class LoginController {
 			BloodSugar bloodSugar = this.bloodSugarService.getRecentBloodSugar(user.getId());
 			BloodOxygen bloodOxygen = this.bloodOxygenService.getRecentBloodOxygen(user.getId());
 			SleepingTime sleepingTime = this.sleepingTimeService.getRecentSleepingTime(user.getId());
+			Calorie calorie = this.calorieService.getRecentCalorie(user.getId());
 			AnalysisData analysisdata = this.analysisDataService.getAnalysisDataByUsername(user.getId());
-			
+
 			currentUserCheckList = userCheckListService.findById(user.getId());
 			System.out.println(currentUserCheckList);
 
@@ -173,20 +178,24 @@ public class LoginController {
 				currentUserCheckList.setLastBloodsugar(0);
 			else
 				currentUserCheckList.setLastBloodsugar(Integer.parseInt(bloodSugar.getBG()));
-			
+
 			if (bloodOxygen == null)
 				currentUserCheckList.setLastBloodoxygen(0);
 			else
 				currentUserCheckList.setLastBloodoxygen(bloodOxygen.getBO());
-			if(sleepingTime == null)
+			if (sleepingTime == null)
 				currentUserCheckList.setLastSleepingTime("0");
 			else
 				currentUserCheckList.setLastSleepingTime(sleepingTime.getSleepingTime());
-			if(analysisdata == null)
+			if (calorie == null)
+				currentUserCheckList.setLastCalorie(0);
+			else
+				currentUserCheckList.setLastCalorie(calorie.getCalorie());
+			if (analysisdata == null)
 				currentUserCheckList.setDis("0");
 			else
 				currentUserCheckList.setDis(analysisdata.getDis());
-		
+
 			// System.out.println("app dashboard" + userInfo);
 
 		} catch (AuthenticationException e) {
@@ -250,7 +259,7 @@ class SampleAuthenticationManager implements AuthenticationManager {
 			return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(),
 					AUTHORITIES);
 		}
-		// TODO 자동 생성된 메소드 스텁
+		
 		throw new BadCredentialsException("Bad");
 	}
 

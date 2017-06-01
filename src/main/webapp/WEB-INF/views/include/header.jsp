@@ -149,16 +149,7 @@
 	<section class="sidebar">
 
 		<!-- Sidebar user panel (optional) -->
-		<c:if test="${pageContext.request.userPrincipal.name == null}">
-			<div class="user-panel">
-				<a class="btn btn-block btn-social btn-facebook" href="#"> <i
-					class="fa fa-facebook"></i> Sign in with Facebook
-				</a> <a class="btn btn-block btn-social btn-google"> <i
-					class="fa fa-google-plus"></i> Sign in with Google
-				</a>
-
-			</div>
-		</c:if>
+		
 
 		<c:if test="${pageContext.request.userPrincipal.name != null }">
 			<div class="user-panel">
