@@ -18,4 +18,9 @@ public class AdviceService {
 		return this.adviceDao.getAdvice(userId);
 	}
 
+	public void deleteAdvice(int id) {
+		this.adviceDao.deleteAdvice(id);
+		
+	}
+
 }

@@ -34,4 +34,16 @@ public class AdviceDao {
 		return adviceList;
 	}
 
+	public void deleteAdvice(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Advice advice = session.get(Advice.class, id);
+		
+		session.delete(advice);
+		
+		session.flush();
+		session.clear();
+		
+	}
+
 }
