@@ -227,9 +227,12 @@ public class DashboardController {
 
 		List<Advice> adviceList = this.adviceService.getAdvice(userId);
 		AnalysisData analysisData = this.analysisDataService.getAnalysisDataByUsername(userId);
-
+		StepCount stepCount = this.stepCountService.getRecentStepCount(userId);
+		String SCpoint = this.getAdviceByStepCount(stepCount);
+		
 		model.addAttribute("analysisData", analysisData);
 		model.addAttribute("advices", adviceList);
+		model.addAttribute("SCpoint", SCpoint);
 
 		return "webview_advice";
 	}
