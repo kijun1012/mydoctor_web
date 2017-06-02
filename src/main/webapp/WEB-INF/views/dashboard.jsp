@@ -536,6 +536,14 @@
 											</div>
 										</c:if>
 									</c:if>
+									
+									<c:if test="${analysisData.dis == '4' }">
+ -										<div class="direct-chat-text">
+ -											<p class="text-green">
+ -												<b>데이터 분석 결과 당신은 건강합니다.</b>
+ -											</p>
+ -										</div>
+ -									</c:if>
 									<!-- /.direct-chat-text -->
 								</div>
 							</c:if>
